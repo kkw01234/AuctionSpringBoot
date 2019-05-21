@@ -19,8 +19,8 @@ public class AucUserBean {
     private String password;
     @Column
     private String email;
-    @Column
-    private String address;
+//    @Column
+//    private String address;
     @Column
     private String phone;
     @Column
