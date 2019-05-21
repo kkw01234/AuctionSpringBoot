@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/login")
+
 public class LoginController {
 
     @Autowired
     UserService userService;
 
+    @RequestMapping("/login")
     @PostMapping
     @GetMapping
     public String login(HttpServletRequest request, Model model){
@@ -34,8 +35,15 @@ public class LoginController {
             model.addAttribute("userid",aucUserBean.getId());
             model.addAttribute("password", aucUserBean.getPassword());
 
-        return "index";
+        return "redirect:/";
 
+    }
+
+    @RequestMapping("/login_page")
+    @PostMapping
+    @GetMapping
+    public String login_page(){
+        return "login_page";
     }
 
 }
