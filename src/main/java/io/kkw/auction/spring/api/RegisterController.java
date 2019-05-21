@@ -34,11 +34,12 @@ public class RegisterController {
         String account = request.getParameter("account");
 
 
-        //AucUserBean aucUserBean = new AucUserBean(id,password,email,address,phone,account);
-        //AucUserBean bean = userService.addUser(aucUserBean);
+        AucUserBean aucUserBean = new AucUserBean(id,password,email,address,phone,account);
+        AucUserBean bean = userService.addUser(aucUserBean);
         return "redirect:/";
     }
 
+    //회원가입창 띄우기
     @RequestMapping("/register_page")
     public String register_page(){
         return "register_page";

@@ -1,6 +1,7 @@
 package io.kkw.auction.spring.api;
 
 import io.kkw.auction.spring.bean.AucUserBean;
+import io.kkw.auction.spring.bean.UserBean;
 import io.kkw.auction.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,7 @@ public class LoginController {
 
     @Autowired
     UserService userService;
-
+    //로그인
     @RequestMapping("/login")
     @PostMapping
     @GetMapping
@@ -24,12 +25,14 @@ public class LoginController {
         String id = request.getParameter("id");
         String password = request.getParameter("password");
 
-        AucUserBean aucUserBean = userService.getLogin(id,password);
+        UserBean userBean = userService.getLogin(id,password);
+        AucUserBean aucUserBean = (AucUserBean)userBean;
+
 
         HttpSession session = request.getSession();
-        session.setAttribute("user",aucUserBean);
+        session.setAttribute("user",userBean);
 
-        if(aucUserBean == null){
+        if(userBean == null){
             model.addAttribute("user", null);
         }else
             model.addAttribute("userid",aucUserBean.getId());
@@ -38,12 +41,20 @@ public class LoginController {
         return "redirect:/";
 
     }
-
+    //로그인페이지 띄우기
     @RequestMapping("/login_page")
     @PostMapping
     @GetMapping
     public String login_page(){
         return "login_page";
+    }
+
+    //로그아웃
+    @RequestMapping("/logout")
+    public String logout_page(HttpServletRequest request){
+        HttpSession httpSession = request.getSession();
+        httpSession.invalidate();
+        return "redirect:/";
     }
 
 }

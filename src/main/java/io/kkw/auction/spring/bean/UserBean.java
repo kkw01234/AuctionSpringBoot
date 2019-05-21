@@ -1,4 +1,6 @@
 package io.kkw.auction.spring.bean;
 
-public class NoteBean {
+
+public interface UserBean {
+
 }

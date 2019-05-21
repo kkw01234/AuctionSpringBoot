@@ -24,5 +24,5 @@ public interface UserRepository extends CrudRepository<AucUserBean, String> {
     // @Query("SELECT * FROM auc_user") d이렇게 쿼리문 작성하면됩니다.
     // List<AucUserBean> findAllBy();
 
-    List<AucUserBean> findByIdAndPassword(String id, String Password);
+    AucUserBean findByIdAndPassword(String id, String Password);
 }

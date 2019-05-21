@@ -4,33 +4,46 @@ import lombok.*;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Entity
 @Table(name="AUC_USER")
-
-public class AucUserBean {
+public class AucUserBean implements Serializable, UserBean {
 
     @Id
     @Column(name="id")
     private String id;
     @Column(name="password")
     private String password;
-    @Column
+    @Column(name = "email")
     private String email;
-//    @Column
-//    private String address;
-    @Column
+    @Column(name ="address")
+    private String address;
+    @Column(name = "phone")
     private String phone;
-    @Column
+    @Column(name = "account")
     private String account;
-    @Column
+    @Column(name = "authcode")
     private String authcode;
-    @Column
+    @Column(name = "stopdate")
     private Date stopdate;
 
-    public AucUserBean(String id){
+    public AucUserBean(){
+
+    }
+    public AucUserBean(String id,String password, String email, String address, String phone, String account){
+        this.id =id;
+        this.password=password;
+        this.email=email;
+        this.address =address;
+        this.phone=phone;
+        this.account=account;
+        this.authcode="test";
+        this.stopdate=null;
+
+
 
     }
 

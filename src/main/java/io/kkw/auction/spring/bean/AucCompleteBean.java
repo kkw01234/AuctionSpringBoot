@@ -1,4 +1,22 @@
 package io.kkw.auction.spring.bean;
 
+
+import lombok.Data;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@Entity
+@Table(name = "AUC_COMPLETE")
 public class AucCompleteBean {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+
+    private int auc_id;
+    private long complete_price;
+    private String tender_user_id;
+    private Date uid_check;
+    private Date tender_id_check;
 }
