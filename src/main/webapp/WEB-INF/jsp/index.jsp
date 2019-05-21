@@ -13,8 +13,9 @@
 </head>
 <body>
 Hello, Spring Boot App
-<h2>메인 화면 작성구역</h2>
+<h2>메인페이지</h2>
 <a href="/loginpage"> 로그인 페이지로</a>
+<a href="/registerpage"> 회원가입란</a>
 <h2 class="test">ID : <%=id%>, Password : <%=password%></h2>
 </body>
 <script>
