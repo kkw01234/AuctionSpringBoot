@@ -30,6 +30,10 @@ public class AucUserBean {
     @Column
     private Date stopdate;
 
+    public AucUserBean(String id){
+
+    }
+
 
 
 
