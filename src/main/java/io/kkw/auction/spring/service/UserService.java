@@ -12,8 +12,8 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public AucUserBean getLogin(String id, String password){
-        AucUserBean aucUserBean = userRepository.findByIdAndPassword(id,password);
+    public AucUserBean getLogin(String id, String password) {
+        AucUserBean aucUserBean = userRepository.findByIdAndPassword(id, password).get(0);
         return aucUserBean;
     }
 
