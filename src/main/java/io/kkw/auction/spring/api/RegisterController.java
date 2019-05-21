@@ -34,8 +34,8 @@ public class RegisterController {
         String account = request.getParameter("account");
 
 
-        AucUserBean aucUserBean = new AucUserBean(id,password,email,address,phone,account);
-        AucUserBean bean = userService.addUser(aucUserBean);
+        //AucUserBean aucUserBean = new AucUserBean(id,password,email,address,phone,account);
+        //AucUserBean bean = userService.addUser(aucUserBean);
         return "redirect:/";
     }
 
