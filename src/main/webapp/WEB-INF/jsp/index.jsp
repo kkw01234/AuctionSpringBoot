@@ -517,7 +517,7 @@
                 address : address,
                 account : account
             },
-            dataType : "html",
+            dataType : "json",
             success : function(data) {
 
             }

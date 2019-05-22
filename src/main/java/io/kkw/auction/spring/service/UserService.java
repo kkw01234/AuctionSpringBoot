@@ -1,6 +1,7 @@
 package io.kkw.auction.spring.service;
 
 
+import com.google.gson.JsonObject;
 import io.kkw.auction.spring.bean.AucAdminBean;
 import io.kkw.auction.spring.bean.AucUserBean;
 import io.kkw.auction.spring.bean.UserBean;
@@ -27,7 +28,14 @@ public class UserService {
     }
 
 
-    public  AucUserBean addUser(AucUserBean aucUserBean){
+    public AucUserBean addUser(JsonObject object){
+        String id = object.get("id").getAsString();
+        String password = object.get("password").getAsString();
+        String email = object.get("email").getAsString();
+        String phone = object.get("phone").getAsString();
+        String address = object.get("address").getAsString();
+        String account = object.get("account").getAsString();
+        AucUserBean aucUserBean = new AucUserBean(id,password,email,phone,address,account);
         return userRepository.save(aucUserBean);
     }
 
