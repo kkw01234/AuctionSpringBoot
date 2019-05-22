@@ -22,7 +22,21 @@ public class AucInformationBean {
     private String psubject;
     private String pcontent;
     private String picture;
+    @Column(name="register_date", nullable = true)
     private Date register_date;
     private Date end_date;
+
+    public AucInformationBean(){
+
+    }
+    public AucInformationBean(String user_id,String title,String pname,String psubject,String pcontent,String picture, Date end_date){
+        this.user_id = user_id;
+        this.title = title;
+        this.pname = pname;
+        this.psubject = psubject;
+        this.pcontent = pcontent;
+        this.picture = picture;
+        this.end_date = end_date;
+    }
 
 }

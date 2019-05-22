@@ -8,14 +8,9 @@ import io.kkw.auction.spring.bean.UserBean;
 import io.kkw.auction.spring.service.UserService;
 import jdk.nashorn.internal.parser.JSONParser;
 import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -45,5 +40,18 @@ public class RegisterController {
 
         System.out.println("가입 완료");
         return "success";
+    }
+
+    @RequestMapping("/verify_email")
+    @PostMapping
+    @GetMapping
+    public @ResponseBody
+    String verify_email(@RequestParam("email") String email){
+
+        if(userService.hasEmail(email)){
+            return "1";
+        }else
+            return "0";
+
     }
 }

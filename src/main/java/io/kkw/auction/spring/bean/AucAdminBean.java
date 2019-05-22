@@ -21,6 +21,7 @@ public class AucAdminBean implements Serializable, UserBean {
     public AucAdminBean(){
 
     }
+
     public AucAdminBean(String id, String password){
         this.id = id;
         this.password = password;
