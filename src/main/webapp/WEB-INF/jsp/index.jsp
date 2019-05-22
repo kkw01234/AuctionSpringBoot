@@ -1,10 +1,8 @@
 <%@ page import="io.kkw.auction.spring.bean.AucUserBean" %>
-<%@ page import="io.kkw.auction.spring.bean.UserBean" %>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-    UserBean user = (UserBean) session.getAttribute("user");
+    AucUserBean user = (AucUserBean) session.getAttribute("user");
 %>
 <html>
 <head>
@@ -14,6 +12,8 @@
     <meta name="description" content="경기대학교 강경웅, 김건욱">
 
     <title>경기대학교 데이터베이스 프로그래밍 - Auction</title>
+
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
 
     <!-- for modal -->
     <link href="css/main.css" rel="stylesheet">
@@ -91,8 +91,9 @@
                 <%
                     } else {
                 %>
-                <li class="nav-content"><a data-toggle="modal" href="#loginModal">경매물품 확인</a></li>
-                <li class="nav-content"><a data-toggle="modal" href="#registerModal">개인정보</a></li>
+                <li class="nav-content"><a data-toggle="modal" href="#">경매물품 확인</a></li>
+                <li class="nav-content"><a data-toggle="modal" href="#">개인정보</a></li>
+                <li class="nav-content"><a data-toggle="modal" href="logout">로그아웃</a></li>
                 <%
                     }
                 %>
@@ -372,8 +373,6 @@
 <script type="text/javascript" src="extensions/fancybox/jquery.fancybox-media.js"></script>
 <!-- Initiate Fancybox/Lightbox for Videos -->
 
-<!-- JQuery JavaScript -->
-<script src="js/jquery.min.js"></script>
 <!-- Bootstrap core JavaScript -->
 <script src="js/bootstrap.bundle.min.js"></script>
 <!--  SHA256 HASH JavaScript -->
