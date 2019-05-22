@@ -84,12 +84,12 @@
         <nav class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <%
-                    if(user == null) {
+                    if (user == null) {
                 %>
                 <li class="nav-content"><a data-toggle="modal" href="#loginModal">로그인</a></li>
                 <li class="nav-content"><a data-toggle="modal" href="#registerModal">회원가입</a></li>
                 <%
-                    } else {
+                } else {
                 %>
                 <li class="nav-content"><a href="#">경매물품 확인</a></li>
                 <li class="nav-content"><a href="#">개인정보</a></li>
@@ -279,9 +279,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2 class="title-section"><span class="title-regular">최신 등록된</span><br/>경매 물건</h2>
-                <a href="blog-single-post.html" class="btn btn-sm btn-primary" style="float: right">더보기</a>
-                <hr class="title-underline"/>
+                <div style="float:left">
+                    <h2 class="title-section"><span class="title-regular">최신 등록된</span><br/>경매 물건</h2>
+                    <hr class="title-underline"/>
+                </div>
+                <a href="blog-single-post.html" class="btn btn-lg btn-primary" style="float: right; margin-top:15px;">더 보러가기</a>
             </div>
         </div>
         <div class="row blog-listing">
@@ -401,13 +403,13 @@
             });
     });
 
-    function clickRegister(){
+    function clickRegister() {
         $('#loginModal').modal('hide');
         $('#registerModal').modal('show');
     }
 
-    function loginError(choose){
-        switch(choose){
+    function loginError(choose) {
+        switch (choose) {
             case 1:
                 $('#inform_login').html('빈 칸을 채워주세요.');
                 break;
@@ -419,25 +421,25 @@
         }
     }
 
-    function goLogin(){
+    function goLogin() {
         var email = $('#id').val();
         var password = $('#pass').val();
-        if(email == '' || password == ''){
+        if (email == '' || password == '') {
             loginError(1);
             return;
         }
         // password = SHA256(email + password);
 
         $.ajax({
-            url : "login",
-            type : "post",
-            data : {
-                id : email,
-                password : password
+            url: "login",
+            type: "post",
+            data: {
+                id: email,
+                password: password
             },
-            dataType : "html",
-            success : function(data) {
-                if(data == 'success') {
+            dataType: "html",
+            success: function (data) {
+                if (data == 'success') {
                     location.href = '/'
                 }
             }
@@ -448,52 +450,52 @@
     var pattern = [];
     pattern.push('0123456789');
     pattern.push('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-    function checkPattern(password){
-        isSafePassword = 0 ;
+
+    function checkPattern(password) {
+        isSafePassword = 0;
         var full_check1 = 0;
         var full_check2 = 0;
         var check1;
         var check2;
-        for(var i = 0; i < password.length ; ++i){
+        for (var i = 0; i < password.length; ++i) {
             var check1 = 0;
             var check2 = 0;
-            if(pattern[0].indexOf(password[i]) >= 0) {
+            if (pattern[0].indexOf(password[i]) >= 0) {
                 full_check1 = 1;
                 check1 = 1;
             }
-            if(pattern[1].indexOf(password[i]) >= 0) {
+            if (pattern[1].indexOf(password[i]) >= 0) {
                 full_check2 = 1;
                 check2 = 1;
             }
-            if(check1 == 0 && check2 == 0){
+            if (check1 == 0 && check2 == 0) {
                 full_check1 = 0;
                 break;
             }
         }
-        if(full_check1 == 1 && full_check2 == 1){
+        if (full_check1 == 1 && full_check2 == 1) {
             isSafePassword = 1;
         }
     }
 
-    function checkPassword(){
+    function checkPassword() {
         checkPattern($('#InputPassword').val());
-        if($('#InputPassword').val().length < 6 || isSafePassword == 0){
+        if ($('#InputPassword').val().length < 6 || isSafePassword == 0) {
             $('#password-span-1').html('6자 이상, 영문과 숫자의 조합 (특수문자 금지)');
             $('#password-span-1').css('color', 'red');
-        }
-        else if($('#InputPassword').val() == $('#InputPasswordCheck').val()){
+        } else if ($('#InputPassword').val() == $('#InputPasswordCheck').val()) {
             $('#password-span-1').html('비밀번호가 일치합니다');
             $('#password-span-1').css('color', 'blue');
-        }
-        else{
+        } else {
             $('#password-span-1').html('비밀번호를 확인해주세요.');
             $('#password-span-1').css('color', 'red');
         }
     }
 
     var onRegister = 0;
-    function doRegister(){
-        if(onRegister == 1) return;
+
+    function doRegister() {
+        if (onRegister == 1) return;
         onRegister = 1;
         var id = $('#InputId').val();
         var password = $('#InputPassword').val();
@@ -502,7 +504,7 @@
         var address = $('#InputAddress').val();
         var account = $('#InputAccount').val();
 
-        if(id== '' || email == '' || password == '' || phone == '' || address == '' || account == '') {
+        if (id == '' || email == '' || password == '' || phone == '' || address == '' || account == '') {
             onRegister = 0;
             alert('빈 칸을 채워주세요.');
             return;
@@ -513,19 +515,19 @@
         }
         // password = SHA256(email + password);
         $.ajax({
-            url : "register",
-            type : "post",
-            data : {
-                id : id,
-                password : password,
-                email : email,
-                phone : phone,
-                address : address,
-                account : account
+            url: "register",
+            type: "post",
+            data: {
+                id: id,
+                password: password,
+                email: email,
+                phone: phone,
+                address: address,
+                account: account
             },
-            dataType : "text",
-            success : function(data) {
-                if(data == 'success') {
+            dataType: "text",
+            success: function (data) {
+                if (data == 'success') {
                     location.href = '/'
                 }
             }
