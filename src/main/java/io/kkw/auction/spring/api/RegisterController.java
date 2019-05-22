@@ -33,13 +33,17 @@ public class RegisterController {
     @GetMapping
     public @ResponseBody
     String register(HttpServletRequest request){
-        JsonParser jsonParser = new JsonParser();
-        String str = request.getParameter("data");
-        JsonObject object = (JsonObject)jsonParser.parse(str);
+        String id = request.getParameter("id");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String account = request.getParameter("account");
 
-        UserBean userBean = userService.addUser(object);
+        AucUserBean aucUserBean = new AucUserBean(id,password,email,address,phone,account);
+        AucUserBean bean = userService.addUser(aucUserBean);
 
         System.out.println("가입 완료");
-        return "1";
+        return "success";
     }
 }

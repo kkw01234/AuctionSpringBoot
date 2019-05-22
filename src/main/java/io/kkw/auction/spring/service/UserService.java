@@ -28,14 +28,7 @@ public class UserService {
     }
 
 
-    public AucUserBean addUser(JsonObject object){
-        String id = object.get("id").getAsString();
-        String password = object.get("password").getAsString();
-        String email = object.get("email").getAsString();
-        String phone = object.get("phone").getAsString();
-        String address = object.get("address").getAsString();
-        String account = object.get("account").getAsString();
-        AucUserBean aucUserBean = new AucUserBean(id,password,email,phone,address,account);
+    public AucUserBean addUser(AucUserBean aucUserBean){
         return userRepository.save(aucUserBean);
     }
 

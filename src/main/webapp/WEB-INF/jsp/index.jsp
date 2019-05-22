@@ -79,7 +79,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="index.html"><img class="logo" src="img/logo.jpg" alt="Logo"></a>
+            <a href="/"><img class="logo" src="img/logo.jpg" alt="Logo"></a>
         </div>
         <nav class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -91,9 +91,9 @@
                 <%
                     } else {
                 %>
-                <li class="nav-content"><a data-toggle="modal" href="#">경매물품 확인</a></li>
-                <li class="nav-content"><a data-toggle="modal" href="#">개인정보</a></li>
-                <li class="nav-content"><a data-toggle="modal" href="logout">로그아웃</a></li>
+                <li class="nav-content"><a href="#">경매물품 확인</a></li>
+                <li class="nav-content"><a href="#">개인정보</a></li>
+                <li class="nav-content"><a href="/logout">로그아웃</a></li>
                 <%
                     }
                 %>
@@ -373,6 +373,9 @@
 <script type="text/javascript" src="extensions/fancybox/jquery.fancybox-media.js"></script>
 <!-- Initiate Fancybox/Lightbox for Videos -->
 
+
+<!-- JQuery JavaScript -->
+<script src="js/jquery.min.js"></script>
 <!-- Bootstrap core JavaScript -->
 <script src="js/bootstrap.bundle.min.js"></script>
 <!--  SHA256 HASH JavaScript -->
@@ -434,6 +437,9 @@
             },
             dataType : "html",
             success : function(data) {
+                if(data == 'success') {
+                    location.href = '/'
+                }
             }
         });
     }
@@ -517,9 +523,11 @@
                 address : address,
                 account : account
             },
-            dataType : "json",
+            dataType : "text",
             success : function(data) {
-
+                if(data == 'success') {
+                    location.href = '/'
+                }
             }
         });
     }
