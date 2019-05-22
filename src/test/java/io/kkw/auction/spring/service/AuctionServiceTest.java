@@ -12,7 +12,7 @@ import java.util.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AucInformationTEst {
+public class AuctionServiceTest {
     @Autowired
     AuctionService auctionService;
     @Test

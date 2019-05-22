@@ -14,10 +14,10 @@ import java.util.Date;
 @Repository
 public interface AucInformationRepository extends CrudRepository<AucInformationBean,Long> {
 
-
+    ///프로시저 실행~~
     @Transactional
     @Procedure(procedureName = "UploadAuction")
-    void uploadAuction(@Param("user_id") String user_id, @Param("title")String title, @Param("name")String name
+    Boolean uploadAuction(@Param("user_id") String user_id, @Param("title")String title, @Param("name")String name
                         ,@Param("psubject") String psubject, @Param("pcontent") String pcontent, @Param("picture") String picture, @Param("start_date") Date start_date
                         ,@Param("end_date") Date end_date);
 }

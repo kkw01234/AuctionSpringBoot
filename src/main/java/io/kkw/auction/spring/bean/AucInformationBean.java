@@ -4,12 +4,13 @@ package io.kkw.auction.spring.bean;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Entity
 @Table(name = "AUC_INFORMATION")
-public class AucInformationBean {
+public class AucInformationBean implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
