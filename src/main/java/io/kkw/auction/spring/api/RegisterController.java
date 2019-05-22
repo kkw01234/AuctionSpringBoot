@@ -36,12 +36,7 @@ public class RegisterController {
 
         AucUserBean aucUserBean = new AucUserBean(id,password,email,address,phone,account);
         AucUserBean bean = userService.addUser(aucUserBean);
+        System.out.println("가입 완료");
         return "redirect:/";
-    }
-
-    //회원가입창 띄우기
-    @RequestMapping("/register_page")
-    public String register_page(){
-        return "register_page";
     }
 }
