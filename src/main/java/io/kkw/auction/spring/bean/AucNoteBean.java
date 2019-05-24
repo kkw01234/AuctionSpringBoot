@@ -2,15 +2,16 @@ package io.kkw.auction.spring.bean;
 
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Entity
+
+@IdClass(AucNoteId.class)
 @Table(name="AUC_NOTE")
 public class AucNoteBean {
     @Id
@@ -23,4 +24,11 @@ public class AucNoteBean {
     private String content;
 
     private Date condate;
+}
+
+@Data
+class AucNoteId implements Serializable {
+    private String send_id;
+
+    private String receive_id;
 }

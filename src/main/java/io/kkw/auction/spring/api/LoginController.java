@@ -21,32 +21,26 @@ public class LoginController {
     @RequestMapping("/login")
     @PostMapping
     @GetMapping
-    public String login(HttpServletRequest request, Model model){
+    public @ResponseBody
+    String login(HttpServletRequest request, Model model){
         String id = request.getParameter("id");
         String password = request.getParameter("password");
 
         UserBean userBean = userService.getLogin(id,password);
         AucUserBean aucUserBean = (AucUserBean)userBean;
 
-
         HttpSession session = request.getSession();
         session.setAttribute("user",userBean);
 
         if(userBean == null){
             model.addAttribute("user", null);
-        }else
-            model.addAttribute("userid",aucUserBean.getId());
+        }else {
+            model.addAttribute("userid", aucUserBean.getId());
             model.addAttribute("password", aucUserBean.getPassword());
-
+            System.out.println("로그인 성공");
+            return "success";
+        }
         return "redirect:/";
-
-    }
-    //로그인페이지 띄우기
-    @RequestMapping("/login_page")
-    @PostMapping
-    @GetMapping
-    public String login_page(){
-        return "login_page";
     }
 
     //로그아웃
@@ -54,6 +48,7 @@ public class LoginController {
     public String logout_page(HttpServletRequest request){
         HttpSession httpSession = request.getSession();
         httpSession.invalidate();
+        System.out.println("로그아웃 성공");
         return "redirect:/";
     }
 
