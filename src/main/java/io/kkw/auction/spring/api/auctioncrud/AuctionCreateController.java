@@ -20,8 +20,8 @@ public class AuctionCreateController {
     AuctionService auctionService;
 
     // /upload_auction
-    @RequestMapping //AJAX 할지 말지 결정해주세여
-    public String uploadAction(HttpServletRequest request){
+    @RequestMapping("/new") //AJAX 할지 말지 결정해주세여
+    public String uploadAction(HttpServletRequest request) {
         AucUserBean user = (AucUserBean) request.getSession().getAttribute("user");
         String title = request.getParameter("title");
         String pname = request.getParameter("name");
@@ -32,16 +32,16 @@ public class AuctionCreateController {
         String end_date_string = request.getParameter("end_date");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date start_date = null;
-        Date end_date=null;
+        Date end_date = null;
         try {
             start_date = format.parse(start_date_string);
             end_date = format.parse(end_date_string);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         //AucInformationBean aucInformationBean = new AucInformationBean(user.getId(), title,pname,psubject,pcontent,picture,end_date);
-        Boolean result =auctionService.addAuction(user.getId(),title,pname,psubject,pcontent,picture,start_date,end_date);
+        Boolean result = auctionService.addAuction(user.getId(), title, pname, psubject, pcontent, picture, start_date, end_date);
 
 
         return null;
@@ -50,9 +50,9 @@ public class AuctionCreateController {
 
     //insert(Create) page
     //  /upload_auction/page
-    @RequestMapping("/page")
-    public String uploadAuction_page(){
-        return "upload_action_page";
+    @RequestMapping
+    public String uploadAuction_page() {
+        return "upload_auction_page";
     }
 
 }

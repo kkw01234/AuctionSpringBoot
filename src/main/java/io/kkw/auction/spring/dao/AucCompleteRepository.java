@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface AucCompleteRepository extends CrudRepository<AucCompleteBean, Long> {
 
-    Optional<AucCompleteBean> findByAuc_id(long id);
+//    Optional<AucCompleteBean> findByAuc_id(long id);
 }

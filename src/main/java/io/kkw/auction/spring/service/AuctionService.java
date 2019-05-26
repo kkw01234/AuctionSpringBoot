@@ -23,8 +23,8 @@ public class AuctionService {
     @Autowired
     AucProgressRepository aucProgressRepository;
 
-    @Autowired
-    AucCompleteRepository aucCompleteRepository;
+//    @Autowired
+//    AucCompleteRepository aucCompleteRepository;
 
     public boolean addAuction(AucInformationBean bean){
         AucInformationBean a = aucInformationRepository.save(bean);
@@ -53,8 +53,9 @@ public class AuctionService {
     }
     //경매정보 id를 이용해여 마감된 경매정보를 찾는 메소드
     public AucCompleteBean findComplete(long auc_id){
-        Optional<AucCompleteBean> optional = aucCompleteRepository.findByAuc_id(auc_id);
-        return optional.orElse(null);
+//        Optional<AucCompleteBean> optional = aucCompleteRepository.findByAuc_id(auc_id);
+//        return optional.orElse(null);
+        return null;
     }
 
     //유저가 올린 모든 정보를 가져오는 메소드

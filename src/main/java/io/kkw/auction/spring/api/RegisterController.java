@@ -37,7 +37,7 @@ public class RegisterController {
 
         AucUserBean aucUserBean = new AucUserBean(id,password,email,address,phone,account);
         AucUserBean bean = userService.addUser(aucUserBean);
-
+        request.getSession().setAttribute("user",bean);
         System.out.println("가입 완료");
         return "success";
     }
