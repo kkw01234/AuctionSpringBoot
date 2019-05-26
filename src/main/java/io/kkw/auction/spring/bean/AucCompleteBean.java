@@ -13,9 +13,9 @@ import java.util.Date;
 public class AucCompleteBean implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
-    private int auc_id;
+    private long auc_id;
     private long complete_price;
     private String tender_user_id;
     private Date uid_check;
