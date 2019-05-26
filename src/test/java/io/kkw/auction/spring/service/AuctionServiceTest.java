@@ -36,6 +36,7 @@ public class AuctionServiceTest {
     public void Test2(){
         Optional<AucCompleteBean> beanOptional = aucCompleteRepository.findByAuc_id(1);
         assertEquals( 1,beanOptional.get().getAuc_id());
+        System.out.println();
     }
 
 
