@@ -261,13 +261,23 @@ body {
     text-align: center;
     margin: 40px 150px;
     padding: 20px;
-    border : #7a7c88 3px solid;
+    border: #7a7c88 3px solid;
 }
 
 .insert-btn {
-    margin-top : 5px;
+    margin-top: 5px;
 }
 
-.write-container {
-    padding-left : 15px;
+.tag-label {
+    font-weight: bold;
+    margin-top : 10px;
+    margin-bottom : 5px;
+}
+
+.btn-div {
+    float : right;
+}
+
+.btn-div .btn {
+   margin : 2px;
 }

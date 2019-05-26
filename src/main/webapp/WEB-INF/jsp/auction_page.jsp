@@ -38,18 +38,18 @@
                 <a href="">
                     <article>
                         <img class="img-thumbnail" src="/img/item-example1.jpg" alt=""/>
-                        <h2>물건 제목</h2>
+                        <h2>맛있는 빵</h2>
                         <hr class="title-underline">
-                        <p>물건 설명</p>
+                        <p>갓경웅이 직접 구운 맛있는 빵</p>
                         <div>
                             <div>
-                                <i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53
+                                <i class="fa fa-calendar"></i> 2019 05 26 17 00
                             </div>
                             <div>
-                                <i class="fa fa-user"></i> 올린 사람
+                                <i class="fa fa-user"></i> 갓경웅
                             </div>
                             <div>
-                                <i class="fa fa-tag"></i> 관련 항목
+                                <i class="fa fa-tag"></i> 가구 식품
                             </div>
                         </div>
                     </article>
@@ -147,23 +147,6 @@
 <!-- Scripts -->
 <!-- Loads Bootstrap Main JS -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
-
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="bootstrap/js/ie10-viewport-bug-workaround.js"></script>
-
-<!-- Initiate Portoflio Script -->
-<script src="extensions/portfolio/isotope.min.js"></script>
-<script src="extensions/portfolio/portfolio.js"></script>
-
-<!-- Initiate Fancybox/Lightbox Script -->
-<!-- Fancybox/Lightbox -->
-<script type="text/javascript" src="extensions/fancybox/jquery.fancybox.js"></script>
-<script type="text/javascript" src="extensions/fancybox/jquery.fancybox.pack.js"></script>
-<link rel="stylesheet" type="text/css" href="extensions/fancybox/jquery.fancybox.css" media="screen"/>
-<script type="text/javascript" src="extensions/fancybox/jquery.fancybox-media.js"></script>
-<!-- Initiate Fancybox/Lightbox for Videos -->
-
-
 <!-- JQuery JavaScript -->
 <script src="js/jquery.min.js"></script>
 <!-- Bootstrap core JavaScript -->
