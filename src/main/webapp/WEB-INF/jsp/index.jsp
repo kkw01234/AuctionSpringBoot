@@ -110,92 +110,9 @@
     </div>
 </section>
 
-<!-- BLOG/LATEST NEWS-->
-<section class="page-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div style="float:left">
-                    <h2 class="title-section"><span class="title-regular">최근 등록된</span><br/>경매 물건</h2>
-                    <hr class="title-underline"/>
-                </div>
-                <a href="/auction_page" class="btn btn-lg btn-primary" style="float: right; margin-top:15px;">더 보러가기</a>
-            </div>
-        </div>
-        <div class="row blog-listing">
-            <div class="col-md-4">
-                <a href="">
-                    <article>
-                        <img class="img-thumbnail" src="/img/item-example1.jpg" alt=""/>
-                        <h2>물건 제목</h2>
-                        <hr class="title-underline">
-                        <p>물건 설명</p>
-                        <div>
-                            <div>
-                                <i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53
-                            </div>
-                            <div>
-                                <i class="fa fa-user"></i> 올린 사람
-                            </div>
-                            <div>
-                                <i class="fa fa-tag"></i> 관련 항목
-                            </div>
-                        </div>
-                    </article>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="">
-                    <article>
-                        <img class="img-thumbnail" src="/img/item-example2.jpg" alt=""/>
-                        <h2>물건 제목</h2>
-                        <hr class="title-underline">
-                        <p>물건 설명</p>
-                        <div>
-                            <div>
-                                <i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53
-                            </div>
-                            <div>
-                                <i class="fa fa-user"></i> 올린 사람
-                            </div>
-                            <div>
-                                <i class="fa fa-tag"></i> 관련 항목
-                            </div>
-                        </div>
-                    </article>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="">
-                    <article>
-                        <img class="img-thumbnail" src="/img/item-example3.jpg" alt=""/>
-                        <h2>물건 제목</h2>
-                        <hr class="title-underline">
-                        <p>물건 설명</p>
-                        <div>
-                            <div>
-                                <i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53
-                            </div>
-                            <div>
-                                <i class="fa fa-user"></i> 올린 사람
-                            </div>
-                            <div>
-                                <i class="fa fa-tag"></i> 관련 항목
-                            </div>
-                        </div>
-                    </article>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-
 <%@ include file="footer.jsp"%>
 
 <!-- Scripts -->
-<!-- Loads Bootstrap Main JS -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
 <!-- JQuery JavaScript -->
 <script src="js/jquery.min.js"></script>
 <!-- Bootstrap core JavaScript -->

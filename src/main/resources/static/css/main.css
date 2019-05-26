@@ -262,6 +262,7 @@ body {
     margin: 40px 150px;
     padding: 20px;
     border: #7a7c88 3px solid;
+    border-radius: 4px;
 }
 
 .insert-btn {
@@ -270,14 +271,25 @@ body {
 
 .tag-label {
     font-weight: bold;
-    margin-top : 10px;
-    margin-bottom : 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 .btn-div {
-    float : right;
+    float: right;
 }
 
 .btn-div .btn {
-   margin : 2px;
+    margin: 2px;
+}
+
+.search-container {
+    background-color: #efefef;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top : 25px;
+}
+
+.search-container img {
+    width: 25px;
 }

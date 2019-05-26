@@ -17,7 +17,7 @@
 
 <%@ include file="nav.jsp" %>
 
-<section class="page-section" style="padding:50px 0;">
+<section class="page-section">
     <div class="insert-div">
         <h3>지금 바로 당신의 물건을 등록해보세요!</h3>
         <a <%if (user == null) { %>
@@ -28,9 +28,15 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-9">
                 <h2 class="title-section"><span class="title-regular">최근 등록된</span><br/>경매 물건</h2>
                 <hr class="title-underline"/>
+            </div>
+            <div class="col-md-3">
+                <div class="search-container input-group">
+                    <input class="form-control" type="text" placeholder="검색하기" id="search" onkeyup="if(event.keyCode==13){doSearch();}">
+                    <div class="input-group-addon" style="padding : 0px 10px; border : none;"><a onclick="doSearch();"><img src="/img/search.png"></a></div>
+                </div>
             </div>
         </div>
         <div class="row blog-listing">
@@ -145,8 +151,6 @@
 <%@ include file="footer.jsp" %>
 
 <!-- Scripts -->
-<!-- Loads Bootstrap Main JS -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
 <!-- JQuery JavaScript -->
 <script src="js/jquery.min.js"></script>
 <!-- Bootstrap core JavaScript -->
@@ -173,6 +177,10 @@
                 }
             });
     });
+
+    function doSearch(){
+        return;
+    }
 </script>
 
 </body>
