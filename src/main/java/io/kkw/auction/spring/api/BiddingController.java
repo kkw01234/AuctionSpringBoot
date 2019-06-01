@@ -28,7 +28,7 @@ public class BiddingController {
         //ID
         //금액
 
-
+        //작성중
         boolean result = biddingService.bidding(aucUser.getId(), product_id, price);
 
            return null;
