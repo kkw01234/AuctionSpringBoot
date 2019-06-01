@@ -28,9 +28,9 @@ public class AuctionUpdateCotroller {
     public String cancelAuthorize(){
         return null;
     }
-    //개인이 올린 것을 수정하기
 
-    @RequestMapping("/modify_auction_page/{id}")
+    //개인이 올린 것을 수정하기
+    @RequestMapping("/{id}")
     public String modifyAuctionPage(Model model, @PathVariable("id")long id){
 
         return null;

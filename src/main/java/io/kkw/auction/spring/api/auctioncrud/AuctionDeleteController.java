@@ -19,6 +19,7 @@ public class AuctionDeleteController {
     @RequestMapping("/{id}")
     public String deleteAuction(@PathVariable long id){
          //이건 프로시저로 갑시다.
+         //product랑 progress
         boolean result = auctionService.deleteAuction(id);
         return null;
     }

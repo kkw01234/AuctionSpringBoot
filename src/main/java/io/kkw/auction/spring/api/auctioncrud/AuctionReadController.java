@@ -24,17 +24,19 @@ public class AuctionReadController {
 
     @RequestMapping("/{id}") //한개씩
     public String readAuctionInfo_page(Model model, HttpServletRequest request, @PathVariable long id){
-        AucProduct informationBean = auctionService.findInfo(id);
-        if(informationBean.getEnddate().after(new Date())){
+        AucProduct aucProduct = auctionService.findInfo(id);
+        if(aucProduct.getEnddate().after(new Date())){
             AucComplete aucComplete = auctionService.findComplete(id);
             model.addAttribute("CompleteBean", aucComplete);
         }else {
             AucProgress progressBean = auctionService.findProgress(id);
             model.addAttribute("progressBean", progressBean);
         }
-        model.addAttribute("informationBean",informationBean);
+        model.addAttribute("informationBean",aucProduct);
+        //Join 안하게 내가 짜놨네...
         return "read_action_page";
     }
+
 
     @RequestMapping("/read_my_auction") //내가 올린 경매 확인
     public String readMyAuction(HttpServletRequest request){
