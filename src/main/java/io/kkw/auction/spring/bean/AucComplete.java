@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "AUC_COMPLETE")
-public class AucCompleteBean implements Serializable {
+public class AucComplete implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -20,4 +20,10 @@ public class AucCompleteBean implements Serializable {
     private String tender_user_id;
     private Date uid_check;
     private Date tender_id_check;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "aucInformation_pid", nullable = true)
+    private AucInformation aucInformation;
+
 }

@@ -1,11 +1,12 @@
 package io.kkw.auction.spring.dao;
 
-import io.kkw.auction.spring.bean.AucProgressBean;
+import io.kkw.auction.spring.bean.AucProgress;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface AucProgressRepository extends CrudRepository<AucProgressBean,Long> {
+public interface AucProgressRepository extends CrudRepository<AucProgress,Long> {
 
-    Optional<AucProgressBean> findByPid(long pid);
+    Optional<AucProgress> findByPid(long pid);
+
 }

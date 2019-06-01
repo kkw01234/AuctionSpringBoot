@@ -1,9 +1,7 @@
 package io.kkw.auction.spring.service;
 
 
-import com.google.gson.JsonObject;
-import io.kkw.auction.spring.bean.AucAdminBean;
-import io.kkw.auction.spring.bean.AucUserBean;
+import io.kkw.auction.spring.bean.AucUser;
 import io.kkw.auction.spring.bean.UserBean;
 import io.kkw.auction.spring.dao.AdminRepository;
 import io.kkw.auction.spring.dao.UserRepository;
@@ -30,11 +28,11 @@ public class UserService {
     }
 
 
-    public AucUserBean addUser(AucUserBean aucUserBean){
-        return userRepository.save(aucUserBean);
+    public AucUser addUser(AucUser aucUser){
+        return userRepository.save(aucUser);
     }
     public boolean hasEmail(String email){
-        List<AucUserBean> Users = userRepository.findByEmail(email);
+        List<AucUser> Users = userRepository.findByEmail(email);
 
         if(Users != null && Users.size() >0){
             return true;

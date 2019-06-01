@@ -1,9 +1,9 @@
 package io.kkw.auction.spring.dao;
 
-import io.kkw.auction.spring.bean.AucAdminBean;
+import io.kkw.auction.spring.bean.AucAdmin;
 import org.springframework.data.repository.CrudRepository;
 
-public interface AdminRepository extends CrudRepository<AucAdminBean, String> {
+public interface AdminRepository extends CrudRepository<AucAdmin, String> {
 
-    AucAdminBean findByIdAndPassword(String id, String password);
+    AucAdmin findByIdAndPassword(String id, String password);
 }

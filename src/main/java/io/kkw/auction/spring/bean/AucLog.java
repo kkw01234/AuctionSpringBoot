@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "AUC_LOG")
-public class AucLogBean implements Serializable {
+public class AucLog implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

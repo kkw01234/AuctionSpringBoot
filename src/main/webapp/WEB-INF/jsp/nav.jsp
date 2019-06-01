@@ -1,8 +1,8 @@
-<%@ page import="io.kkw.auction.spring.bean.AucUserBean" %>
+<%@ page import="io.kkw.auction.spring.bean.AucUser" %>
 <%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" isELIgnored="false" %>
 <%
-    AucUserBean user = (AucUserBean) session.getAttribute("user");
+    AucUser user = (AucUser) session.getAttribute("user");
 %>
 <html>
 <head>

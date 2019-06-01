@@ -1,7 +1,7 @@
 package io.kkw.auction.spring.api.auctioncrud;
 
 
-import io.kkw.auction.spring.bean.AucUserBean;
+import io.kkw.auction.spring.bean.AucUser;
 import io.kkw.auction.spring.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,9 +20,10 @@ public class AuctionCreateController {
     AuctionService auctionService;
 
     // /upload_auction
+    //Upload 하는 법
     @RequestMapping("/new") //AJAX 할지 말지 결정해주세여
     public String uploadAction(HttpServletRequest request) {
-        AucUserBean user = (AucUserBean) request.getSession().getAttribute("user");
+        AucUser user = (AucUser) request.getSession().getAttribute("user");
         String title = request.getParameter("title");
         String pname = request.getParameter("name");
         String psubject = request.getParameter("subject");
@@ -40,7 +41,7 @@ public class AuctionCreateController {
             e.printStackTrace();
         }
 
-        //AucInformationBean aucInformationBean = new AucInformationBean(user.getId(), title,pname,psubject,pcontent,picture,end_date);
+        //AucInformation aucInformation = new AucInformation(user.getId(), title,pname,psubject,pcontent,picture,end_date);
         Boolean result = auctionService.addAuction(user.getId(), title, pname, psubject, pcontent, picture, start_date, end_date);
 
 
@@ -49,7 +50,7 @@ public class AuctionCreateController {
 
 
     //insert(Create) page
-    //  /upload_auction/page
+    // 경매 올릴 수 있는사이트
     @RequestMapping
     public String uploadAuction_page() {
         return "upload_auction_page";

@@ -1,6 +1,6 @@
 package io.kkw.auction.spring.api;
 
-import io.kkw.auction.spring.bean.AucUserBean;
+import io.kkw.auction.spring.bean.AucUser;
 import io.kkw.auction.spring.bean.UserBean;
 import io.kkw.auction.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class LoginController {
         String password = request.getParameter("password");
 
         UserBean userBean = userService.getLogin(id,password);
-        AucUserBean aucUserBean = (AucUserBean)userBean;
+        AucUser aucUser = (AucUser)userBean;
 
         HttpSession session = request.getSession();
         session.setAttribute("user",userBean);
@@ -35,8 +35,8 @@ public class LoginController {
         if(userBean == null){
             model.addAttribute("user", null);
         }else {
-            model.addAttribute("userid", aucUserBean.getId());
-            model.addAttribute("password", aucUserBean.getPassword());
+            model.addAttribute("userid", aucUser.getId());
+            model.addAttribute("password", aucUser.getPassword());
             System.out.println("로그인 성공");
             return "success";
         }

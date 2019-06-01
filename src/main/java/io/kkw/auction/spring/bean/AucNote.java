@@ -13,7 +13,7 @@ import java.util.Date;
 
 @IdClass(AucNoteId.class)
 @Table(name="AUC_NOTE")
-public class AucNoteBean {
+public class AucNote {
     @Id
     @Column(name = "sendid")
     private String send_id;

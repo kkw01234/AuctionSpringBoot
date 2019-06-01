@@ -1,10 +1,9 @@
 package io.kkw.auction.spring.service;
 
 
-import io.kkw.auction.spring.bean.AucCompleteBean;
-import io.kkw.auction.spring.bean.AucInformationBean;
-import io.kkw.auction.spring.bean.AucProgressBean;
-import io.kkw.auction.spring.dao.AucCompleteRepository;
+import io.kkw.auction.spring.bean.AucComplete;
+import io.kkw.auction.spring.bean.AucInformation;
+import io.kkw.auction.spring.bean.AucProgress;
 import io.kkw.auction.spring.dao.AucInformationRepository;
 import io.kkw.auction.spring.dao.AucProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,8 @@ public class AuctionService {
 //    @Autowired
 //    AucCompleteRepository aucCompleteRepository;
 
-    public boolean addAuction(AucInformationBean bean){
-        AucInformationBean a = aucInformationRepository.save(bean);
+    public boolean addAuction(AucInformation bean){
+        AucInformation a = aucInformationRepository.save(bean);
         if(a != null){
             return true;
         }else
@@ -40,32 +39,62 @@ public class AuctionService {
         return result;
     }
     //id를 이용하여 경매정보를 찾는 메소드
-    public AucInformationBean findInfo(long id) {
-        Optional<AucInformationBean> optional = aucInformationRepository.findById(id);
+    public AucInformation findInfo(long id) {
+        Optional<AucInformation> optional = aucInformationRepository.findById(id);
         //Optional 존재할 수도 있지만 안할 수도 있는 객체
         //null을 처리 해줄 필요가없음
         return optional.orElse(null); //무슨값을 넣을까
     }
+
     //경매정보 id를 이용하여 진행예정/진행중인 경매정보를 찾는 메소드
-    public AucProgressBean findProgress(long pid){
-        Optional<AucProgressBean> optional = aucProgressRepository.findByPid(pid);
+    public AucProgress findProgress(long pid){
+        Optional<AucProgress> optional = aucProgressRepository.findByPid(pid);
         return optional.orElse(null);
+        //return null;
     }
     //경매정보 id를 이용해여 마감된 경매정보를 찾는 메소드
-    public AucCompleteBean findComplete(long auc_id){
-//        Optional<AucCompleteBean> optional = aucCompleteRepository.findByAuc_id(auc_id);
+    public AucComplete findComplete(long auc_id){
+//        Optional<AucComplete> optional = aucCompleteRepository.findByAuc_id(auc_id);
 //        return optional.orElse(null);
         return null;
     }
 
     //유저가 올린 모든 정보를 가져오는 메소드
-    public List<AucInformationBean> findMyAuction(String id){
+    public List<AucInformation> findMyAuction(int id){
+        return aucInformationRepository.findByPid(id);
         //Join 걸어서 가져와야할듯
         //SELECT * FROM auc_information i, auc_progress p where i.id = p.pid and  i.user_id = :id
         //SELECT * FROM auc_information i, auc_complete c where i.id = c.auc_id (이거 바꿔야될듯 변수명 불일치) and  i.user_id = :id
         //근데 이러면 어떻게 매핑하지? 답 없는데...ㅋㅋㅋㅋㅋㅋㅋㅋㅋ Json Mapping 해야하나여
         //흐음
+        //return null;
+    }
+
+    public List<AucInformation> findAllPlan(){
+        Date today = new Date();
+        List<AucInformation> informations = aucInformationRepository.findAllByStartdateBefore(today);
+        return informations;
+    }
+
+    public List<AucInformation> findAllProgress(){
+        Date today = new Date();
+        List<AucInformation> informations = aucInformationRepository.findAllByStartdateAfterAndEnddateBefore(today,today);
+        return informations;
+
+    }
+
+    public List<AucInformation> findAllComplete(){
+        //여기는 finish칸
+
         return null;
     }
+
+    //경매정보삭제 (단 경매 시작 이전에만 지울 수 있게 하는 프로시저, 트리거 작성)
+    public boolean deleteAuction(long id){
+        boolean result = false;
+        return result;
+    }
+
+
 
 }

@@ -6,11 +6,12 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name="AUC_USER")
-public class AucUserBean implements Serializable, UserBean {
+public class AucUser extends UserBean implements Serializable {
 
     @Id
     @Column(name="id")
@@ -30,12 +31,12 @@ public class AucUserBean implements Serializable, UserBean {
     @Column(name = "stopdate")
     private Date stopdate;
 
-    public AucUserBean(){
+    public AucUser(){
 
     }
-    public AucUserBean(String id,String password, String email, String address, String phone, String account){
-        this.id =id;
-        this.password=password;
+    public AucUser(String id, String password, String email, String address, String phone, String account){
+        this.setId(id);
+        this.setPassword(password);
         this.email=email;
         this.address =address;
         this.phone=phone;
@@ -46,7 +47,10 @@ public class AucUserBean implements Serializable, UserBean {
 
 
     }
-
+    /*
+    @OneToMany(cascade =CascadeType.ALL, mappedBy = "aucUserBean",fetch = FetchType.LAZY, targetEntity = AucInformation.class)
+    private List<AucInformation> aucInformation;
+    */
 
 
 

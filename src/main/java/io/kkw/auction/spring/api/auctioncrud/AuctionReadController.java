@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/read_auction_page")
+@RequestMapping("/read_auction")
 public class AuctionReadController {
 
     @Autowired
@@ -24,25 +24,25 @@ public class AuctionReadController {
 
     @RequestMapping("/{id}") //한개씩
     public String readAuctionInfo_page(Model model, HttpServletRequest request, @PathVariable long id){
-        AucInformationBean informationBean = auctionService.findInfo(id);
-        if(informationBean.getEnd_date().after(new Date())){
-            AucCompleteBean aucCompleteBean = auctionService.findComplete(id);
-            model.addAttribute("CompleteBean", aucCompleteBean);
+        AucInformation informationBean = auctionService.findInfo(id);
+        if(informationBean.getEnddate().after(new Date())){
+            AucComplete aucComplete = auctionService.findComplete(id);
+            model.addAttribute("CompleteBean", aucComplete);
         }else {
-            AucProgressBean progressBean = auctionService.findProgress(id);
+            AucProgress progressBean = auctionService.findProgress(id);
             model.addAttribute("progressBean", progressBean);
         }
         model.addAttribute("informationBean",informationBean);
         return "read_action_page";
     }
 
-    @RequestMapping("/myauction") //내가 올린 경매 확인
-    public String readmyauction(HttpServletRequest request){
+    @RequestMapping("/read_my_auction") //내가 올린 경매 확인
+    public String readMyAuction(HttpServletRequest request){
         HttpSession httpSession = request.getSession();
         UserBean userBean = (UserBean)httpSession.getAttribute("user");
         try{
-            AucUserBean aucUserBean =(AucUserBean) userBean;
-            //List<AucInformationBean> beans = auctionService.findMyAuction(aucUserBean.getId());
+            AucUser aucUser =(AucUser) userBean;
+            //List<AucInformation> beans = auctionService.findMyAuction(aucUser.getId());
 
 
 
@@ -50,6 +50,26 @@ public class AuctionReadController {
         }catch(ClassCastException e){
             e.printStackTrace(); //Admin이 접속했을 때 막아버림
         }
+        return null;
+    }
+
+    //진행 예정
+    @RequestMapping("/plan")
+    public String readPlan(){
+        List<AucInformation> informations = auctionService.findAllPlan();
+        return null;
+    }
+
+    //진행 중
+    @RequestMapping("/progress")
+    public String readProgress(){
+        List<AucInformation> informations = auctionService.findAllProgress();
+        return null;
+    }
+
+    @RequestMapping("/complete")
+    public String readComplete(){
+        List<AucInformation> informations = auctionService.findAllComplete();
         return null;
     }
 

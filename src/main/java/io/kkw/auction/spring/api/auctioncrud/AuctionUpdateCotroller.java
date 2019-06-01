@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
+@RequestMapping("/modify_auction")
 public class AuctionUpdateCotroller {
 
     @Autowired
@@ -31,8 +32,9 @@ public class AuctionUpdateCotroller {
         return null;
     }
 
-    @RequestMapping("/modify_auction")
+    @RequestMapping
     public String modifyAction(HttpServletRequest request){
+
         return null;
     }
 

@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "AUC_INFORMATION")
-public class AucInterestBean implements Serializable {
+public class AucInterest implements Serializable {
 
     @Id
     private String user_id;
