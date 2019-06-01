@@ -39,4 +39,9 @@ public class UserService {
         }else
             return false;
     }
+
+    public boolean userStop(String userId){
+        return false;
+
+    }
 }

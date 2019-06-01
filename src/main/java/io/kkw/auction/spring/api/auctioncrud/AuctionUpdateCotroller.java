@@ -7,12 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 @Controller
@@ -56,16 +57,26 @@ public class AuctionUpdateCotroller {
     }
 
     //개인이 올린 것을 수정하기
+    @ResponseBody
     @RequestMapping("/{id}")
-    public String modifyAuctionPage(Model model,@SessionAttribute("user") UserBean userBean, @PathVariable("id")long id, HttpServletRequest request){
+    public String modifyAuctionPage(Model model, @SessionAttribute("user") UserBean userBean, @PathVariable("id")long id, HttpServletRequest request, @RequestParam("isNewImage") boolean isNewImage,@RequestPart MultipartFile sourceFile){
+
+
+        if (!(userBean instanceof AucUser)){
+            return null;
+        }
+        AucUser aucUser = (AucUser) userBean;
         String title = request.getParameter("title");
-        String pname = request.getParameter("pname");
         String psubject = request.getParameter("psubject");
         String pcontent = request.getParameter("pcontent");
         String picture = null;
-        String startdate = request.getParameter("startdate");
-        String enddate = request.getParameter("enddate");
-        //AucProduct aucProduct = auctionService.modifyAuction();
+        if(isNewImage){
+            picture = AuctionCreateController.uploadImage(sourceFile);
+        }
+        SimpleDateFormat format = new SimpleDateFormat(("yyyy-MM-dd HH:mm:ss"));
+        Date startdate = new Date(request.getParameter("startdate"));
+        Date enddate = new Date(request.getParameter("enddate"));
+        AucProduct aucProduct = auctionService.modifyAuction(id, aucUser.getId(),title,psubject,pcontent,picture,startdate,enddate);
         return null;
     }
 
@@ -75,5 +86,6 @@ public class AuctionUpdateCotroller {
 
         return null;
     }
+
 
 }

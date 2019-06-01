@@ -21,7 +21,6 @@ public class AucProduct implements Serializable {
     @Column(name="user_id", nullable = false)
     private String userid;
     private  String title;
-    private String pname;
     private String psubject;
     private String pcontent;
     private String picture;
@@ -30,6 +29,7 @@ public class AucProduct implements Serializable {
     private Date startdate;
     @Column(name="end_date", nullable = true)
     private Date enddate;
+    private long price;
 
     /*
     @ManyToOne(fetch = FetchType.LAZY)
@@ -50,15 +50,15 @@ public class AucProduct implements Serializable {
     public AucProduct(){
 
     }
-    public AucProduct(String userid, String title, String pname, String psubject, String pcontent, String picture, Date startdate, Date enddate){
+    public AucProduct(String userid, String title, String psubject, String pcontent, String picture, Date startdate, Date enddate, long price){
         this.userid = userid;
         this.title = title;
-        this.pname = pname;
         this.psubject = psubject;
         this.pcontent = pcontent;
         this.picture = picture;
         this.startdate = startdate;
         this.enddate = enddate;
+        this.price = price;
     }
 
 

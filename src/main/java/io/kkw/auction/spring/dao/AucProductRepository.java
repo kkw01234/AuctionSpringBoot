@@ -1,6 +1,7 @@
 package io.kkw.auction.spring.dao;
 
 import io.kkw.auction.spring.bean.AucProduct;
+import org.apache.taglibs.standard.extra.spath.ASCII_UCodeESC_CharStream;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
@@ -12,14 +13,14 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface AucInformationRepository extends CrudRepository<AucProduct,Long> {
+public interface AucProductRepository extends CrudRepository<AucProduct,Long> {
 
     ///프로시저 실행~~
     @Transactional
     @Procedure(procedureName = "UploadAuction")
-    Boolean uploadAuction(@Param("user_id") String user_id, @Param("title")String title, @Param("name")String name
+    Boolean uploadAuction(@Param("user_id") String user_id, @Param("title")String title
                         ,@Param("psubject") String psubject, @Param("pcontent") String pcontent, @Param("picture") String picture, @Param("start_date") Date start_date
-                        ,@Param("end_date") Date end_date);
+                        ,@Param("end_date") Date end_date, @Param("price") long price);
 
 
     //각자 사람마다
@@ -35,6 +36,9 @@ public interface AucInformationRepository extends CrudRepository<AucProduct,Long
     //Start 이후 End 이전데이터
     @Query("FROM AucProduct i WHERE i.startdate < :start_date and i.enddate > :start_date")
     List<AucProduct> findAllByStartdateAfterAndEnddateBefore(@Param("start_date") Date start_date, @Param("start_date") Date end_date);
+
+    @Query("FROM AucProduct i, AucProgress p WHERE i.id=p.product_id and p.approval = :approval")
+    List<AucProduct> approval(@Param("approval") boolean approval);
 
 
 }

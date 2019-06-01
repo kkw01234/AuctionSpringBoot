@@ -29,7 +29,6 @@ public class AuctionCreateController {
     public String uploadAction(HttpServletRequest request, @RequestPart MultipartFile sourceFile) {
         AucUser user = (AucUser) request.getSession().getAttribute("user");
         String title = request.getParameter("title");
-        String pname = request.getParameter("name");
         String psubject = request.getParameter("subject");
         String pcontent = request.getParameter("content");
         String picture = uploadImage(sourceFile);
@@ -38,6 +37,7 @@ public class AuctionCreateController {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date start_date = null;
         Date end_date = null;
+        long price = Long.parseLong(request.getParameter("price"));
         try {
             start_date = format.parse(start_date_string);
             end_date = format.parse(end_date_string);
@@ -46,7 +46,7 @@ public class AuctionCreateController {
         }
 
         //AucProduct aucProduct = new AucProduct(user.getId(), title,pname,psubject,pcontent,picture,end_date);
-        Boolean result = auctionService.addAuction(user.getId(), title, pname, psubject, pcontent, picture, start_date, end_date);
+        Boolean result = auctionService.addAuction(user.getId(), title, psubject, pcontent, picture, start_date, end_date, price);
 
 
         return null;
@@ -62,7 +62,7 @@ public class AuctionCreateController {
     }
 
     //이미지 업로드 코드
-    private static String uploadImage(MultipartFile sourceFile){
+    public static String uploadImage(MultipartFile sourceFile){
         String sourceFileName = sourceFile.getOriginalFilename();
         String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
 

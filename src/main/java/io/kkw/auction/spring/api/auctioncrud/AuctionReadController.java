@@ -63,39 +63,50 @@ public class AuctionReadController {
 
     //모두 보여주기
     @RequestMapping("/all")
-    public String readAllAuction(){
-        return null;
+    public String readAllAuction(Model model){
+        Iterable<AucProduct> aucProducts = auctionService.findAll();
+        model.addAttribute("auction_list", aucProducts);
+        return "auction_page";
     }
     //진행 예정
     @RequestMapping("/plan")
-    public String readPlan(){
-        List<AucProduct> informations = auctionService.findAllPlan();
-        return null;
+    public String readPlan(Model model){
+        List<AucProduct> aucProducts = auctionService.findAllPlan();
+        model.addAttribute("auction_list", aucProducts);
+        return "auction_page";
     }
 
     //진행 중
     @RequestMapping("/progress")
-    public String readProgress(){
-        List<AucProduct> informations = auctionService.findAllProgress();
-        return null;
+    public String readProgress(Model model){
+        List<AucProduct> aucProducts = auctionService.findAllProgress();
+        model.addAttribute("auction_list", aucProducts);
+        return "auction_page";
     }
     //완료된 정보
     @RequestMapping("/complete")
-    public String readComplete(){
-        List<AucProduct> informations = auctionService.findAllComplete();
-        return null;
+    public String readComplete(Model model){
+        List<AucProduct> aucProducts = auctionService.findAllComplete();
+        model.addAttribute("auction_list", aucProducts);
+        return "auction_page";
     }
 
     //허가받지않은 정보
     @RequestMapping("/unauthorized")
-    public String readUnauthorized(){
-        return null;
+    public String readUnauthorized(Model model){
+        List<AucProduct> aucProducts = auctionService.unAuthorized();
+        model.addAttribute("auction_list", aucProducts);
+        return "auction_page";
     }
 
     //허가받은 정보
+
     @RequestMapping("/authorized")
-    public String readAuthorized(){
-        return null;
+    public String readAuthorized(Model model){
+        List<AucProduct> aucProducts = auctionService.authorized();
+        model.addAttribute("auction_list", aucProducts);
+        return "auction_page";
+
     }
 
 

@@ -20,12 +20,12 @@ CREATE TABLE auc_product(
     id NUMBER PRIMARY KEY,
     user_id VARCHAR2(100),
     title VARCHAR2(100) NOT NULL,
-    pname VARCHAR2(100) NOT NULL,
     psubject VARCHAR2(100),
     pcontent CLOB,
     picture VARCHAR2(500),
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
+    price NUMBER NOT NULL,
     CONSTRAINT product_user_FK FOREIGN KEY(user_id) REFERENCES auc_user(id)
 );
 
