@@ -15,7 +15,7 @@ public class AuctionDeleteController {
     AuctionService auctionService;
 
 
-    //Auction을 등록했을 때 삭제
+    //등록 취소
     @RequestMapping("/{id}")
     public String deleteAuction(@PathVariable long id){
          //이건 프로시저로 갑시다.

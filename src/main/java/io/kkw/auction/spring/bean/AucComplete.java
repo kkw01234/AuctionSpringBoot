@@ -14,8 +14,8 @@ public class AucComplete implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    private long auc_id;
+    @Column(name = "product_id")
+    private long product_id;
     private long complete_price;
     private String tender_user_id;
     private Date uid_check;
@@ -23,7 +23,7 @@ public class AucComplete implements Serializable {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "aucInformation_pid", nullable = true)
-    private AucInformation aucInformation;
+    @JoinColumn(name = "product_id", nullable = true,insertable = false,updatable = false)
+    private AucProduct aucProduct;
 
 }

@@ -24,7 +24,7 @@ public class AuctionReadController {
 
     @RequestMapping("/{id}") //한개씩
     public String readAuctionInfo_page(Model model, HttpServletRequest request, @PathVariable long id){
-        AucInformation informationBean = auctionService.findInfo(id);
+        AucProduct informationBean = auctionService.findInfo(id);
         if(informationBean.getEnddate().after(new Date())){
             AucComplete aucComplete = auctionService.findComplete(id);
             model.addAttribute("CompleteBean", aucComplete);
@@ -42,7 +42,7 @@ public class AuctionReadController {
         UserBean userBean = (UserBean)httpSession.getAttribute("user");
         try{
             AucUser aucUser =(AucUser) userBean;
-            //List<AucInformation> beans = auctionService.findMyAuction(aucUser.getId());
+            //List<AucProduct> beans = auctionService.findMyAuction(aucUser.getId());
 
 
 
@@ -53,25 +53,43 @@ public class AuctionReadController {
         return null;
     }
 
+    //모두 보여주기
+    @RequestMapping("/all")
+    public String readAllAuction(){
+        return null;
+    }
     //진행 예정
     @RequestMapping("/plan")
     public String readPlan(){
-        List<AucInformation> informations = auctionService.findAllPlan();
+        List<AucProduct> informations = auctionService.findAllPlan();
         return null;
     }
 
     //진행 중
     @RequestMapping("/progress")
     public String readProgress(){
-        List<AucInformation> informations = auctionService.findAllProgress();
+        List<AucProduct> informations = auctionService.findAllProgress();
+        return null;
+    }
+    //완료된 정보
+    @RequestMapping("/complete")
+    public String readComplete(){
+        List<AucProduct> informations = auctionService.findAllComplete();
         return null;
     }
 
-    @RequestMapping("/complete")
-    public String readComplete(){
-        List<AucInformation> informations = auctionService.findAllComplete();
+    //허가받지않은 정보
+    @RequestMapping("/unauthorized")
+    public String readUnauthorized(){
         return null;
     }
+
+    //허가받은 정보
+    @RequestMapping("/authorized")
+    public String readAuthorized(){
+        return null;
+    }
+
 
     //필요한 거
 

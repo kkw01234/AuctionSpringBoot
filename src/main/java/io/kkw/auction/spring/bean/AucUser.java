@@ -48,8 +48,8 @@ public class AucUser extends UserBean implements Serializable {
 
     }
     /*
-    @OneToMany(cascade =CascadeType.ALL, mappedBy = "aucUserBean",fetch = FetchType.LAZY, targetEntity = AucInformation.class)
-    private List<AucInformation> aucInformation;
+    @OneToMany(cascade =CascadeType.ALL, mappedBy = "aucUserBean",fetch = FetchType.LAZY, targetEntity = AucProduct.class)
+    private List<AucProduct> aucProduct;
     */
 
 

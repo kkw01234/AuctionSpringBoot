@@ -1,7 +1,6 @@
 package io.kkw.auction.spring.service;
 
-import io.kkw.auction.spring.bean.AucInformation;
-import io.kkw.auction.spring.dao.AucCompleteRepository;
+import io.kkw.auction.spring.bean.AucProduct;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +18,6 @@ import static org.junit.Assert.assertEquals;
 public class AuctionServiceTest {
     @Autowired
     AuctionService auctionService;
-    @Autowired
-    AucCompleteRepository aucCompleteRepository;
 
     @Test
     public void Test1(){
@@ -41,14 +38,19 @@ public class AuctionServiceTest {
 
     @Test
     public void Test3(){
-        List<AucInformation> infos = auctionService.findMyAuction(1);
+        List<AucProduct> infos = auctionService.findMyAuction(1);
         Assert.assertNotNull(infos);
     }
 
     @Test
     public void Test4(){
-        List<AucInformation> infos = auctionService.findAllProgress();
+        List<AucProduct> infos = auctionService.findAllProgress();
         Assert.assertNotNull(infos);
+    }
+
+    @Test
+    public void Test5(){
+        auctionService.findComplete(1);
     }
 
 

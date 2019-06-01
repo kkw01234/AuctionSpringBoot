@@ -16,11 +16,11 @@ public class AucLog implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private int progress_id;
+    private int product_id;
 
-    private String tender_user_id;
+    private String user_id;
 
-    private Date tender_date;
+    private Date log_date;
 
-    private long tender_price;
+    private long price;
 }

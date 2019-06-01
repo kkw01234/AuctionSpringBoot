@@ -13,7 +13,6 @@ import java.io.Serializable;
 @Table(name = "AUC_INFORMATION")
 public class AucInterest implements Serializable {
 
-    @Id
     private String user_id;
 
     private String interest;

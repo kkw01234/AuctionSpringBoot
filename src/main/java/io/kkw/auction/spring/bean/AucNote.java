@@ -23,7 +23,7 @@ public class AucNote {
 
     private String content;
 
-    private Date condate;
+    private Date note_date;
 }
 
 @Data

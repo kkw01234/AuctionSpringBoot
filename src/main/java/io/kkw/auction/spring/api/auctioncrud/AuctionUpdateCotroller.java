@@ -17,21 +17,26 @@ public class AuctionUpdateCotroller {
     @Autowired
     AuctionService auctionService;
 
+    //관리자가 허가 하기
+    @RequestMapping("/authorizecheck")
+    public String checkAuthorize(){
+        return null;
+    }
 
-
-
-
-
-
-
-
+    //관리자 허가 취소
+    @RequestMapping("/cancelahthorize")
+    public String cancelAuthorize(){
+        return null;
+    }
+    //개인이 올린 것을 수정하기
 
     @RequestMapping("/modify_auction_page/{id}")
-    public String modifyAuctionPage(Model model, @PathVariable("id")int id){
+    public String modifyAuctionPage(Model model, @PathVariable("id")long id){
 
         return null;
     }
 
+    //수정 페이지
     @RequestMapping
     public String modifyAction(HttpServletRequest request){
 

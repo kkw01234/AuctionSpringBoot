@@ -19,8 +19,7 @@ public class AuctionCreateController {
     @Autowired
     AuctionService auctionService;
 
-    // /upload_auction
-    //Upload 하는 법
+    //경매정보 업로드
     @RequestMapping("/new") //AJAX 할지 말지 결정해주세여
     public String uploadAction(HttpServletRequest request) {
         AucUser user = (AucUser) request.getSession().getAttribute("user");
@@ -41,7 +40,7 @@ public class AuctionCreateController {
             e.printStackTrace();
         }
 
-        //AucInformation aucInformation = new AucInformation(user.getId(), title,pname,psubject,pcontent,picture,end_date);
+        //AucProduct aucProduct = new AucProduct(user.getId(), title,pname,psubject,pcontent,picture,end_date);
         Boolean result = auctionService.addAuction(user.getId(), title, pname, psubject, pcontent, picture, start_date, end_date);
 
 
@@ -53,6 +52,7 @@ public class AuctionCreateController {
     // 경매 올릴 수 있는사이트
     @RequestMapping
     public String uploadAuction_page() {
+
         return "upload_auction_page";
     }
 

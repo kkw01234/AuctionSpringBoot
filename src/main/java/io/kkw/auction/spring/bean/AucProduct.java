@@ -11,12 +11,12 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "AUC_INFORMATION")
-public class AucInformation implements Serializable {
+public class AucProduct implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "pid")
-    private long pid;
+    @Column(name = "id")
+    private long id;
 
     private String user_id;
     private  String title;
@@ -25,10 +25,10 @@ public class AucInformation implements Serializable {
     private String pcontent;
     private String picture;
 
-    @Column(name="register_date", nullable = true)
-    private Date startdate;
+    @Column(name="start_date", nullable = true)
+    private Date start_date;
     @Column(name="end_date", nullable = true)
-    private Date enddate;
+    private Date end_date;
 
     /*
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,28 +36,28 @@ public class AucInformation implements Serializable {
     private AucUser aucUserBean;
     */
 
-    @OneToMany(cascade =CascadeType.ALL, mappedBy = "aucInformation",fetch = FetchType.LAZY, targetEntity = AucProgress.class)
+    @OneToMany(cascade =CascadeType.ALL, mappedBy = "aucProduct",fetch = FetchType.LAZY, targetEntity = AucProgress.class)
     private List<AucProgress> aucProgresses;
 
-    @OneToMany(cascade =CascadeType.ALL, mappedBy = "aucInformation",fetch = FetchType.LAZY, targetEntity = AucProgress.class)
+    @OneToMany(cascade =CascadeType.ALL, mappedBy = "aucProduct",fetch = FetchType.LAZY, targetEntity = AucProgress.class)
     private List<AucComplete> aucCompletes;
     /*
     @OneToOne
     @JoinColumn(name = "aucProgress_pid", referencedColumnName = "pid")
     private AucProgress aucProgress;
     */
-    public AucInformation(){
+    public AucProduct(){
 
     }
-    public AucInformation(String user_id, String title, String pname, String psubject, String pcontent, String picture,Date startdate, Date enddate){
+    public AucProduct(String user_id, String title, String pname, String psubject, String pcontent, String picture, Date startdate, Date enddate){
         this.user_id = user_id;
         this.title = title;
         this.pname = pname;
         this.psubject = psubject;
         this.pcontent = pcontent;
         this.picture = picture;
-        this.startdate = startdate;
-        this.enddate = enddate;
+        this.start_date = startdate;
+        this.end_date = enddate;
     }
 
 

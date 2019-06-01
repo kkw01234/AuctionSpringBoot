@@ -21,21 +21,21 @@ public class AucProgress implements Serializable {
 
     private Date app_date;
 
-    private boolean admin_approval;
+    private boolean approval;
 
     private String admin_id;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "aucInformation_pid", nullable = true)
-    private AucInformation aucInformation;
+    @JoinColumn(name = "pid", nullable = true,insertable = false, updatable = false)
+    private AucProduct aucProduct;
 
 
-    public AucProgress(long id, long pid, Date app_date, boolean admin_approval, String admin_id){
+    public AucProgress(long id, long pid, Date app_date, boolean approval, String admin_id){
         this.id =id;
         this.pid =pid;
         this.app_date = app_date;
-        this.admin_approval =admin_approval;
+        this.approval =approval;
         this.admin_id=admin_id;
 
     }
