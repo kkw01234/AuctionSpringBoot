@@ -2,6 +2,7 @@ package io.kkw.auction.spring.service;
 
 
 import io.kkw.auction.spring.bean.AucComplete;
+import io.kkw.auction.spring.bean.AucInterest;
 import io.kkw.auction.spring.bean.AucProduct;
 import io.kkw.auction.spring.bean.AucProgress;
 import io.kkw.auction.spring.dao.AucCompleteRepository;
@@ -37,8 +38,13 @@ public class AuctionService {
 
     //프로시저 이용해서 AucProduct 과 AucProgress에 값들을 저장하는 메소드
     public boolean addAuction(String user_id, String title, String psubject, String pcontent, String picture,Date start_date ,Date end_date, long price){
-           boolean result = aucProductRepository.uploadAuction(user_id,title,psubject,pcontent,picture,start_date,end_date, price);
-        return result;
+        try {
+            aucProductRepository.uploadAuction(user_id, title, psubject, pcontent, picture, start_date, end_date, price);
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
     //id를 이용하여 경매정보를 찾는 메소드
     public AucProduct findInfo(long id) {
@@ -160,6 +166,11 @@ public class AuctionService {
 
     public Iterable<AucProduct> findAll(){
         Iterable<AucProduct> aucProducts = aucProductRepository.findAll();
+        return aucProducts;
+    }
+
+    public List<AucProduct> searchAuction(String search){
+        List<AucProduct> aucProducts = aucProductRepository.searchAuction(search);
         return aucProducts;
     }
 

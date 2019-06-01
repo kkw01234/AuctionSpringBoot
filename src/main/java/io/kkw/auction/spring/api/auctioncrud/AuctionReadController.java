@@ -4,10 +4,13 @@ import io.kkw.auction.spring.bean.*;
 import io.kkw.auction.spring.service.AuctionService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -107,6 +110,13 @@ public class AuctionReadController {
         model.addAttribute("auction_list", aucProducts);
         return "auction_page";
 
+    }
+
+    @ResponseBody
+    @RequestMapping("/search")
+    public ResponseEntity<Object> searchAuction(@RequestParam("search") String search){
+        List<AucProduct> aucProducts = auctionService.searchAuction(search);
+        return null;
     }
 
 

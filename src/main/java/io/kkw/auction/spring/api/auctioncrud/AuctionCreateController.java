@@ -34,13 +34,13 @@ public class AuctionCreateController {
         String picture = uploadImage(sourceFile);
         String start_date_string = request.getParameter("start_date");
         String end_date_string = request.getParameter("end_date");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date start_date = null;
         Date end_date = null;
         long price = Long.parseLong(request.getParameter("price"));
         try {
-            start_date = format.parse(start_date_string);
-            end_date = format.parse(end_date_string);
+            start_date = format.parse(start_date_string.replace("T", " "));
+            end_date = format.parse(end_date_string.replace("T", " "));
         } catch (Exception e) {
             e.printStackTrace();
         }

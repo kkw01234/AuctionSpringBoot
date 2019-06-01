@@ -8,7 +8,10 @@ import io.kkw.auction.spring.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -41,7 +44,18 @@ public class UserService {
     }
 
     public boolean userStop(String userId){
-        return false;
+        try {
+            Optional<AucUser> aucUser = userRepository.findById(userId);
+            AucUser user = aucUser.get();
+            Date time = new Date();
+
+            user.setStopdate(time);
+            userRepository.save(user);
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
 
     }
 }
