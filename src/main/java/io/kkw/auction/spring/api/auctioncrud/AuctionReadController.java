@@ -1,9 +1,11 @@
 package io.kkw.auction.spring.api.auctioncrud;
 
+import com.google.gson.Gson;
 import io.kkw.auction.spring.bean.*;
 import io.kkw.auction.spring.service.AuctionService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,11 +74,13 @@ public class AuctionReadController {
         return "auction_page";
     }
     //진행 예정
+    @ResponseBody
     @RequestMapping("/plan")
-    public String readPlan(Model model){
+    public List<AucProduct> readPlan(){
         List<AucProduct> aucProducts = auctionService.findAllPlan();
-        model.addAttribute("auction_list", aucProducts);
-        return "auction_page";
+
+        return aucProducts;
+
     }
 
     //진행 중

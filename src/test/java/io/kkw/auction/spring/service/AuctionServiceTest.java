@@ -24,9 +24,6 @@ public class AuctionServiceTest {
     @Test
     public void Test1(){
 
-      auctionService.addAuction("1","id2"
-                ,"test","consodfsfe","01234","twetewtew",new Date(),new Date());
-
 
     }
 
@@ -57,7 +54,8 @@ public class AuctionServiceTest {
 
     @Test
     public void checkAuthorize(){
-        //auctionService.checkAuthorize();
+        List<AucProduct> products=auctionService.findAllPlan();
+        Assert.assertNotNull(products.get(0));
     }
 
 

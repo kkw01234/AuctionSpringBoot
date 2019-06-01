@@ -36,12 +36,14 @@ public class AucProduct implements Serializable {
     @JoinColumn(name = "aucUserBean_id", nullable = true)
     private AucUser aucUserBean;
     */
-
+    /*
     @OneToMany(cascade =CascadeType.ALL, mappedBy = "aucProduct",fetch = FetchType.LAZY, targetEntity = AucProgress.class)
     private List<AucProgress> aucProgresses;
 
     @OneToMany(cascade =CascadeType.ALL, mappedBy = "aucProduct",fetch = FetchType.LAZY, targetEntity = AucProgress.class)
     private List<AucComplete> aucCompletes;
+    */
+
     /*
     @OneToOne
     @JoinColumn(name = "aucProgress_pid", referencedColumnName = "pid")

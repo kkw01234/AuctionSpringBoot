@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ public class AuctionCreateController {
     AuctionService auctionService;
 
     //경매정보 업로드
+    @ResponseBody
     @RequestMapping("/new") //AJAX 할지 말지 결정해주세여
     public String uploadAction(HttpServletRequest request, @RequestPart MultipartFile sourceFile) {
         AucUser user = (AucUser) request.getSession().getAttribute("user");
@@ -47,9 +49,7 @@ public class AuctionCreateController {
 
         //AucProduct aucProduct = new AucProduct(user.getId(), title,pname,psubject,pcontent,picture,end_date);
         Boolean result = auctionService.addAuction(user.getId(), title, psubject, pcontent, picture, start_date, end_date, price);
-
-
-        return null;
+        return (result)?"success":"fail";
     }
 
 

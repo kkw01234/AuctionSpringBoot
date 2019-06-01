@@ -34,11 +34,10 @@ public interface AucProductRepository extends CrudRepository<AucProduct,Long> {
     List<AucProduct> findAllByStartdateBefore(@Param("start_date") Date start_date);
 
     //Start 이후 End 이전데이터
-    @Query("FROM AucProduct i WHERE i.startdate < :start_date and i.enddate > :start_date")
+    @Query("FROM AucProduct i WHERE i.startdate < ?1 and i.enddate > :start_date")
     List<AucProduct> findAllByStartdateAfterAndEnddateBefore(@Param("start_date") Date start_date, @Param("start_date") Date end_date);
 
-    @Query("FROM AucProduct i, AucProgress p WHERE i.id=p.productId and p.approval = :approval")
-    List<AucProduct> approval(@Param("approval") boolean approval);
+
 
     @Query("FROM AucProduct i WHERE i.title like %:search%")
     List<AucProduct> searchAuction(@Param("search") String search);

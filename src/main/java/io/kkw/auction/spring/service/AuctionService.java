@@ -11,10 +11,8 @@ import io.kkw.auction.spring.dao.AucProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class AuctionService {
@@ -56,7 +54,7 @@ public class AuctionService {
 
     //경매정보 id를 이용하여 진행예정/진행중인 경매정보를 찾는 메소드
     public AucProgress findProgress(long pid){
-        Optional<AucProgress> optional = aucProgressRepository.findByproductId(pid);
+        Optional<AucProgress> optional = aucProgressRepository.findByProductIdAndApproval(pid,1);
         return optional.orElse(null);
         //return null;
     }
@@ -80,7 +78,14 @@ public class AuctionService {
     public List<AucProduct> findAllPlan(){
         Date today = new Date();
         List<AucProduct> informations = aucProductRepository.findAllByStartdateBefore(today);
-        return informations;
+        List<AucProduct> products = new ArrayList<>();
+        for(AucProduct aucProduct : informations) {
+            System.out.println(aucProduct.getId());
+            Optional<AucProgress> progress = aucProgressRepository.findByProductIdAndApproval(aucProduct.getId(),1);
+            if(progress.isPresent())
+                products.add(aucProduct);
+        }
+        return products;
     }
 
     //경매중인 모든 정보를 가져오는 메소드
@@ -94,7 +99,7 @@ public class AuctionService {
     //경매 마감된 모든 정보를 가져오는 메소드
     public List<AucProduct> findAllComplete(){
         //여기는 finish칸
-
+        //List<AucProduct> aucProducts = aucProductRepository;
         return null;
     }
 
@@ -108,11 +113,11 @@ public class AuctionService {
     //id = product_id , admin_id = admin_id
     // 허가 하기
     public boolean checkAuthorize(long id, String admin_id){
-        Optional<AucProgress> aucProgressOptional = aucProgressRepository.findByproductId(id);
+        Optional<AucProgress> aucProgressOptional = aucProgressRepository.findByProductIdAndApproval(id,1);
         AucProgress aucProgress = aucProgressOptional.get();
         try {
-            aucProgress.setApproval(true);
-            aucProgress.setAdmin_id(admin_id);
+            aucProgress.setApproval(1);
+            aucProgress.setAdminId(admin_id);
             aucProgressRepository.save(aucProgress);
             return true;
         }catch(Exception e){
@@ -122,11 +127,11 @@ public class AuctionService {
     }
     //허가 취소하기
     public boolean cancelAuthorize(long id, String admin_id){
-        Optional<AucProgress> aucProgressOptional = aucProgressRepository.findByproductId(id);
+        Optional<AucProgress> aucProgressOptional = aucProgressRepository.findByProductIdAndApproval(id,1);
         AucProgress aucProgress = aucProgressOptional.get();
         try{
-            aucProgress.setApproval(false);
-            aucProgress.setAdmin_id("");
+            aucProgress.setApproval(0);
+            aucProgress.setAdminId("");
             aucProgressRepository.save(aucProgress);
             return true;
         }catch(Exception e){
@@ -155,13 +160,16 @@ public class AuctionService {
     }
 
     public List<AucProduct> unAuthorized(){
-        List<AucProduct> aucProducts = aucProductRepository.approval(false);
-        return aucProducts;
+        List<AucProgress> aucProgresses = aucProgressRepository.approval(0);
+
+        //List<AucProduct> aucProducts = aucProductRepository.da
+        //List<AucProduct> aucProducts = aucProductRepository.approval(false);
+        return null;
     }
 
     public List<AucProduct> authorized(){
-        List<AucProduct> aucProducts = aucProductRepository.approval(true);
-        return aucProducts;
+        //List<AucProduct> aucProducts = aucProductRepository.approval(true);
+        return null;
     }
 
     public Iterable<AucProduct> findAll(){
