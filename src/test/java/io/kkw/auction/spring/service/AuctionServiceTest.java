@@ -38,7 +38,7 @@ public class AuctionServiceTest {
 
     @Test
     public void Test3(){
-        List<AucProduct> infos = auctionService.findMyAuction(1);
+        List<AucProduct> infos = auctionService.findMyAuction("1");
         Assert.assertNotNull(infos);
     }
 

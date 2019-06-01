@@ -10,9 +10,11 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "AUC_INFORMATION")
+@Table(name = "AUC_INTEREST")
 public class AucInterest implements Serializable {
 
+
+    @Id
     private String user_id;
 
     private String interest;

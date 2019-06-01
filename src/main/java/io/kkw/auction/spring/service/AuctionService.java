@@ -56,13 +56,13 @@ public class AuctionService {
 
     //경매정보 id를 이용해여 마감된 경매정보를 찾는 메소드
     public AucComplete findComplete(long auc_id){
-        Optional<AucComplete> optional = aucCompleteRepository.findByAucid(auc_id);
+        Optional<AucComplete> optional = aucCompleteRepository.findById(auc_id);
         return optional.orElse(null);
     }
 
     //유저가 올린 모든 정보를 가져오는 메소드
-    public List<AucProduct> findMyAuction(int id){
-        return aucInformationRepository.findByPid(id);
+    public List<AucProduct> findMyAuction(String id){
+        return aucInformationRepository.findAllByUserid(id);
         //Join 걸어서 가져와야할듯
         //SELECT * FROM auc_information i, auc_progress p where i.id = p.pid and  i.user_id = :id
         //SELECT * FROM auc_information i, auc_complete c where i.id = c.auc_id (이거 바꿔야될듯 변수명 불일치) and  i.user_id = :id

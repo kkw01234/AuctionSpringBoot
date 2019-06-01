@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "AUC_INFORMATION")
+@Table(name = "AUC_PRODUCT")
 public class AucProduct implements Serializable {
 
     @Id
@@ -18,7 +18,8 @@ public class AucProduct implements Serializable {
     @Column(name = "id")
     private long id;
 
-    private String user_id;
+    @Column(name="user_id", nullable = false)
+    private String userid;
     private  String title;
     private String pname;
     private String psubject;
@@ -26,9 +27,9 @@ public class AucProduct implements Serializable {
     private String picture;
 
     @Column(name="start_date", nullable = true)
-    private Date start_date;
+    private Date startdate;
     @Column(name="end_date", nullable = true)
-    private Date end_date;
+    private Date enddate;
 
     /*
     @ManyToOne(fetch = FetchType.LAZY)
@@ -49,15 +50,15 @@ public class AucProduct implements Serializable {
     public AucProduct(){
 
     }
-    public AucProduct(String user_id, String title, String pname, String psubject, String pcontent, String picture, Date startdate, Date enddate){
-        this.user_id = user_id;
+    public AucProduct(String userid, String title, String pname, String psubject, String pcontent, String picture, Date startdate, Date enddate){
+        this.userid = userid;
         this.title = title;
         this.pname = pname;
         this.psubject = psubject;
         this.pcontent = pcontent;
         this.picture = picture;
-        this.start_date = startdate;
-        this.end_date = enddate;
+        this.startdate = startdate;
+        this.enddate = enddate;
     }
 
 

@@ -23,19 +23,18 @@ public interface AucInformationRepository extends CrudRepository<AucProduct,Long
 
 
     //각자 사람마다
-    //List<AucProduct> findByUser_id(String id);
+    List<AucProduct> findAllByUserid(String userid);
 
     //@Query(value = "FROM AUC_INFORMATION i, AUC_PROGRESS p where i.pid = p.pid and i.pid = ?1")
-    //번호당
-    List<AucProduct> findByPid(long pid);
+
 
     //Start이전 데이터
-    @Query("FROM AucProduct i WHERE i.startdate > :register_date")
-    List<AucProduct> findAllByStartdateBefore(@Param("register_date") Date start_date);
+    @Query("FROM AucProduct i WHERE i.startdate > :start_date")
+    List<AucProduct> findAllByStartdateBefore(@Param("start_date") Date start_date);
 
     //Start 이후 End 이전데이터
-    @Query("FROM AucProduct i WHERE i.startdate < :register_date and i.enddate > :end_date")
-    List<AucProduct> findAllByStartdateAfterAndEnddateBefore(@Param("register_date") Date start_date, @Param("end_date") Date end_date);
+    @Query("FROM AucProduct i WHERE i.startdate < :start_date and i.enddate > :start_date")
+    List<AucProduct> findAllByStartdateAfterAndEnddateBefore(@Param("start_date") Date start_date, @Param("start_date") Date end_date);
 
 
 }
