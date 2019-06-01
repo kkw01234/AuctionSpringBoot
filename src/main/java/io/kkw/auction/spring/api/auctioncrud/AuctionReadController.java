@@ -2,6 +2,7 @@ package io.kkw.auction.spring.api.auctioncrud;
 
 import io.kkw.auction.spring.bean.*;
 import io.kkw.auction.spring.service.AuctionService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +26,10 @@ public class AuctionReadController {
 
 
     @RequestMapping("/{id}") //한개씩
-    public String readAuctionInfo_page(Model model, HttpServletRequest request, @PathVariable long id){
+    public String readAuctionInfo_page(Model model, HttpServletRequest request, @PathVariable long id) throws IOException {
         AucProduct aucProduct = auctionService.findInfo(id);
+        InputStream in = getClass().getResourceAsStream(aucProduct.getPicture());
+        aucProduct.setPicture("");
         if(aucProduct.getEnddate().after(new Date())){
             AucComplete aucComplete = auctionService.findComplete(id);
             model.addAttribute("CompleteBean", aucComplete);
@@ -33,6 +38,7 @@ public class AuctionReadController {
             model.addAttribute("progressBean", progressBean);
         }
         model.addAttribute("informationBean",aucProduct);
+        model.addAttribute("picture", IOUtils.toByteArray(in));
         //Join 안하게 내가 짜놨네...
         return "read_action_page";
     }

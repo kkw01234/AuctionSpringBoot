@@ -14,7 +14,8 @@ public class BiddingService {
 
     //경매 입찰
     public boolean bidding(String user_id, long product_id, long price){
-            return false;
+
+        return false;
     }
 
 }

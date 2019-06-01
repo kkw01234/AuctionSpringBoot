@@ -1,5 +1,5 @@
-package io.kkw.auction.spring.service;
 
+package io.kkw.auction.spring.service;
 import io.kkw.auction.spring.bean.AucProduct;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,8 +16,10 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AuctionServiceTest {
+
     @Autowired
     AuctionService auctionService;
+
 
     @Test
     public void Test1(){
@@ -53,5 +55,12 @@ public class AuctionServiceTest {
         auctionService.findComplete(1);
     }
 
+    @Test
+    public void checkAuthorize(){
+        //auctionService.checkAuthorize();
+    }
+
 
 }
+
+

@@ -1,5 +1,6 @@
 package io.kkw.auction.spring.api;
 
+import io.kkw.auction.spring.bean.AucAdmin;
 import io.kkw.auction.spring.bean.AucUser;
 import io.kkw.auction.spring.bean.UserBean;
 import io.kkw.auction.spring.service.UserService;
@@ -27,19 +28,27 @@ public class LoginController {
         String password = request.getParameter("password");
 
         UserBean userBean = userService.getLogin(id,password);
-        AucUser aucUser = (AucUser)userBean;
+        AucUser aucUser= null;
+        AucAdmin aucAdmin = null;
+        if (userBean instanceof AucUser)
+            aucUser = (AucUser) userBean;
+        else if(userBean instanceof AucAdmin)
+            aucAdmin = (AucAdmin) userBean;
+        else
+            return "ERROR";
 
         HttpSession session = request.getSession();
         session.setAttribute("user",userBean);
 
-        if(userBean == null){
-            model.addAttribute("user", null);
-        }else {
+        if(aucUser != null) { //User 일경우
             model.addAttribute("userid", aucUser.getId());
             model.addAttribute("password", aucUser.getPassword());
             System.out.println("로그인 성공");
             return "success";
         }
+        //관리자일경우
+
+
         return "redirect:/";
     }
 

@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface AucProgressRepository extends CrudRepository<AucProgress,Long> {
 
-    Optional<AucProgress> findByPid(long pid);
+    Optional<AucProgress> findByproductId(long productId);
+
 
 }

@@ -3,11 +3,16 @@ package io.kkw.auction.spring.api.auctioncrud;
 
 import io.kkw.auction.spring.bean.AucUser;
 import io.kkw.auction.spring.service.AuctionService;
+import net.bytebuddy.utility.RandomString;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,13 +26,13 @@ public class AuctionCreateController {
 
     //경매정보 업로드
     @RequestMapping("/new") //AJAX 할지 말지 결정해주세여
-    public String uploadAction(HttpServletRequest request) {
+    public String uploadAction(HttpServletRequest request, @RequestPart MultipartFile sourceFile) {
         AucUser user = (AucUser) request.getSession().getAttribute("user");
         String title = request.getParameter("title");
         String pname = request.getParameter("name");
         String psubject = request.getParameter("subject");
         String pcontent = request.getParameter("content");
-        String picture = request.getParameter("picture");
+        String picture = uploadImage(sourceFile);
         String start_date_string = request.getParameter("start_date");
         String end_date_string = request.getParameter("end_date");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -56,4 +61,31 @@ public class AuctionCreateController {
         return "upload_auction_page";
     }
 
+    //이미지 업로드 코드
+    private static String uploadImage(MultipartFile sourceFile){
+        String sourceFileName = sourceFile.getOriginalFilename();
+        String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
+
+        File destinationFile;
+        String destinationFileName;
+        String fileurl = "D:/attachments/";
+        do{
+            SimpleDateFormat format = new SimpleDateFormat(("yyyyMMddHHmmss"));
+            String today =format.format(System.currentTimeMillis());
+            destinationFileName = today+ RandomString.DEFAULT_LENGTH+"."+sourceFileNameExtension;
+            destinationFile = new File(fileurl+destinationFileName);
+        }while(destinationFile.exists());
+
+        destinationFile.getParentFile().mkdirs();
+        try {
+            sourceFile.transferTo(destinationFile);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return destinationFileName; //데이터베이스에는 이름만 저장
+    }
+
 }
+
+

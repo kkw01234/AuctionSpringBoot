@@ -16,8 +16,8 @@ public class AucProgress implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "pid")
-    private long pid;
+    @Column(name = "product_id")
+    private long productId;
 
     private Date app_date;
 
@@ -33,7 +33,7 @@ public class AucProgress implements Serializable {
 
     public AucProgress(long id, long pid, Date app_date, boolean approval, String admin_id){
         this.id =id;
-        this.pid =pid;
+        this.productId =pid;
         this.app_date = app_date;
         this.approval =approval;
         this.admin_id=admin_id;

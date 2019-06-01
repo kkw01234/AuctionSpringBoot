@@ -1,6 +1,7 @@
 package io.kkw.auction.spring.service;
 
 
+import io.kkw.auction.spring.bean.AucAdmin;
 import io.kkw.auction.spring.bean.AucComplete;
 import io.kkw.auction.spring.bean.AucProduct;
 import io.kkw.auction.spring.bean.AucProgress;
@@ -49,7 +50,7 @@ public class AuctionService {
 
     //경매정보 id를 이용하여 진행예정/진행중인 경매정보를 찾는 메소드
     public AucProgress findProgress(long pid){
-        Optional<AucProgress> optional = aucProgressRepository.findByPid(pid);
+        Optional<AucProgress> optional = aucProgressRepository.findByproductId(pid);
         return optional.orElse(null);
         //return null;
     }
@@ -66,8 +67,6 @@ public class AuctionService {
         //Join 걸어서 가져와야할듯
         //SELECT * FROM auc_information i, auc_progress p where i.id = p.pid and  i.user_id = :id
         //SELECT * FROM auc_information i, auc_complete c where i.id = c.auc_id (이거 바꿔야될듯 변수명 불일치) and  i.user_id = :id
-        //근데 이러면 어떻게 매핑하지? 답 없는데...ㅋㅋㅋㅋㅋㅋㅋㅋㅋ Json Mapping 해야하나여
-        //흐음
         //return null;
     }
 
@@ -100,6 +99,38 @@ public class AuctionService {
         return result;
     }
 
+    //id = product_id , admin_id = admin_id
+    public boolean checkAuthorize(long id, String admin_id){
+        Optional<AucProgress> aucProgressOptional = aucProgressRepository.findByproductId(id);
+        AucProgress aucProgress = aucProgressOptional.get();
+        try {
+            aucProgress.setApproval(true);
+            aucProgress.setAdmin_id(admin_id);
+            aucProgressRepository.save(aucProgress);
+            return true;
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 
+    public boolean cancelAuthorize(long id, String admin_id){
+        Optional<AucProgress> aucProgressOptional = aucProgressRepository.findByproductId(id);
+        AucProgress aucProgress = aucProgressOptional.get();
+        try{
+            aucProgress.setApproval(false);
+            aucProgress.setAdmin_id("");
+            aucProgressRepository.save(aucProgress);
+            return true;
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public AucProduct modifyAuction(String user_id, String title, String pname, String psubject, String pcontent, String picture, Date startdate, Date enddate){
+
+
+    }
 
 }
