@@ -182,6 +182,8 @@
 
 
 <!-- Scripts -->
+<!-- Loads Bootstrap Main JS -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
 <!-- JQuery JavaScript -->
 <script src="js/jquery.min.js"></script>
 <!-- Bootstrap core JavaScript -->
