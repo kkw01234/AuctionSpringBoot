@@ -92,6 +92,7 @@
                 } else {
                 %>
                 <li class="nav-content"><a href="/auction_page">경매장</a></li>
+
                 <li class="nav-content"><a href="#">개인정보</a></li>
                 <li class="nav-content"><a href="/logout">로그아웃</a></li>
                 <%
@@ -120,7 +121,7 @@
                 <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" data-width="290" data-height="44"
                      data-longtitle="true"></div>
                 <div class="login-help">
-                    <a href="#" onclick="clickRegister();">회원가입</a>
+                    <a data-toggle="modal" href="#registerModal">회원가입</a>
                 </div>
             </div>
         </div>

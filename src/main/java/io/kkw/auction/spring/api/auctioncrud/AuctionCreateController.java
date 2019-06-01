@@ -68,7 +68,7 @@ public class AuctionCreateController {
 
         File destinationFile;
         String destinationFileName;
-        String fileurl = "D:/attachments/";
+        String fileurl = "C:/img/";
         do{
             SimpleDateFormat format = new SimpleDateFormat(("yyyyMMddHHmmss"));
             String today =format.format(System.currentTimeMillis());

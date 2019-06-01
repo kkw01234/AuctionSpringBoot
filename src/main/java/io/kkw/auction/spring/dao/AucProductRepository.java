@@ -18,7 +18,7 @@ public interface AucProductRepository extends CrudRepository<AucProduct,Long> {
     ///프로시저 실행~~
     @Transactional
     @Procedure(procedureName = "UploadAuction")
-    Boolean uploadAuction(@Param("user_id") String user_id, @Param("title")String title
+    void uploadAuction(@Param("user_id") String user_id, @Param("title")String title
                         ,@Param("psubject") String psubject, @Param("pcontent") String pcontent, @Param("picture") String picture, @Param("start_date") Date start_date
                         ,@Param("end_date") Date end_date, @Param("price") long price);
 

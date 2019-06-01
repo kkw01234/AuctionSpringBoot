@@ -1,0 +1,27 @@
+.read-row {
+    border-bottom : 2px solid #e6e5e5;
+    margin : 5px 0;
+}
+
+.auction-label {
+    font-size : 18px;
+    font-weight : 700;
+    border-right : 2px solid #e6e5e5;
+    border-left : 2px solid #e6e5e5;
+    text-align : center;
+}
+
+.auction-value {
+    font-size : 18px;
+    border-right : 2px solid #e6e5e5;
+    border-left : 2px solid #e6e5e5;
+}
+
+.auction-content {
+    min-height : 100px !important;
+    font-size : 16px !important;
+}
+
+.play-container {
+    margin-top : 40px;
+}

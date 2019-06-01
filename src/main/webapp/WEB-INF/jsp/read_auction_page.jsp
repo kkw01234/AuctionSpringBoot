@@ -1,5 +1,8 @@
+<%@ page import="io.kkw.auction.spring.bean.AucProduct" %>
 <%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" isELIgnored="false" %>
+<% AucProduct auc = (AucProduct) session.getAttribute("auc"); %>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -10,7 +13,7 @@
     <title>경기대학교 데이터베이스 프로그래밍 - Auction</title>
 
     <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
-
+    <link href="css/auction.css" rel="stylesheet">
 </head>
 
 <body>
@@ -21,116 +24,45 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2 class="title-section"><span class="title-regular">최근 등록된</span><br/>경매 물건</h2>
+                <h2 class="title-section"><span class="title-regular">물건</span><br/>확인하기</h2>
                 <hr class="title-underline"/>
             </div>
-        </div>
-        <div class="row blog-listing">
-            <div class="col-md-4">
-                <a href="">
-                    <article>
-                        <img class="img-thumbnail" src="/img/item-example1.jpg" alt=""/>
-                        <h2>물건 제목</h2>
-                        <hr class="title-underline">
-                        <p>
-                            물건 설명
-                        </p>
-                        <div>
-                            <div>
-                                <i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53
-                            </div>
-                            <div>
-                                <i class="fa fa-user"></i> 올린 사람
-                            </div>
-                            <div>
-                                <i class="fa fa-tag"></i> 관련 항목
-                            </div>
-                        </div>
-                    </article>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <article>
-                    <img class="img-thumbnail" src="/img/item-example2.jpg" alt=""/>
-                    <h2>물건 제목</h2>
-                    <hr class="title-underline">
-                    <p>
-                        물건 설명
-                    </p>
-                    <div class="post-meta">
-                        <span><i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53</span>
-                        <span><i class="fa fa-user"></i> By <a href="#">올린 사람</a></span>
-                        <span><i class="fa fa-tag"></i> <a href="#">Duis</a>, <a href="#">관련 항목</a> </span>
-                    </div>
-                </article>
-            </div>
-            <div class="col-md-4">
-                <article>
-                    <img class="img-thumbnail" src="/img/item-example3.jpg" alt=""/>
-                    <h2>물건 제목</h2>
-                    <hr class="title-underline">
-                    <p>
-                        물건 설명
-                    </p>
-                    <div>
-                        <span><i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53</span>
-                        <span><i class="fa fa-user"></i> By <a href="#">올린 사람</a></span>
-                        <span><i class="fa fa-tag"></i> <a href="#">Duis</a>, <a href="#">관련 항목</a> </span>
-                    </div>
-                </article>
-            </div>
-        </div>
-        <div class="row blog-listing">
-            <div class="col-md-4">
-                <article>
+            <div class="image-container col-md-5">
+                <div class="image-container col-md-12">
                     <img class="img-thumbnail" src="/img/item-example1.jpg" alt=""/>
-                    <h2>물건 제목</h2>
-                    <hr class="title-underline">
-                    <p>
-                        물건 설명
-                    </p>
-                    <div class="post-meta">
-                        <span><i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53</span>
-                        <span><i class="fa fa-user"></i> By <a href="#">올린 사람</a></span>
-                        <span><i class="fa fa-tag"></i> <a href="#">Duis</a>, <a href="#">관련 항목</a> </span>
-                    </div>
-                </article>
+                </div>
             </div>
-            <div class="col-md-4">
-                <article>
-                    <img class="img-thumbnail" src="/img/item-example2.jpg" alt=""/>
-                    <h2>물건 제목</h2>
-                    <hr class="title-underline">
-                    <p>
-                        물건 설명
-                    </p>
-                    <div class="post-meta">
-                        <span><i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53</span>
-                        <span><i class="fa fa-user"></i> By <a href="#">올린 사람</a></span>
-                        <span><i class="fa fa-tag"></i> <a href="#">Duis</a>, <a href="#">관련 항목</a> </span>
-                    </div>
-                </article>
+            <div class="read-container col-md-7">
+                <div class="read-row col-md-12"></div>
+                <div class="auction-label col-md-2">제목</div>
+                <div class="auction-value col-md-10">맛있는 빵 드세요!</div>
+                <div class="read-row col-md-12"></div>
+                <div class="auction-label col-md-2">분류</div>
+                <div class="auction-value col-md-2">식품</div>
+                <div class="auction-label col-md-2">시작</div>
+                <div class="auction-value col-md-2">12.06.07</div>
+                <div class="auction-label col-md-2">마감</div>
+                <div class="auction-value col-md-2">13.06.07</div>
+                <div class="read-row col-md-12"></div>
+                <div class="auction-label col-md-12">내용</div>
+                <div class="read-row col-md-12"></div>
+                <div class="auction-value auction-content col-md-12">
+                    좋은 물건을 팔고 싶어요~
+                </div>
+                <div class="read-row col-md-12"></div>
             </div>
-            <div class="col-md-4">
-                <article>
-                    <img class="img-thumbnail" src="/img/item-example3.jpg" alt=""/>
-                    <h2>물건 제목</h2>
-                    <hr class="title-underline">
-                    <p>
-                        물건 설명
-                    </p>
-                    <div class="post-meta">
-                        <span><i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53</span>
-                        <span><i class="fa fa-user"></i> By <a href="#">올린 사람</a></span>
-                        <span><i class="fa fa-tag"></i> <a href="#">Duis</a>, <a href="#">관련 항목</a> </span>
-                    </div>
-                </article>
+            <div class="col-md-12 play-container">
+                <div class="col-md-3">
+                    현재 입찰가 : 5000원
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="inputPrice" class="inform-label">입찰가</label>
+                    <input type="text" class="form-control" id="inputPrice" placeholder="입찰가를 입력하세요.">
+                </div>
+                <div class="col-md-4">
+                    <a href="/auction_page" class="btn btn-primary btn-lg">입찰하기</a>
+                </div>
             </div>
-        </div>
-        <div class="row col-md-12">
-            <button class="more-button">
-                더보기
-            </button>
         </div>
     </div>
 </section>

@@ -16,4 +16,9 @@ public class AuctionController {
         return "auction_page";
     }
 
+    @RequestMapping("/tmp")
+    public String readAuctionPage(){
+
+        return "read_auction_page";
+    }
 }
