@@ -17,8 +17,7 @@ public class BiddingService {
 
     //경매 입찰
     public boolean bidding(long product_id, String user_id, long price){
-        Date date = new Date();
-        AucLog log = aucLogRepository.saveBidding(product_id, user_id, date, price);
+        aucLogRepository.saveBidding(product_id, user_id, price);
         return false;
     }
 

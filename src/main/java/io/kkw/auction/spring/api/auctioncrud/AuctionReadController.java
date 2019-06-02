@@ -6,16 +6,15 @@ import io.kkw.auction.spring.service.AuctionService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -124,6 +123,28 @@ public class AuctionReadController {
     public List<AucProduct> searchAuction(@RequestParam("search") String search){
         List<AucProduct> aucProducts = auctionService.searchAuction(search);
         return aucProducts;
+    }
+
+    @ResponseBody
+    @GetMapping(
+            value = "/load/{id}",
+            produces =  MediaType.IMAGE_JPEG_VALUE
+    )
+    public ResponseEntity<byte[]> loadImage(@PathVariable("id") long product_id) throws Exception{
+        InputStream in = null;
+        ResponseEntity<byte[]> entity = null;
+        AucProduct aucProduct = auctionService.findInfo(product_id);
+        try{
+            in = new FileInputStream("D:/attachments/"+aucProduct.getPicture());
+            entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), HttpStatus.CREATED);
+        }catch(Exception e){
+            e.printStackTrace();
+            entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+        }finally{
+            in.close();
+        }
+
+        return entity;
     }
 
 
