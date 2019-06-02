@@ -76,6 +76,7 @@ public class AuctionService {
 
     //경매예정인 모든 정보를 가져오는 메소드
     public List<AucProduct> findAllPlan(){
+        /*
         Date today = new Date();
         List<AucProduct> informations = aucProductRepository.findAllByStartdateBefore(today);
         List<AucProduct> products = new ArrayList<>();
@@ -85,6 +86,9 @@ public class AuctionService {
             if(progress.isPresent())
                 products.add(aucProduct);
         }
+         */
+        Date today = new Date();
+        List<AucProduct> products = aucProductRepository.findAllByStartdateBefore(today);
         return products;
     }
 
@@ -100,7 +104,9 @@ public class AuctionService {
     public List<AucProduct> findAllComplete(){
         //여기는 finish칸
         //List<AucProduct> aucProducts = aucProductRepository;
-        return null;
+        List<AucProduct> aucProducts = aucProductRepository.findAllByAucComplete();
+
+        return aucProducts;
     }
 
 
@@ -160,16 +166,14 @@ public class AuctionService {
     }
 
     public List<AucProduct> unAuthorized(){
-        List<AucProgress> aucProgresses = aucProgressRepository.approval(0);
+        List<AucProduct> aucProducts = aucProductRepository.findAllByAuthorize(0);
 
-        //List<AucProduct> aucProducts = aucProductRepository.da
-        //List<AucProduct> aucProducts = aucProductRepository.approval(false);
-        return null;
+        return aucProducts;
     }
 
     public List<AucProduct> authorized(){
-        //List<AucProduct> aucProducts = aucProductRepository.approval(true);
-        return null;
+        List<AucProduct> aucProducts = aucProductRepository.findAllByAuthorize(1);
+        return aucProducts;
     }
 
     public Iterable<AucProduct> findAll(){

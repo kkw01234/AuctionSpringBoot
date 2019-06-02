@@ -30,16 +30,31 @@ public interface AucProductRepository extends CrudRepository<AucProduct,Long> {
 
 
     //Start이전 데이터
+    /*
     @Query("FROM AucProduct i WHERE i.startdate > :start_date")
     List<AucProduct> findAllByStartdateBefore(@Param("start_date") Date start_date);
+    */
+    @Query(nativeQuery = true, value = "SELECT * FROM Auc_Product i, Auc_Progress p WHERE i.id=p.product_id and i.start_date > :start_date and approval= 1")
+    List<AucProduct> findAllByStartdateBefore(@Param("start_date") Date start_date);
+
 
     //Start 이후 End 이전데이터
-    @Query("FROM AucProduct i WHERE i.startdate < ?1 and i.enddate > :start_date")
-    List<AucProduct> findAllByStartdateAfterAndEnddateBefore(@Param("start_date") Date start_date, @Param("start_date") Date end_date);
+    @Query(nativeQuery = true, value = "SELECT * FROM Auc_Product i, Auc_Progress p WHERE  i.id=p.product_id and  i.start_date <= :start_date and i.end_date > :end_date and approval= 1")
+    List<AucProduct> findAllByStartdateAfterAndEnddateBefore(@Param("start_date") Date start_date, @Param("end_date") Date end_date);
+
+    //마무리된 경매
+    @Query(nativeQuery = true, value = "SELECT * FROM Auc_Product i, Auc_Complete p WHERE  i.id=p.product_id")
+    List<AucProduct> findAllByAucComplete();
+
+    //허가받지않 경매
+    @Query(nativeQuery = true, value = "SELECT * FROM Auc_Product i, Auc_Progress p WHERE  i.id=p.product_id and approval = :approval")
+    List<AucProduct> findAllByAuthorize(@Param("approval")int approval);
 
 
 
-    @Query("FROM AucProduct i WHERE i.title like %:search%")
+
+
+    @Query(nativeQuery = true, value = "SELECT * FROM Auc_Product i, Auc_Progress p WHERE  i.id=p.product_id and approval = 1 and i.title LIKE %:search%")
     List<AucProduct> searchAuction(@Param("search") String search);
 
 

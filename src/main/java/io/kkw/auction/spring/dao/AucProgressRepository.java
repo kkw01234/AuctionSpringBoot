@@ -13,8 +13,8 @@ public interface AucProgressRepository extends CrudRepository<AucProgress,Long> 
 
     //@Query("FROM AucProgress p WHERE p.productId = :productId and p.approval = :approval")
     Optional<AucProgress> findByProductIdAndApproval(@Param("productId")long productId, @Param("approval")int approval);
-
+    /*
     @Query("FROM AucProgress p WHERE p.approval = :approval")
     List<AucProgress> approval(@Param("approval") long approval);
-
+    */
 }

@@ -43,12 +43,11 @@ public class UserService {
             return false;
     }
 
-    public boolean userStop(String userId){
+    public boolean stopUser(String userId){
         try {
             Optional<AucUser> aucUser = userRepository.findById(userId);
             AucUser user = aucUser.get();
             Date time = new Date();
-
             user.setStopdate(time);
             userRepository.save(user);
         }catch(Exception e){
@@ -57,5 +56,23 @@ public class UserService {
         }
         return true;
 
+    }
+    public boolean releaseUser(String userId){
+        try {
+            Optional<AucUser> aucUser = userRepository.findById(userId);
+            AucUser user = aucUser.get();
+            user.setStopdate(null);
+            userRepository.save(user);
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+
+    }
+
+    public List<AucUser> findAll(){
+        List<AucUser> aucUsers = userRepository.findAll();
+        return aucUsers;
     }
 }

@@ -84,43 +84,46 @@ public class AuctionReadController {
     }
 
     //진행 중
+    @ResponseBody
     @RequestMapping("/progress")
-    public String readProgress(Model model){
+    public  List<AucProduct>  readProgress(Model model){
         List<AucProduct> aucProducts = auctionService.findAllProgress();
-        model.addAttribute("auction_list", aucProducts);
-        return "auction_page";
+
+        return aucProducts;
     }
     //완료된 정보
+    @ResponseBody
     @RequestMapping("/complete")
-    public String readComplete(Model model){
+    public  List<AucProduct> readComplete(Model model){
         List<AucProduct> aucProducts = auctionService.findAllComplete();
-        model.addAttribute("auction_list", aucProducts);
-        return "auction_page";
+
+        return aucProducts;
     }
 
     //허가받지않은 정보
+    @ResponseBody
     @RequestMapping("/unauthorized")
-    public String readUnauthorized(Model model){
+    public List<AucProduct> readUnauthorized(Model model){
         List<AucProduct> aucProducts = auctionService.unAuthorized();
-        model.addAttribute("auction_list", aucProducts);
-        return "auction_page";
+
+        return aucProducts;
     }
 
     //허가받은 정보
-
+    @ResponseBody
     @RequestMapping("/authorized")
-    public String readAuthorized(Model model){
+    public List<AucProduct> readAuthorized(Model model){
         List<AucProduct> aucProducts = auctionService.authorized();
-        model.addAttribute("auction_list", aucProducts);
-        return "auction_page";
+
+        return aucProducts;
 
     }
 
     @ResponseBody
     @RequestMapping("/search")
-    public ResponseEntity<Object> searchAuction(@RequestParam("search") String search){
+    public List<AucProduct> searchAuction(@RequestParam("search") String search){
         List<AucProduct> aucProducts = auctionService.searchAuction(search);
-        return null;
+        return aucProducts;
     }
 
 

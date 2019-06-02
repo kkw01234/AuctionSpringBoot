@@ -4,6 +4,8 @@ import io.kkw.auction.spring.bean.AucUser;
 import io.kkw.auction.spring.service.AuctionService;
 import io.kkw.auction.spring.service.BiddingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,15 +24,15 @@ public class BiddingController {
 
 
 
-    @PostMapping("/{id}")
+    @RequestMapping("/{id}")
     public @ResponseBody
-    String bidding(@PathVariable("id") long product_id, @RequestParam int price, @SessionAttribute("user") AucUser aucUser){
+    ResponseEntity<Object> bidding(@PathVariable("id") long product_id, @RequestParam int price/*, @SessionAttribute("user") AucUser aucUser*/){
         //ID
         //금액
 
         //작성중
-        boolean result = biddingService.bidding(aucUser.getId(), product_id, price);
+        boolean result = biddingService.bidding(product_id, "1", price);
 
-           return null;
+        return new ResponseEntity<Object>(result, HttpStatus.OK);
     }
 }

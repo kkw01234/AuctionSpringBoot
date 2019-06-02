@@ -37,9 +37,21 @@ public class AucProduct implements Serializable {
     private AucUser aucUserBean;
     */
     /*
-    @OneToMany(cascade =CascadeType.ALL, mappedBy = "aucProduct",fetch = FetchType.LAZY, targetEntity = AucProgress.class)
+    @OneToMany(cascade =CascadeType.ALL)
+    @JoinColumn(name="id",insertable = false, updatable = false)
     private List<AucProgress> aucProgresses;
+    */
 
+    @OneToOne(cascade =CascadeType.ALL)
+    @JoinColumn(name = "id", nullable = true, insertable = false, updatable = false)
+    private AucProgress aucProgress;
+
+    @OneToOne(cascade =CascadeType.ALL)
+    @JoinColumn(name = "id", nullable = true, insertable = false, updatable = false)
+    private AucComplete aucComplete;
+
+
+     /*
     @OneToMany(cascade =CascadeType.ALL, mappedBy = "aucProduct",fetch = FetchType.LAZY, targetEntity = AucProgress.class)
     private List<AucComplete> aucCompletes;
     */
