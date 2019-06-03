@@ -30,6 +30,7 @@ public class LoginController {
         UserBean userBean = userService.getLogin(id,password);
         AucUser aucUser= null;
         AucAdmin aucAdmin = null;
+        System.out.println(userBean instanceof AucUser);
         if (userBean instanceof AucUser)
             aucUser = (AucUser) userBean;
         else if(userBean instanceof AucAdmin)

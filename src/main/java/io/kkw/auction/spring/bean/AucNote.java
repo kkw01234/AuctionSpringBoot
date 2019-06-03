@@ -10,21 +10,29 @@ import java.util.Date;
 
 @Data
 @Entity
-
-@IdClass(AucNoteId.class)
 @Table(name="AUC_NOTE")
 public class AucNote {
 
     @Id
-    @Column(name = "sendid")
+    long id;
+
+    @Column(name = "send_id")
     private String sendId;
-    @Id
-    @Column(name = "recievieid")
+
+    @Column(name = "receive_id")
     private String receiveId;
 
     private String content;
-
-    private Date note_date;
+    @Column(name = "data_send")
+    private Date dataSend;
+    @Column(name = "data_read")
+    private Date dataRead;
+    @Column(name = "recv_read")
+    private boolean recvRead;
+    @Column(name = "recv_del")
+    private boolean recvDel;
+    @Column(name = "sent_del")
+    private boolean sentDel;
 }
 
 

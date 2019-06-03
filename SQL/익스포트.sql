@@ -61,10 +61,17 @@ CREATE TABLE auc_interest(
     interest varchar2(100)
 );
 
-create TABLE auc_note(
-        sendid VARCHAR2(100) REFERENCES auc_user(id),
-        receiveid VARCHAR2(100) REFERENCES auc_user(id),
-        content clob, --clob 대용량 텍스트 데이터 타입
-        note_date date,
-        CONSTRAINT note_pk PRIMARY KEY (sendid, receiveid)
-);
+create table auc_note(
+    id NUMBER PRIMARY KEY,
+    send_id VARCHAR2(100),
+    receive_id VARCHAR2(100),
+    content CLOB NOT NULL,
+    data_send Date,
+    data_read Date,
+    recv_read number(1) NOT NULL CHECK (recv_read in (0,1)),
+    recv_del number(1) NOT NULL CHECK (recv_del in (0,1)),
+    sent_del number(1) NOT NULL CHECK (sent_del in (0,1)),
+    CONSTRAINT NOTE_SEND_ID_FK FOREIGN KEY(send_id) REFERENCES auc_user(id) ,
+
+    CONSTRAINT NOTE_RECEIVE_FK FOREIGN KEY(receive_id) REFERENCES auc_user(id)
+)
