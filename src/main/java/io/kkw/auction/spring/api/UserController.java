@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -79,8 +80,38 @@ public class UserController {
             }
             AucUser user2 = (AucUser) userBean;
             AucUser user = userService.findUser(user2.getId());
+            user.setPassword("");
             model.addAttribute("user", new Gson().toJson(user));
             return "my_page";
+    }
+
+    @ResponseBody
+    @RequestMapping("/mypage/update")
+    public ResponseEntity<Object> UpdateMyPage( @SessionAttribute("user") UserBean userBean,
+                                                @RequestParam("email") String email,
+                                                @RequestParam("address") String address,
+                                                @RequestParam("phone") String phone,
+                                                @RequestParam("account") String account,
+                                                HttpServletRequest request){
+
+        if(!(userBean instanceof AucUser)){
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+
+        String id = ((AucUser) userBean).getId();
+        AucUser findUser = userService.findUser(id);
+        AucUser aucUser = null;
+        aucUser = new AucUser(id,findUser.getPassword(),email,address,phone,account);
+
+
+        AucUser bean = userService.addUser(aucUser);
+        request.getSession().setAttribute("user",bean);
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @RequestMapping("/mypage/updatepage")
+    public String updatemyPage(){
+        return "update_my_page";
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.transaction.Transactional;
 import java.util.Date;
@@ -25,6 +26,12 @@ public interface AucProductRepository extends CrudRepository<AucProduct,Long> {
 
     //각자 사람마다
     List<AucProduct> findAllByUserid(String userid);
+
+    @Query(nativeQuery = true, value = "SELECT i.*, p.* FROM AUC_PRODUCT i, AUC_PROGRESS p WHERE i.id=p.product_id and i.user_id = :userId")
+    List<AucProduct> findMyProgressAuction(@Param("userId") String userId);
+
+    @Query(nativeQuery = true, value = "SELECT i.*, c.* FROM AUC_PRODUCT i, AUC_COMPLETE c WHERE i.id=c.product_id and i.user_id = :userId")
+    List<AucProduct> findMyCompleteAuction(@Param("userId") String userId);
 
     //@Query(value = "FROM AUC_INFORMATION i, AUC_PROGRESS p where i.pid = p.pid and i.pid = ?1")
 

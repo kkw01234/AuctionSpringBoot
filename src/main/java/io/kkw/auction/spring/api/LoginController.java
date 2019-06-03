@@ -31,21 +31,27 @@ public class LoginController {
         AucUser aucUser= null;
         AucAdmin aucAdmin = null;
         System.out.println(userBean instanceof AucUser);
-        if (userBean instanceof AucUser)
+        if (userBean instanceof AucUser) {
             aucUser = (AucUser) userBean;
-        else if(userBean instanceof AucAdmin)
+            aucUser.setPassword("");
+        }else if(userBean instanceof AucAdmin) {
             aucAdmin = (AucAdmin) userBean;
+            aucAdmin.setPassword("");
+        }
         else
             return "ERROR";
 
         HttpSession session = request.getSession();
-        session.setAttribute("user",userBean);
+
 
         if(aucUser != null) { //User 일경우
             model.addAttribute("userid", aucUser.getId());
-            model.addAttribute("password", aucUser.getPassword());
+            session.setAttribute("user",aucUser);
             System.out.println("로그인 성공");
             return "success";
+        }else{
+            model.addAttribute("userId",aucAdmin.getId());
+            session.setAttribute("user",aucAdmin);
         }
         //관리자일경우
 

@@ -46,22 +46,20 @@ public class AuctionReadController {
         return "read_action_page";
     }
 
-
-    @RequestMapping("/read_my_auction") //내가 올린 경매 확인
-    public String readMyAuction(HttpServletRequest request){
+    @ResponseBody
+    @RequestMapping("/myauction") //내가 올린 경매 확인
+    public ResponseEntity<Object> readMyAuction(HttpServletRequest request){
         HttpSession httpSession = request.getSession();
         UserBean userBean = (UserBean)httpSession.getAttribute("user");
         try{
             AucUser aucUser =(AucUser) userBean;
             List<AucProduct> beans = auctionService.findMyAuction(aucUser.getId());
-
-
-
-
+            return new ResponseEntity<>(beans,HttpStatus.OK);
         }catch(ClassCastException e){
             e.printStackTrace(); //Admin이 접속했을 때 막아버림
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return null;
+
     }
 
     //모두 보여주기

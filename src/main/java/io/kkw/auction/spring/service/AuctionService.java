@@ -1,13 +1,11 @@
 package io.kkw.auction.spring.service;
 
 
-import io.kkw.auction.spring.bean.AucComplete;
-import io.kkw.auction.spring.bean.AucInterest;
-import io.kkw.auction.spring.bean.AucProduct;
-import io.kkw.auction.spring.bean.AucProgress;
+import io.kkw.auction.spring.bean.*;
 import io.kkw.auction.spring.dao.AucCompleteRepository;
 import io.kkw.auction.spring.dao.AucProductRepository;
 import io.kkw.auction.spring.dao.AucProgressRepository;
+import jdk.nashorn.internal.runtime.ListAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +67,11 @@ public class AuctionService {
 
     //유저가 올린 모든 정보를 가져오는 메소드
     public List<AucProduct> findMyAuction(String id){
-        return aucProductRepository.findAllByUserid(id);
+        List<AucProduct> products = aucProductRepository.findMyProgressAuction(id);
+        System.out.println(products.get(0).getAucProgress());
+        List<AucProduct> products1 = aucProductRepository.findMyCompleteAuction(id);
+        products.addAll(products1);
+        return products;
         //Join 걸어서 가져와야할듯
         //SELECT * FROM auc_information i, auc_progress p where i.id = p.pid and  i.user_id = :id
         //SELECT * FROM auc_information i, auc_complete c where i.id = c.auc_id (이거 바꿔야될듯 변수명 불일치) and  i.user_id = :id
