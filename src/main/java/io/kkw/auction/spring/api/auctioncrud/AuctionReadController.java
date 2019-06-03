@@ -3,6 +3,7 @@ package io.kkw.auction.spring.api.auctioncrud;
 import com.google.gson.Gson;
 import io.kkw.auction.spring.bean.*;
 import io.kkw.auction.spring.service.AuctionService;
+import io.kkw.auction.spring.service.BiddingService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,9 @@ public class AuctionReadController {
 
     @Autowired
     AuctionService auctionService;
+
+    @Autowired
+    BiddingService biddingService;
 
 
     @RequestMapping("/{id}") //한개씩
@@ -169,6 +173,13 @@ public class AuctionReadController {
         List<AucProduct> aucProducts = auctionService.findAllCompleteAndSearch(search);
 
         return aucProducts;
+    }
+    //값 확인
+    @ResponseBody
+    @RequestMapping("/price/{id}")
+    public long currentPrice(@PathVariable int id, @SessionAttribute("user") UserBean userBean){
+        long current = biddingService.currentbidding(id);
+        return current;
     }
     //필요한 거
 

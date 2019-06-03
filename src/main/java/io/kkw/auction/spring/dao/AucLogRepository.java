@@ -21,4 +21,6 @@ public interface AucLogRepository extends CrudRepository<AucLog, Long> {
     Optional<AucLog> findByProductIdOrderByPrice(@Param("product_id") long product_id);
 
 
+
+
 }

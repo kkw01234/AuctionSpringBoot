@@ -224,13 +224,14 @@ public class AuctionService {
             if(aucProduct.getEnddate().after(today)){
                     aucProgressRepository.deleteByProductId(aucProduct.getId());
                     Optional<AucLog> aucLogOptional = aucLogRepository.findByProductIdOrderByPrice(aucProduct.getId());
-                    AucLog aucLog = aucLogOptional.orElseThrow(() -> new ClassCastException());
+                    AucLog aucLog = aucLogOptional.get();
                     AucComplete complete = new AucComplete();
                     long nextVal = aucCompleteRepository.getNextVal();
+                    System.out.println(nextVal);
                     complete.setId(nextVal);
                     complete.setProductId(aucProduct.getId());
-                    complete.setComplete_price(aucLog.getPrice());
-                    complete.setTender_user_id(aucLog.getUserId());
+                    complete.setCompletePrice(aucLog.getPrice());
+                    complete.setTenderUserId(aucLog.getUserId());
                     aucCompleteRepository.save(complete);
                     noteService.sendNote(aucProduct.getUserid(),aucLog.getUserId(),today,content(aucProduct.getTitle(),aucProduct.getId()));
 

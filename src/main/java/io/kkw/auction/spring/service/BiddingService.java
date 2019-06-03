@@ -1,18 +1,22 @@
 package io.kkw.auction.spring.service;
 
 import io.kkw.auction.spring.bean.AucLog;
+import io.kkw.auction.spring.bean.AucProduct;
 import io.kkw.auction.spring.dao.AucLogRepository;
+import io.kkw.auction.spring.dao.AucProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class BiddingService {
 
     @Autowired
     AucLogRepository aucLogRepository;
-
+    @Autowired
+    AucProductRepository aucProductRepository;
 
 
     //경매 입찰
@@ -21,4 +25,15 @@ public class BiddingService {
         return false;
     }
 
+    //현재까지의 금액
+    public long currentbidding(long product_id){
+        Optional<AucProduct> aucProduct = aucProductRepository.findById(product_id);
+        AucLog a = new AucLog();
+        a.setPrice(aucProduct.get().getPrice());
+        Optional<AucLog> aucLog = aucLogRepository.findByProductIdOrderByPrice(product_id);
+        return aucLog.orElse(a).getPrice();
+    }
+
 }
+
+
