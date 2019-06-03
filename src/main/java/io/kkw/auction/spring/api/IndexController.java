@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -29,15 +26,15 @@ public class IndexController {
         return "index";
     }
 
-    public static Date date = new Date();
+    public static Date date = null;
 
 
     //시간 지난거 확인
-    @PostMapping("/check")
+    @RequestMapping("/check")
     @ResponseBody
     public ResponseEntity<Object> time(){
         Date now = new Date();
-        if (date.getTime() - now.getTime() >= 60000) {
+        if (date == null || date.getTime() - now.getTime() >= 60000) {
             System.out.println("Check Start");
             long start = System.currentTimeMillis();
             auctionService.findCheck();

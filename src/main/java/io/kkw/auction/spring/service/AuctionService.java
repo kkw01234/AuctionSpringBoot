@@ -223,15 +223,16 @@ public class AuctionService {
             AucProduct aucProduct = iterator.next();
             if(aucProduct.getEnddate().after(today)){
                     aucProgressRepository.deleteByProductId(aucProduct.getId());
-                    AucLog aucLog = aucLogRepository.findByProductIdAndOrderByPrice();
+                    Optional<AucLog> aucLogOptional = aucLogRepository.findByProductIdOrderByPrice(aucProduct.getId());
+                    AucLog aucLog = aucLogOptional.orElseThrow(() -> new ClassCastException());
                     AucComplete complete = new AucComplete();
                     long id = aucCompleteRepository.getNextVal();
                     complete.setId(id);
                     complete.setProductId(aucProduct.getId());
                     complete.setComplete_price(aucLog.getPrice());
-                    complete.setTender_user_id(aucLog.getUser_id());
+                    complete.setTender_user_id(aucLog.getUserId());
                     aucCompleteRepository.save(complete);
-                    noteService.sendNote(aucProduct.getUserid(),aucLog.getUser_id(),today,content(aucProduct.getTitle(),aucProduct.getId()));
+                    noteService.sendNote(aucProduct.getUserid(),aucLog.getUserId(),today,content(aucProduct.getTitle(),aucProduct.getId()));
 
 
             }

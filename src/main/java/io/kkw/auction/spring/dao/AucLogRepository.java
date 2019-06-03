@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.Optional;
 
 public interface AucLogRepository extends CrudRepository<AucLog, Long> {
 
@@ -15,7 +16,7 @@ public interface AucLogRepository extends CrudRepository<AucLog, Long> {
     @Procedure(procedureName = "insertBidding")
     void saveBidding(@Param("product_id") long product_id, @Param("user_id") String user_id, @Param("price") long price);
 
-    AucLog findByProductIdAndOrderByPrice();
+    Optional<AucLog> findByProductIdOrderByPrice(@Param("productId") long product_id);
 
 
 }
