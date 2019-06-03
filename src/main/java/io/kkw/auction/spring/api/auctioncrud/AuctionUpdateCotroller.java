@@ -84,7 +84,7 @@ public class AuctionUpdateCotroller {
     @RequestMapping
     public String modifyAction(HttpServletRequest request){
 
-        return null;
+        return "mod";
     }
 
 

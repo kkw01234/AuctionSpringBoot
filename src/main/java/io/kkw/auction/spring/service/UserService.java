@@ -75,4 +75,9 @@ public class UserService {
         List<AucUser> aucUsers = userRepository.findAll();
         return aucUsers;
     }
+
+    public AucUser findUser(String user_id){
+        Optional<AucUser> user = userRepository.findById(user_id);
+        return user.orElse(null);
+    }
 }

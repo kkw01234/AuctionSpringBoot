@@ -1,10 +1,12 @@
 package io.kkw.auction.spring.api;
 
 
+import com.google.gson.Gson;
 import io.kkw.auction.spring.bean.AucAdmin;
 import io.kkw.auction.spring.bean.AucUser;
 import io.kkw.auction.spring.bean.UserBean;
 import io.kkw.auction.spring.service.UserService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,6 +70,17 @@ public class UserController {
             return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @RequestMapping("/mypage")
+    public String myPage(@SessionAttribute("user")UserBean userBean, Model model){
+            if(!(userBean instanceof AucUser)){
+                return "/";
+            }
+            AucUser user2 = (AucUser) userBean;
+            AucUser user = userService.findUser(user2.getId());
+            model.addAttribute("user", new Gson().toJson(user));
+            return "my_page";
     }
 
 }
