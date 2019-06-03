@@ -31,7 +31,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping
     public List<AucUser> userList(){
-        List<AucUser> aucUsers = userService.findAll(); //추후 원한느 데이터만 가져올수 있게 해야함
+        List<AucUser> aucUsers = userService.findAll(); //추후 원하는 데이터만 가져올수 있게 해야함
         return aucUsers;
     }
 

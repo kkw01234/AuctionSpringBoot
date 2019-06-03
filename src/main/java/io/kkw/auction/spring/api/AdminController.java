@@ -15,7 +15,7 @@ public class AdminController {
 
     @RequestMapping
     public String adminPage(@SessionAttribute("user") UserBean userBean){
-        if(userBean instanceof AucAdmin){
+        if(!(userBean instanceof AucAdmin)){
             return "index";
         }
         return "admin_page";

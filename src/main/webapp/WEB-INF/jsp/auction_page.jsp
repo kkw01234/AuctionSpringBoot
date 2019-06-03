@@ -10,6 +10,7 @@
     <title>경기대학교 데이터베이스 프로그래밍 - Auction</title>
 
     <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
+    <link href="css/auction.css" rel="stylesheet">
 
 </head>
 
@@ -17,132 +18,41 @@
 
 <%@ include file="nav.jsp" %>
 
-<section class="page-section">
-    <div class="insert-div">
-        <h3>지금 바로 당신의 물건을 등록해보세요!</h3>
-        <a <%if (user == null) { %>
-                data-toggle="modal" href="#loginModal"
-                <%} else {%>
-                href="/create_auction"
-                <%}%> class="btn btn-primary btn-lg insert-btn">물건 등록하기</a>
-    </div>
+<section class="page-section my-page-section">
     <div class="container">
-        <div class="row">
-            <div class="col-md-9">
-                <h2 class="title-section"><span class="title-regular">최근 등록된</span><br/>경매 물건</h2>
+        <a onclick="clickFuture();">
+            <div class="col-md-4 tab" id="tab0">진행 예정</div>
+        </a>
+        <a onclick="clickCurrent();">
+            <div class="col-md-4 tab selected-tab" id="tab1">진행 중</div>
+        </a>
+        <a onclick="clickPast();">
+            <div class="col-md-4 tab" id="tab2">진행 완료</div>
+        </a>
+        <div class="col-md-12 tab-row"></div>
+        <div class="insert-div col-md-12">
+            <h3>지금 바로 당신의 물건을 등록해보세요!</h3>
+            <a <%if (user == null) { %>
+                    data-toggle="modal" href="#loginModal"
+                    <%} else {%>
+                    href="/create_auction"
+                    <%}%> class="btn btn-primary btn-lg insert-btn">물건 등록하기</a>
+        </div>
+        <div class="row col-md-12">
+            <div class="col-md-8">
+                <h2 class="title-section"><span class="title-regular" id="adjective">진행 중인</span><br/>경매 물건</h2>
                 <hr class="title-underline"/>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="search-container input-group">
-                    <input class="form-control" type="text" placeholder="검색하기" id="search" onkeyup="if(event.keyCode==13){doSearch();}">
-                    <div class="input-group-addon" style="padding : 0px 10px; border : none;"><a onclick="doSearch();"><img src="/img/search.png"></a></div>
+                    <input class="form-control" type="text" placeholder="검색하기" id="search"
+                           onkeyup="if(event.keyCode==13){doSearch();}">
+                    <div class="input-group-addon" style="padding : 0px 10px; border : none;"><a
+                            onclick="doSearch();"><img src="/img/search.png"></a></div>
                 </div>
             </div>
         </div>
-        <div class="row blog-listing">
-            <div class="col-md-4">
-                <a href="">
-                    <article>
-                        <img class="img-thumbnail" src="/img/item-example1.jpg" alt=""/>
-                        <h2>맛있는 빵</h2>
-                        <hr class="title-underline">
-                        <p>갓경웅이 직접 구운 맛있는 빵</p>
-                        <div>
-                            <div>
-                                <i class="fa fa-calendar"></i> 2019 05 26 17 00
-                            </div>
-                            <div>
-                                <i class="fa fa-user"></i> 갓경웅
-                            </div>
-                            <div>
-                                <i class="fa fa-tag"></i> 가구 식품
-                            </div>
-                        </div>
-                    </article>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <article>
-                    <img class="img-thumbnail" src="/img/item-example2.jpg" alt=""/>
-                    <h2>물건 제목</h2>
-                    <hr class="title-underline">
-                    <p>
-                        물건 설명
-                    </p>
-                    <div class="post-meta">
-                        <span><i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53</span>
-                        <span><i class="fa fa-user"></i> By <a href="#">올린 사람</a></span>
-                        <span><i class="fa fa-tag"></i> <a href="#">Duis</a>, <a href="#">관련 항목</a> </span>
-                    </div>
-                </article>
-            </div>
-            <div class="col-md-4">
-                <article>
-                    <img class="img-thumbnail" src="/img/item-example3.jpg" alt=""/>
-                    <h2>물건 제목</h2>
-                    <hr class="title-underline">
-                    <p>
-                        물건 설명
-                    </p>
-                    <div>
-                        <span><i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53</span>
-                        <span><i class="fa fa-user"></i> By <a href="#">올린 사람</a></span>
-                        <span><i class="fa fa-tag"></i> <a href="#">Duis</a>, <a href="#">관련 항목</a> </span>
-                    </div>
-                </article>
-            </div>
-        </div>
-        <div class="row blog-listing">
-            <div class="col-md-4">
-                <article>
-                    <img class="img-thumbnail" src="/img/item-example1.jpg" alt=""/>
-                    <h2>물건 제목</h2>
-                    <hr class="title-underline">
-                    <p>
-                        물건 설명
-                    </p>
-                    <div class="post-meta">
-                        <span><i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53</span>
-                        <span><i class="fa fa-user"></i> By <a href="#">올린 사람</a></span>
-                        <span><i class="fa fa-tag"></i> <a href="#">Duis</a>, <a href="#">관련 항목</a> </span>
-                    </div>
-                </article>
-            </div>
-            <div class="col-md-4">
-                <article>
-                    <img class="img-thumbnail" src="/img/item-example2.jpg" alt=""/>
-                    <h2>물건 제목</h2>
-                    <hr class="title-underline">
-                    <p>
-                        물건 설명
-                    </p>
-                    <div class="post-meta">
-                        <span><i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53</span>
-                        <span><i class="fa fa-user"></i> By <a href="#">올린 사람</a></span>
-                        <span><i class="fa fa-tag"></i> <a href="#">Duis</a>, <a href="#">관련 항목</a> </span>
-                    </div>
-                </article>
-            </div>
-            <div class="col-md-4">
-                <article>
-                    <img class="img-thumbnail" src="/img/item-example3.jpg" alt=""/>
-                    <h2>물건 제목</h2>
-                    <hr class="title-underline">
-                    <p>
-                        물건 설명
-                    </p>
-                    <div class="post-meta">
-                        <span><i class="fa fa-calendar"></i> Aug 17, 2016 - 6:53</span>
-                        <span><i class="fa fa-user"></i> By <a href="#">올린 사람</a></span>
-                        <span><i class="fa fa-tag"></i> <a href="#">Duis</a>, <a href="#">관련 항목</a> </span>
-                    </div>
-                </article>
-            </div>
-        </div>
-        <div class="row col-md-12">
-            <button class="more-button">
-                더보기
-            </button>
+        <div id="auc-container">
         </div>
     </div>
 </section>
@@ -159,26 +69,108 @@
 <script src="js/sha256.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        /*
-         *  Media helper. Group items, disable animations, hide arrows, enable media and button helpers.
-         */
-        $('.fancybox-media')
-            .attr('rel', 'media-gallery')
-            .fancybox({
-                openEffect: 'none',
-                closeEffect: 'none',
-                prevEffect: 'none',
-                nextEffect: 'none',
-                arrows: false,
-                helpers: {
-                    media: {},
-                    buttons: {}
-                }
-            });
+    var curr = 4;
+    var auc_list;
+
+    function setAucList() {
+        var aucs = $('#auc-container');
+        var result = ''
+        for (var i = 0; i < auc_list.length; i++) {
+            if(i % 3 == 0) result += '<div class="row blog-listing">';
+            var auc = auc_list[i];
+            var startdate = new Date(auc['startdate']);
+            var enddate = new Date(auc['enddate']);
+            var startFormat = '';
+            var endFormat = '';
+            startFormat += startdate.getFullYear() + '년 ' + startdate.getMonth() + '월 ' + startdate.getDay() + '일, ';
+            startFormat += startdate.getUTCHours() + '시 ' + startdate.getMonth() + '분'
+            endFormat += enddate.getFullYear() + '년 ' + enddate.getMonth() + '월 ' + enddate.getDay() + '일, ';
+            endFormat += enddate.getUTCHours() + '시 ' + enddate.getMonth() + '분'
+            result += '<div class="col-md-4"><a href="/read_auction/' + auc['id'] + '">' + '<article>' +
+                '<img class="img-thumbnail" src="/read_auction/load/' + auc['id'] + '" alt=""/>' +
+                '<h2>' + auc['title'] + '</h2>' + '<hr class="title-underline">' +
+                '<p>' + auc['pcontent'] + '</p>' + '<div>' + '<div>' +
+                '<i class="fa fa-calendar"></i> 시작 : ' + startFormat + '</div>' +
+                '<div>' + '<i class="fa fa-calendar"></i> 종료 : ' + endFormat + '</div>' +
+                '<div>' + '<i class="fa fa-user"></i> 작성자 : ' + auc['userid'] + '</div>' + '<div>' +
+                '<i class="fa fa-tag"></i> 분류 : ' + auc['psubject'] + '</div>' + '</div>' +
+                '</article>' + '</a>' + '</div>'
+            if(i % 3 == 2) result += '</div>';
+        }
+        if(auc_list % 3 != 2) result += '</div>';
+        aucs.html(result);
+    }
+
+    function clickFuture() {
+        if (curr == 0) return;
+        $('#tab' + curr).removeClass('selected-tab');
+        curr = 0;
+        $('#tab' + curr).addClass('selected-tab');
+        $('#adjective').text("진행 예정인");
+        $.ajax({
+            url: "read_auction/plan",
+            type: "post",
+            data: {},
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                auc_list = data;
+                setAucList();
+            }
+        });
+    }
+
+    function clickCurrent() {
+        if (curr == 1) return;
+        $('#tab' + curr).removeClass('selected-tab');
+        curr = 1;
+        $('#tab' + curr).addClass('selected-tab');
+        $('#adjective').text("진행 중인");
+        $.ajax({
+            url: "read_auction/progress",
+            type: "post",
+            data: {},
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                auc_list = data;
+                setAucList();
+            }
+        });
+    }
+
+    function clickPast() {
+        if (curr == 2) return;
+        $('#tab' + curr).removeClass('selected-tab');
+        curr = 2;
+        $('#tab' + curr).addClass('selected-tab');
+        $('#adjective').text("진행 완료된");
+        $.ajax({
+            url: "read_auction/complete",
+            type: "post",
+            data: {},
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                auc_list = data;
+                setAucList();
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        clickCurrent();
     });
 
-    function doSearch(){
+    function doSearch() {
+        var url = '';
+        if(curr == 0) { // 예정
+
+        } else if (curr == 1) { // 진행 중
+
+        } else { //
+
+        }
         return;
     }
 </script>

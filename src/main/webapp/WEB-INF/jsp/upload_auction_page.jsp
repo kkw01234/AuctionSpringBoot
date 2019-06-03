@@ -84,25 +84,6 @@
 <script src="js/sha256.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        /*
-         *  Media helper. Group items, disable animations, hide arrows, enable media and button helpers.
-         */
-        $('.fancybox-media')
-            .attr('rel', 'media-gallery')
-            .fancybox({
-                openEffect: 'none',
-                closeEffect: 'none',
-                prevEffect: 'none',
-                nextEffect: 'none',
-                arrows: false,
-                helpers: {
-                    media: {},
-                    buttons: {}
-                }
-            });
-    });
-
     function uploadAuction() {
         var formData = new FormData();
         formData.append('sourceFile', $('input[type=file]')[0].files[0]);
@@ -121,11 +102,10 @@
             dataType : "text",
             success : function(data) {
                 if(data == 'success') {
-                    alert('프로필 사진 변경에 성공했습니다!');
-                    window.location.href = "#";
+                    alert('관리자 승인을 기다립니다!');
+                    window.location.href = "/auction_page";
                 } else {
-                    alert('알 수 없는 오류가 발생했습니다!');
-                    window.location.href = "#";
+                    alert('등록에 실패했습니다!');
                 }
             }
         });

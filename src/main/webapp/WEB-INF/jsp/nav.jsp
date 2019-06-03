@@ -1,8 +1,15 @@
 <%@ page import="io.kkw.auction.spring.bean.AucUser" %>
+<%@ page import="io.kkw.auction.spring.bean.AucAdmin" %>
+<%@ page import="io.kkw.auction.spring.bean.UserBean" %>
 <%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" isELIgnored="false" %>
 <%
-    AucUser user = (AucUser) session.getAttribute("user");
+    UserBean user = (UserBean) session.getAttribute("user");
+    boolean isManager = false;
+    if(user instanceof AucAdmin) {
+        isManager = true;
+    }
+
 %>
 <html>
 <head>
@@ -16,23 +23,23 @@
     <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
 
     <!-- for modal -->
-    <link href="css/main.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
 
     <!-- normalize core CSS -->
-    <link href="css/normalize.css" rel="stylesheet">
+    <link href="/css/normalize.css" rel="stylesheet">
 
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="bootstrap/css/carousel.css" rel="stylesheet">
-    <link href="bootstrap/fonts/glyphicons-halflings-regular.eot" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bootstrap/css/carousel.css" rel="stylesheet">
+    <link href="/bootstrap/fonts/glyphicons-halflings-regular.eot" rel="stylesheet">
 
     <!-- Load jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="bootstrap/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="/bootstrap/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-    <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
+    <script src="/bootstrap/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -49,13 +56,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
     <!-- Menu shrinking -->
-    <script type="text/javascript" src="js/menu.js"></script>
+    <script type="text/javascript" src="/js/menu.js"></script>
 
     <!-- Main styles of this template -->
-    <link href="css/style.min.css?v=1.0.0" rel="stylesheet">
+    <link href="/css/style.min.css?v=1.0.0" rel="stylesheet">
 
     <!-- Custom CSS. Input here your changes -->
-    <link href="css/custom.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet">
     <style>
         .nav-content {
             margin: 10px 0px;
@@ -79,7 +86,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/"><img class="logo" src="img/logo.jpg" alt="Logo"></a>
+            <a href="/"><img class="logo" src="/img/logo.jpg" alt="Logo"></a>
         </div>
         <nav class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -92,8 +99,17 @@
                 } else {
                 %>
                 <li class="nav-content"><a href="/auction_page">경매장</a></li>
-
-                <li class="nav-content"><a href="#">개인정보</a></li>
+                <%
+                    if(isManager) {
+                %>
+                <li class="nav-content"><a href="/admin">관리기능</a></li>
+                <%
+                    } else {
+                %>
+                <li class="nav-content"><a href="/user/mypage">개인정보</a></li>
+                <%
+                    }
+                %>
                 <li class="nav-content"><a href="/logout">로그아웃</a></li>
                 <%
                     }
@@ -184,39 +200,9 @@
 
 <!-- Scripts -->
 <!-- Loads Bootstrap Main JS -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- JQuery JavaScript -->
-<script src="js/jquery.min.js"></script>
-<!-- Bootstrap core JavaScript -->
-<script src="js/bootstrap.bundle.min.js"></script>
-<!--  SHA256 HASH JavaScript -->
-<script src="js/sha256.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        /*
-         *  Media helper. Group items, disable animations, hide arrows, enable media and button helpers.
-         */
-        $('.fancybox-media')
-            .attr('rel', 'media-gallery')
-            .fancybox({
-                openEffect: 'none',
-                closeEffect: 'none',
-                prevEffect: 'none',
-                nextEffect: 'none',
-                arrows: false,
-                helpers: {
-                    media: {},
-                    buttons: {}
-                }
-            });
-    });
-
-    function clickRegister() {
-        $('#loginModal').modal('hide');
-        $('#registerModal').modal('show');
-    }
-
     function loginError(choose) {
         switch (choose) {
             case 1:
@@ -246,10 +232,14 @@
                 id: email,
                 password: password
             },
-            dataType: "html",
+            dataType: "text",
             success: function (data) {
                 if (data == 'success') {
                     location.href = '/'
+                } else if( data == 'stop user'){
+                    alert('정지당한 유저입니다. 관리자에게 문의하세요.');
+                } else {
+                    alert('잘못된 아이디, 비밀번호입니다.');
                 }
             }
         });
@@ -338,9 +328,27 @@
             success: function (data) {
                 if (data == 'success') {
                     location.href = '/'
+                } else {
+                    alert('실패했습니다.');
                 }
             }
         });
     }
+
+    // function requestServer(){
+    //     $.ajax({
+    //         url: "/check",
+    //         type: "post",
+    //         data: {
+    //         },
+    //         dataType: "text",
+    //         success: function (data) {
+    //         }
+    //     });
+    // }
+    //
+    // $(document),ready(function (){
+    //     setInterval(requestServer, 2000);
+    // })
 
 </script>

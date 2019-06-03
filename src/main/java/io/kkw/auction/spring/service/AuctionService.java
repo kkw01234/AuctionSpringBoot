@@ -133,7 +133,7 @@ public class AuctionService {
     //id = product_id , admin_id = admin_id
     // 허가 하기
     public boolean checkAuthorize(long id, String admin_id){
-        Optional<AucProgress> aucProgressOptional = aucProgressRepository.findByProductIdAndApproval(id,1);
+        Optional<AucProgress> aucProgressOptional = aucProgressRepository.findByProductIdAndApproval(id,0);
         AucProgress aucProgress = aucProgressOptional.get();
         try {
             aucProgress.setApproval(1);

@@ -36,8 +36,6 @@ public class AuctionReadController {
     @RequestMapping("/{id}") //한개씩
     public String readAuctionInfo_page(Model model, HttpServletRequest request, @PathVariable long id) throws IOException {
         AucProduct aucProduct = auctionService.findInfo(id);
-        InputStream in = getClass().getResourceAsStream(aucProduct.getPicture());
-        aucProduct.setPicture("");
         if(aucProduct.getEnddate().after(new Date())){
             AucComplete aucComplete = auctionService.findComplete(id);
             model.addAttribute("CompleteBean", aucComplete);
@@ -45,9 +43,9 @@ public class AuctionReadController {
             AucProgress progressBean = auctionService.findProgress(id);
             model.addAttribute("progressBean", progressBean);
         }
-        model.addAttribute("informationBean",aucProduct);
-        model.addAttribute("picture", IOUtils.toByteArray(in));
-        return "read_action_page";
+        Gson gson = new Gson();
+        model.addAttribute("informationBean",gson.toJson(aucProduct));
+        return "read_auction_page";
     }
 
     @ResponseBody
@@ -177,7 +175,7 @@ public class AuctionReadController {
     //값 확인
     @ResponseBody
     @RequestMapping("/price/{id}")
-    public long currentPrice(@PathVariable int id, @SessionAttribute("user") UserBean userBean){
+    public long currentPrice(@PathVariable int id){
         long current = biddingService.currentbidding(id);
         return current;
     }

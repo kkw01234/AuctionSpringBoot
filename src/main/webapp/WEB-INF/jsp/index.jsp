@@ -121,24 +121,6 @@
 <script src="js/sha256.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        /*
-         *  Media helper. Group items, disable animations, hide arrows, enable media and button helpers.
-         */
-        $('.fancybox-media')
-            .attr('rel', 'media-gallery')
-            .fancybox({
-                openEffect: 'none',
-                closeEffect: 'none',
-                prevEffect: 'none',
-                nextEffect: 'none',
-                arrows: false,
-                helpers: {
-                    media: {},
-                    buttons: {}
-                }
-            });
-    });
 </script>
 
 </body>

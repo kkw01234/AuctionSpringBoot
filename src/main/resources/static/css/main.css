@@ -259,8 +259,8 @@ body {
 .insert-div {
     background-color: #dcdee0;
     text-align: center;
-    margin: 40px 150px;
     padding: 20px;
+    margin-bottom : 20px;
     border: #7a7c88 3px solid;
     border-radius: 4px;
 }
@@ -292,4 +292,73 @@ body {
 
 .search-container img {
     width: 25px;
+}
+
+.my-page-tab-container {
+}
+
+.my-page-content-container {
+    border-left : 2px solid #efefef;
+}
+
+.my-page-tab {
+    font-size : 20px;
+    font-weight : 700;
+    margin : 10px 0;
+    text-align : center;
+    color : #7a7c82;
+}
+
+.tab-selected {
+    color : #ff5800;
+}
+
+.my-page-section {
+    padding-top : 60px !important;
+}
+
+.my-page-label {
+    margin : 3px 0;
+    padding : 7px;
+    font-weight : 700;
+    font-size : 18px;
+    border-right : 2px solid #7a7c82;
+    border-top : 1px solid #7a7c92;
+    border-bottom : 1px solid #7a7c92;
+    text-align : center;
+
+}
+
+.my-page-value {
+    margin : 3px 0;
+    padding : 7px;
+    border-top : 1px solid #7a7c92;
+    border-bottom : 1px solid #7a7c92;
+    font-size : 18px;
+}
+
+.message-col {
+    background-color : #f8f8f8;
+    text-align: center;
+    border : 1px solid #7a7c92;
+    font-size : 18px;
+    font-weight : 700;
+    padding-top: 5px;
+    padding-bottom : 5px;
+}
+
+.message-val {
+    border-bottom : 1px solid #7a7c92;
+    border-left : 1px solid #7a7c92;
+    border-right : 1px solid #7a7c92;
+    text-align : center;
+    padding-top: 5px;
+    padding-bottom : 5px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    height : 41px;
+}
+
+.message-val a {
+    color : #7a7c92;
 }
