@@ -43,7 +43,6 @@ public class AuctionReadController {
         }
         model.addAttribute("informationBean",aucProduct);
         model.addAttribute("picture", IOUtils.toByteArray(in));
-        //Join 안하게 내가 짜놨네...
         return "read_action_page";
     }
 
@@ -54,7 +53,7 @@ public class AuctionReadController {
         UserBean userBean = (UserBean)httpSession.getAttribute("user");
         try{
             AucUser aucUser =(AucUser) userBean;
-            //List<AucProduct> beans = auctionService.findMyAuction(aucUser.getId());
+            List<AucProduct> beans = auctionService.findMyAuction(aucUser.getId());
 
 
 
@@ -124,7 +123,7 @@ public class AuctionReadController {
         List<AucProduct> aucProducts = auctionService.searchAuction(search);
         return aucProducts;
     }
-
+    //이미지 확인
     @ResponseBody
     @GetMapping(
             value = "/load/{id}",
@@ -135,7 +134,7 @@ public class AuctionReadController {
         ResponseEntity<byte[]> entity = null;
         AucProduct aucProduct = auctionService.findInfo(product_id);
         try{
-            in = new FileInputStream("D:/attachments/"+aucProduct.getPicture());
+            in = new FileInputStream("C:/img/"+aucProduct.getPicture());
             entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), HttpStatus.CREATED);
         }catch(Exception e){
             e.printStackTrace();
@@ -147,7 +146,32 @@ public class AuctionReadController {
         return entity;
     }
 
+    //진행 예정+검색
+    @ResponseBody
+    @RequestMapping("/plan/search")
+    public List<AucProduct> readPlanAndSearch(@RequestParam("search") String search){
+        List<AucProduct> aucProducts = auctionService.findAllPlanAndSearch(search);
 
+        return aucProducts;
+
+    }
+
+    //진행 중 + 검색
+    @ResponseBody
+    @RequestMapping("/progress/search")
+    public  List<AucProduct>  readProgressAndSearch(@RequestParam("search") String search){
+        List<AucProduct> aucProducts = auctionService.findAllProgressAndSearch(search);
+
+        return aucProducts;
+    }
+    //완료된 정보 + 검색
+    @ResponseBody
+    @RequestMapping("/complete/search")
+    public  List<AucProduct> readCompleteAndSearch(@RequestParam("search") String search){
+        List<AucProduct> aucProducts = auctionService.findAllCompleteAndSearch(search);
+
+        return aucProducts;
+    }
     //필요한 거
 
     /*

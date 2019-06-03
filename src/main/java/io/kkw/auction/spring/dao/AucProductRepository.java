@@ -53,10 +53,22 @@ public interface AucProductRepository extends CrudRepository<AucProduct,Long> {
 
 
 
-
-    @Query(nativeQuery = true, value = "SELECT * FROM Auc_Product i, Auc_Progress p WHERE  i.id=p.product_id and approval = 1 and i.title LIKE %:search%")
+    //전체 검색 (관리자용)
+    @Query(nativeQuery = true, value = "SELECT * FROM Auc_Product i WHERE i.title LIKE %:search%")
     List<AucProduct> searchAuction(@Param("search") String search);
+    //경매 이전 검색
+    @Query(nativeQuery = true, value = "SELECT * FROM Auc_Product i, Auc_Progress p Where i.id = p.product_id and approval = 1 and i.start_date > :today and i.title LIKE %:search% ")
+    List<AucProduct> findAllByAucPlanAndSearch(@Param("search") String search, @Param("today") Date today);
+    //경매 중 검색
+    @Query(nativeQuery = true, value = "SELECT * FROM Auc_Product i, Auc_Progress p Where i.id = p.product_id and approval = 1 and i.start_date < :today and i.end_date > :today and i.title LIKE %:search% ")
+    List<AucProduct> findAllByAucProgressAndSearch(@Param("search") String search, @Param("today") Date today);
+    //경매 이후 검색
+    @Query(nativeQuery = true, value = "SELECT * FROM Auc_Product i, Auc_Complete p Where i.id = p.product_id and i.title LIKE %:search% ")
+    List<AucProduct> findAllByAucCompleteAndSearch(@Param("search") String search);
 
 
+    @Transactional
+    @Procedure(procedureName = "deleteAuction")
+    long deleteAuction(@Param("product_id") long product_id, @Param("user_id") String user_id);
 }
 

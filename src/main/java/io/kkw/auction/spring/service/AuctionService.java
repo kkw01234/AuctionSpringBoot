@@ -9,6 +9,8 @@ import io.kkw.auction.spring.dao.AucCompleteRepository;
 import io.kkw.auction.spring.dao.AucProductRepository;
 import io.kkw.auction.spring.dao.AucProgressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -110,10 +112,16 @@ public class AuctionService {
     }
 
 
-    //경매정보삭제 (단 경매 시작 이전에만 지울 수 있게 하는 프로시저, 트리거 작성)
-    public boolean deleteAuction(long id){
-        boolean result = false;
-        return result;
+    //경매정보삭제 (단 경매 시작 이전에만 지울 수 있게 하는 함수, 트리거 작성)
+    public ResponseEntity<Object> deleteAuction(long product_id, String user_id){
+        try {
+            aucProgressRepository.deleteByProductId(product_id);
+            aucProductRepository.deleteById(product_id);
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<Object>("false",HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Object>("true",HttpStatus.BAD_REQUEST);
     }
 
     //id = product_id , admin_id = admin_id
@@ -137,7 +145,7 @@ public class AuctionService {
         AucProgress aucProgress = aucProgressOptional.get();
         try{
             aucProgress.setApproval(0);
-            aucProgress.setAdminId("");
+            aucProgress.setAdminId(null);
             aucProgressRepository.save(aucProgress);
             return true;
         }catch(Exception e){
@@ -164,26 +172,41 @@ public class AuctionService {
             return null;
         }
     }
-
+    //허가X
     public List<AucProduct> unAuthorized(){
         List<AucProduct> aucProducts = aucProductRepository.findAllByAuthorize(0);
-
         return aucProducts;
     }
-
+    //허가 O
     public List<AucProduct> authorized(){
         List<AucProduct> aucProducts = aucProductRepository.findAllByAuthorize(1);
         return aucProducts;
     }
-
+    //모든 것
     public Iterable<AucProduct> findAll(){
         Iterable<AucProduct> aucProducts = aucProductRepository.findAll();
         return aucProducts;
     }
-
+    //모든 거 검색
     public List<AucProduct> searchAuction(String search){
         List<AucProduct> aucProducts = aucProductRepository.searchAuction(search);
         return aucProducts;
     }
+    //경매 이전 검색
+    public List<AucProduct> findAllPlanAndSearch(String search){
+        List<AucProduct> aucProducts = aucProductRepository.findAllByAucPlanAndSearch(search, new Date());
+        return aucProducts;
+    }
+    //경매중 검색
+    public List<AucProduct> findAllProgressAndSearch(String search){
+        List<AucProduct> aucProducts = aucProductRepository.findAllByAucProgressAndSearch(search, new Date());
+        return aucProducts;
+    }
+    //경매 후 검색
+    public List<AucProduct> findAllCompleteAndSearch(String search){
+        List<AucProduct> aucProducts = aucProductRepository.findAllByAucCompleteAndSearch(search);
+        return aucProducts;
+    }
+
 
 }

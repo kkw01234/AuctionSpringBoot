@@ -14,21 +14,17 @@ import java.util.Date;
 @IdClass(AucNoteId.class)
 @Table(name="AUC_NOTE")
 public class AucNote {
+
     @Id
     @Column(name = "sendid")
-    private String send_id;
+    private String sendId;
     @Id
     @Column(name = "recievieid")
-    private String receive_id;
+    private String receiveId;
 
     private String content;
 
     private Date note_date;
 }
 
-@Data
-class AucNoteId implements Serializable {
-    private String send_id;
 
-    private String receive_id;
-}

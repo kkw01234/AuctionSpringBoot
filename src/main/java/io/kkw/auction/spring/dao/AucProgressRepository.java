@@ -17,4 +17,6 @@ public interface AucProgressRepository extends CrudRepository<AucProgress,Long> 
     @Query("FROM AucProgress p WHERE p.approval = :approval")
     List<AucProgress> approval(@Param("approval") long approval);
     */
+
+    void deleteByProductId(long product_id);
 }

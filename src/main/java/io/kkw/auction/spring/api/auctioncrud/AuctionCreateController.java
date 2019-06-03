@@ -72,7 +72,7 @@ public class AuctionCreateController {
         do{
             SimpleDateFormat format = new SimpleDateFormat(("yyyyMMddHHmmss"));
             String today =format.format(System.currentTimeMillis());
-            destinationFileName = today+ RandomString.DEFAULT_LENGTH+"."+sourceFileNameExtension;
+            destinationFileName = today+ RandomString.make(10)+"."+sourceFileNameExtension;
             destinationFile = new File(fileurl+destinationFileName);
         }while(destinationFile.exists());
 

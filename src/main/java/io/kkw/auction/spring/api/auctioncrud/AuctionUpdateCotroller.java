@@ -41,7 +41,7 @@ public class AuctionUpdateCotroller {
     }
 
     //관리자 허가 취소
-    @RequestMapping("/cancelahthorize/{id}")
+    @RequestMapping("/cancleauthorized/{id}")
     public ResponseEntity<Object> cancelAuthorize(@SessionAttribute("user") UserBean user, @PathVariable int id){
         AucAdmin aucAdmin = null;
         if (user instanceof  AucAdmin) {
