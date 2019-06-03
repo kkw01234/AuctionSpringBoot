@@ -10,6 +10,6 @@ public interface AucCompleteRepository extends CrudRepository<AucComplete, Long>
 
     Optional<AucComplete> findById(long id);
 
-    @Query(value = "SELECT auc_complete_auto.nextval FROM dual", nativeQuery = true)
+    @Query(nativeQuery = true, value = "SELECT AUC_COMPLETE_AUTO.nextval FROM dual")
     long getNextVal();
 }

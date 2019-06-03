@@ -52,11 +52,11 @@ public class LoginController {
         }else{
             model.addAttribute("userId",aucAdmin.getId());
             session.setAttribute("user",aucAdmin);
+            System.out.println("로그인 성공");
+            return "success";
         }
         //관리자일경우
 
-
-        return "redirect:/";
     }
 
     //로그아웃

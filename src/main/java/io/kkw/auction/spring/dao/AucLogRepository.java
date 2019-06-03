@@ -16,7 +16,9 @@ public interface AucLogRepository extends CrudRepository<AucLog, Long> {
     @Procedure(procedureName = "insertBidding")
     void saveBidding(@Param("product_id") long product_id, @Param("user_id") String user_id, @Param("price") long price);
 
-    Optional<AucLog> findByProductIdOrderByPrice(@Param("productId") long product_id);
+
+    @Query(nativeQuery = true , value = "SELECT * FROM AUC_LOG WHERE product_id = :product_id ORDER BY price")
+    Optional<AucLog> findByProductIdOrderByPrice(@Param("product_id") long product_id);
 
 
 }

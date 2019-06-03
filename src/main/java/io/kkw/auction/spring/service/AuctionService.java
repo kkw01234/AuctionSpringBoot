@@ -226,8 +226,8 @@ public class AuctionService {
                     Optional<AucLog> aucLogOptional = aucLogRepository.findByProductIdOrderByPrice(aucProduct.getId());
                     AucLog aucLog = aucLogOptional.orElseThrow(() -> new ClassCastException());
                     AucComplete complete = new AucComplete();
-                    long id = aucCompleteRepository.getNextVal();
-                    complete.setId(id);
+                    long nextVal = aucCompleteRepository.getNextVal();
+                    complete.setId(nextVal);
                     complete.setProductId(aucProduct.getId());
                     complete.setComplete_price(aucLog.getPrice());
                     complete.setTender_user_id(aucLog.getUserId());
