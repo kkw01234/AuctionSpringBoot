@@ -34,6 +34,9 @@ public class LoginController {
         if (userBean instanceof AucUser) {
             aucUser = (AucUser) userBean;
             aucUser.setPassword("");
+            if(aucUser.getStopdate() != null){
+                return "stop user";
+            }
         }else if(userBean instanceof AucAdmin) {
             aucAdmin = (AucAdmin) userBean;
             aucAdmin.setPassword("");
