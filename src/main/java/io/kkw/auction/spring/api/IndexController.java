@@ -27,11 +27,11 @@ public class IndexController {
 
 
     //시간 지난거 확인
-    @PostMapping("/find")
+    @PostMapping("/check")
     @ResponseBody
     public String time(){
-        //모든 것을 다 긁어서 비교
         time = true;
+        auctionService.findCheck();
         time = false;
         return null;
     }

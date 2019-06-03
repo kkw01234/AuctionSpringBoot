@@ -45,7 +45,13 @@ public class NoteService {
     }
 
     //쪽지 보내기
-    public boolean sendNote(AucNote aucNote){
+    public boolean sendNote(String sendId, String receiveId,Date today, String content){
+        AucNote aucNote = new AucNote();
+        aucNote.setSendId(sendId);
+        aucNote.setReceiveId(receiveId);
+        aucNote.setDataSend(today);
+        aucNote.setContent(content);
+
         long nextval = aucNoteRepository.getNextVal();
         aucNote.setId(nextval);
         try {

@@ -108,6 +108,26 @@ public class UserController {
         request.getSession().setAttribute("user",bean);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
+    @ResponseBody
+    @RequestMapping("/mypage/updatepassword")
+    public ResponseEntity<Object> UpdatePassword( @SessionAttribute("user") UserBean userBean,
+                                                  @RequestParam("password") String password,
+                                                  @RequestParam("changepassword") String changepassword,
+                                                  HttpServletRequest request){
+
+        if(!(userBean instanceof AucUser)){
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+        AucUser user = (AucUser)userBean;
+        AucUser finduser = userService.findUser(user.getId());
+        if(finduser.getPassword().equals(password)){
+            finduser.setPassword(changepassword);
+            AucUser bean = userService.addUser(finduser);
+            request.getSession().setAttribute("user",bean);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }else
+            return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+    }
 
     @RequestMapping("/mypage/updatepage")
     public String updatemyPage(){

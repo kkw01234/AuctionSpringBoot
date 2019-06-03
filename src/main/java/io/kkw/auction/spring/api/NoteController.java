@@ -66,13 +66,10 @@ public class NoteController {
         if(!(userBean instanceof AucUser))
             return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
         AucUser user = (AucUser) userBean;
-        AucNote note = new AucNote();
         Date today = new Date();
-        note.setReceiveId(receiveId);
-        note.setSendId(user.getId());
-        note.setDataSend(today);
-        note.setContent(content);
-        boolean result = noteService.sendNote(note);
+
+
+        boolean result = noteService.sendNote(user.getId(),receiveId,today,content);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

@@ -15,8 +15,8 @@ public class AucLog implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
-    private int product_id;
+    @Column(name = "product_id")
+    private int productId;
 
     private String user_id;
 

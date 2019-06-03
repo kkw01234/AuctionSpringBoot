@@ -2,9 +2,7 @@ package io.kkw.auction.spring.service;
 
 
 import io.kkw.auction.spring.bean.*;
-import io.kkw.auction.spring.dao.AucCompleteRepository;
-import io.kkw.auction.spring.dao.AucProductRepository;
-import io.kkw.auction.spring.dao.AucProgressRepository;
+import io.kkw.auction.spring.dao.*;
 import jdk.nashorn.internal.runtime.ListAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +23,12 @@ public class AuctionService {
 
     @Autowired
     AucCompleteRepository aucCompleteRepository;
+
+    @Autowired
+    AucLogRepository aucLogRepository;
+
+    @Autowired
+    NoteService noteService;
 
     public boolean addAuction(AucProduct bean){
         AucProduct a = aucProductRepository.save(bean);
@@ -208,6 +212,36 @@ public class AuctionService {
     public List<AucProduct> findAllCompleteAndSearch(String search){
         List<AucProduct> aucProducts = aucProductRepository.findAllByAucCompleteAndSearch(search);
         return aucProducts;
+    }
+
+    public void findCheck(){
+
+        Iterable<AucProduct> aucProducts = aucProductRepository.findAll();
+        Iterator<AucProduct> iterator = aucProducts.iterator();
+        while(iterator.hasNext()){
+            Date today = new Date();
+            AucProduct aucProduct = iterator.next();
+            if(aucProduct.getEnddate().after(today)){
+                    aucProgressRepository.deleteByProductId(aucProduct.getId());
+                    AucLog aucLog = aucLogRepository.findByProductIdAndOrderByPrice();
+                    AucComplete complete = new AucComplete();
+                    long id = aucCompleteRepository.getNextVal();
+                    complete.setId(id);
+                    complete.setProductId(aucProduct.getId());
+                    complete.setComplete_price(aucLog.getPrice());
+                    complete.setTender_user_id(aucLog.getUser_id());
+                    aucCompleteRepository.save(complete);
+                    noteService.sendNote(aucProduct.getUserid(),aucLog.getUser_id(),today,content(aucProduct.getTitle(),aucProduct.getId()));
+
+
+            }
+        }
+    }
+
+    public String content(String title, long product_id){
+        String str = "참여하신 경매가 완료 되었습니다. \n 경매 이름 : "+title+"\n"
+                    +"http://localhost://8080/read_auction/"+product_id;
+        return str;
     }
 
 
