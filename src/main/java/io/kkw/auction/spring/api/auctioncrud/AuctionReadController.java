@@ -36,14 +36,15 @@ public class AuctionReadController {
     @RequestMapping("/{id}") //한개씩
     public String readAuctionInfo_page(Model model, HttpServletRequest request, @PathVariable long id) throws IOException {
         AucProduct aucProduct = auctionService.findInfo(id);
-        if(aucProduct.getEnddate().after(new Date())){
+        Gson gson = new Gson();
+        if(aucProduct.getEnddate().before(new Date())){
             AucComplete aucComplete = auctionService.findComplete(id);
-            model.addAttribute("CompleteBean", aucComplete);
+            model.addAttribute("completeBean", gson.toJson(aucComplete));
         }else {
             AucProgress progressBean = auctionService.findProgress(id);
             model.addAttribute("progressBean", progressBean);
         }
-        Gson gson = new Gson();
+
         model.addAttribute("informationBean",gson.toJson(aucProduct));
         return "read_auction_page";
     }

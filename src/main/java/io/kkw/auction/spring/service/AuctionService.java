@@ -226,7 +226,7 @@ public class AuctionService {
             AucProduct aucProduct = iterator.next();
             Optional<AucComplete> aucComplete = aucCompleteRepository.findByProductId(aucProduct.getId());
 
-            if(aucComplete.orElse(null) == null||aucProduct.getEnddate().before(today)){
+            if(aucComplete.orElse(null) == null && aucProduct.getEnddate().before(today)){
                     System.out.println(aucProduct.getId());
                     aucProgressRepository.removeByProductId(aucProduct.getId());
                     List<AucLog> aucLogOptional = aucLogRepository.findByProductIdOrderByPrice(aucProduct.getId());

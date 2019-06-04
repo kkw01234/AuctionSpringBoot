@@ -49,7 +49,10 @@
                 <div class="auction-label col-md-2">마감</div>
                 <div class="auction-value col-md-4" id="endDate"></div>
                 <div class="read-row col-md-12"></div>
-                <div class="col-md-2" style="text-align : center;  border-left : 2px solid #e6e5e5; font-size : 18px; font-weight: 700;">내용</div>
+                <div class="col-md-2"
+                     style="text-align : center;  border-left : 2px solid #e6e5e5; font-size : 18px; font-weight: 700;">
+                    내용
+                </div>
                 <div class="col-md-10" style=" border-right : 2px solid #e6e5e5;color:#ffffff;font-size:18px;"></div>
                 <div class="read-row col-md-12"></div>
                 <div class="auction-value auction-content col-md-12" id="content">
@@ -75,7 +78,8 @@
     var inform = <%=auc%>;
     console.log(inform);
     var curr = 0;
-    function setInform(){
+
+    function setInform() {
         $('#title').text(inform['title']);
         $('#category').text(inform['psubject']);
         $('#userID').text(inform['userid']);
@@ -92,7 +96,7 @@
         $('#endDate').text(endFormat);
         $('#content').text(inform['pcontent']);
         var today = new Date();
-        if(startdate > today) {
+        if (startdate > today) {
             $('#currLabel').html('경매 준비 중입니다!')
             $('#currPriceLabel').html('시작 입찰가');
             $('#informDiv').append('<div class="form-group col-md-4">' +
@@ -102,20 +106,19 @@
                 '<a class="btn btn-primary btn-lg col-md-4" style="margin-top : 15px;" id="currButton">입찰하기</a>');
             $('#currButton').attr('disabled', true);
             $('#inputPrice').attr('readonly', true);
-        } else if (enddate < today){
+        } else if (enddate < today) {
             $('#currLabel').html('경매가 종료되었습니다!')
             $('#currPriceLabel').html('최종 입찰가');
             var complete = <%=complete%>;
             console.log(complete);
-            if(complete['tenderUserId'] == undefined) {
+            if (complete['tenderUserId'] == undefined) {
                 $('#informDiv').append('<div class="col-md-4 curr-auc-label">입찰자가 없습니다!' +
                     '</div><div class="col-md-4"></div>');
             } else {
-
                 var userID = <%if(aucUser != null){%>
-                    <%=aucUser.getId()%>
+                    '<%=aucUser.getId()%>';
                 <%} else {%>
-                    'NONENONENONENONE';
+                'NONENONENONENONE';
                 <% } %>
                 var writerID = inform['userid'];
                 var tenderID = complete['tenderUserId'];
@@ -123,30 +126,30 @@
                 var tenderCheck = complete['tenderIdCheck'];
                 var writerButton = '대기';
                 var tenderButton = '대기';
-                if(writerCheck == undefined) {
+                if (writerCheck != undefined) {
                     writerButton = '승인';
                 }
-                if(tenderCheck == undefined) {
+                if (tenderCheck != undefined) {
                     tenderButton = '승인';
                 }
                 var btnFormat = '승인';
-                if(userID == tenderID) {
-                    if(tenderButton == '대기') {
-                        btnFormat = '<a onclick="clickCheck();"><div class="col-md-12 btn btn-primary btn-sm">승인<div></a>'
+                if (userID == tenderID) {
+                    if (tenderButton == '대기') {
+                        btnFormat = '<a onclick="clickCheck();"><div class="col-md-12 btn btn-primary btn-sm" style="color : white;">승인</div></a>'
                     }
                     $('#informDiv').append('<div class="col-md-8">' +
-                            '<div class="col-md-6">ID</div><div class="col-md-6">State</div>' +
-                            '<div class="col-md-6">' + writerID + '</div><div class="col-md-6">' + writerButton + '</div>' +
-                            '<div class="col-md-6">' + tenderID + '</div><div class="col-md-6">' + btnFormat + '</div>' +
+                        '<div class="col-md-6 curr_price">ID</div><div class="col-md-6 curr_price">State</div>' +
+                        '<div class="col-md-6 curr_price">' + writerID + '</div><div class="col-md-6 curr_price">' + writerButton + '</div>' +
+                        '<div class="col-md-6 curr_price">' + tenderID + '</div><div class="col-md-6 curr_price">' + btnFormat + '</div>' +
                         '</div>');
-                } else if (userID == writerID){
-                    if(tenderButton == '대기') {
-                        btnFormat = '<a onclick="clickCheck();"><div class="col-md-12 btn btn-primary btn-sm">승인<div></a>'
+                } else if (userID == writerID) {
+                    if (writerButton == '대기') {
+                        btnFormat = '<a onclick="clickCheck();"><div class="col-md-12 btn btn-primary btn-sm" style="color : white;">승인</div></a>'
                     }
                     $('#informDiv').append('<div class="col-md-8">' +
-                        '<div class="col-md-6">ID</div><div class="col-md-6">State</div>' +
-                        '<div class="col-md-6">' + writerID + '</div><div class="col-md-6">' + btnFormat + '</div>' +
-                        '<div class="col-md-6">' + tenderID + '</div><div class="col-md-6">' + tenderButton + '</div>' +
+                        '<div class="col-md-6 curr_price">ID</div><div class="col-md-6 curr_price">State</div>' +
+                        '<div class="col-md-6 curr_price">' + writerID + '</div><div class="col-md-6 curr_price">' + btnFormat + '</div>' +
+                        '<div class="col-md-6 curr_price">' + tenderID + '</div><div class="col-md-6 curr_price">' + tenderButton + '</div>' +
                         '</div>');
                 } else {
                     $('#informDiv').append('<div class="col-md-4 curr_price">최종 입찰자 : ' + tenderID + '</div>');
@@ -164,21 +167,21 @@
         }
     }
 
-    function clickCheck(){
+    function clickCheck() {
         $.ajax({
             url: "/read_auction/check/" + inform['id'],
             type: "post",
             data: {},
             dataType: "text",
             success: function (data) {
-               location.href = '/read_auction/' + inform['id'];
+                location.href = '/read_auction/' + inform['id'];
             }, error: function (error) {
                 alert('승인에 실패했습니다.');
             }
         });
     }
 
-    function getCurrPrice(){
+    function getCurrPrice() {
         $.ajax({
             url: "/read_auction/price/" + inform['id'],
             type: "post",
@@ -194,7 +197,7 @@
         });
     }
 
-    function doAuc(){
+    function doAuc() {
         <%if (user == null) { %>
         $('#loginModal').modal('show');
         <%} else {%>
@@ -207,24 +210,24 @@
             url: "/bidding/" + inform['id'],
             type: "post",
             data: {
-                'price' : want
+                'price': want
             },
             dataType: "text",
             success: function (data) {
-                if(data == 'true') {
+                if (data == 'true') {
                     alert('입찰에 성공했습니다.');
                 } else {
                     alert('입찰 실패!');
                 }
             },
-            error: function(error) {
+            error: function (error) {
                 alert('입찰 실패!');
             }
         });
         <% } %>
     }
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         setInform();
         setInterval(getCurrPrice, 1000);
     });
