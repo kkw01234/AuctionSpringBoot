@@ -160,7 +160,7 @@ public class AuctionService {
         }
     }
     //경매 정보 수정
-    public AucProduct modifyAuction(long id, String user_id, String title,  String psubject, String pcontent, String picture, Date startdate, Date enddate){
+    public AucProduct modifyAuction(long id, String user_id, String title,  String psubject, String pcontent, String picture, Date startdate, Date enddate, long price){
         Optional<AucProduct> product = aucProductRepository.findById(id);
         try{
             AucProduct aucProduct = product.get();
@@ -171,6 +171,7 @@ public class AuctionService {
                 aucProduct.setPicture(picture);
             aucProduct.setStartdate(startdate);
             aucProduct.setEnddate(enddate);
+            aucProduct.setPrice(price);
             AucProduct result = aucProductRepository.save(aucProduct);
             return result;
         }catch(Exception e) {
@@ -258,10 +259,10 @@ public class AuctionService {
         String str = "";
         if(finish == 0) {
             str = "물건이 낙찰 되었습니다. 경매 이름 : " + title + "<br>"
-                    + "<a href=http://localhost://8080/read_auction/" + product_id+">확인하러가기</a>";
+                    + "<a href=http://localhost:8080/read_auction/" + product_id+">확인하러가기</a>";
         }else if(finish == 1){
             str = "경매가 유찰되었습니다. 경매 이름 : " + title + "<br>"
-                    + "<a href=http://localhost://8080/read_auction/" + product_id+">확인하러가기</a>";
+                    + "<a href=http://localhost:8080/read_auction/" + product_id+">확인하러가기</a>";
         }
         return str;
     }

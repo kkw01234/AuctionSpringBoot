@@ -60,7 +60,12 @@ public class AuctionUpdateCotroller {
     //개인이 올린 것을 수정하기
     @ResponseBody
     @RequestMapping
-    public String modifyAuctionPage(Model model, @SessionAttribute("user") UserBean userBean,@RequestParam("id")long id,  HttpServletRequest request, @RequestParam("isNewImage") boolean isNewImage,@RequestPart MultipartFile sourceFile){
+    public String modifyAuctionPage(@SessionAttribute("user") UserBean userBean,
+                                    @RequestParam("id")long id,
+                                    HttpServletRequest request,
+                                    @RequestParam("isNewImage") boolean isNewImage,
+                                    @RequestPart MultipartFile sourceFile,
+                                    @RequestParam("price") long price){
 
 
         if (!(userBean instanceof AucUser)){
@@ -74,10 +79,11 @@ public class AuctionUpdateCotroller {
         if(isNewImage){
             picture = AuctionCreateController.uploadImage(sourceFile);
         }
+
         SimpleDateFormat format = new SimpleDateFormat(("yyyy-MM-dd HH:mm:ss"));
         Date startdate = new Date(request.getParameter("startdate"));
         Date enddate = new Date(request.getParameter("enddate"));
-        AucProduct aucProduct = auctionService.modifyAuction(id, aucUser.getId(),title,psubject,pcontent,picture,startdate,enddate);
+        AucProduct aucProduct = auctionService.modifyAuction(id, aucUser.getId(),title,psubject,pcontent,picture,startdate,enddate,price);
         return null;
     }
 

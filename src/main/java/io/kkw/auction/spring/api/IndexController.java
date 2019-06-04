@@ -34,7 +34,7 @@ public class IndexController {
     @ResponseBody
     public ResponseEntity<Object> time(){
         Date now = new Date();
-        if (date == null || date.getTime() - now.getTime() >= 60000) {
+        if (date == null || date.getTime() - now.getTime() >= 59000) {
             System.out.println("Check Start");
             long start = System.currentTimeMillis();
             auctionService.findCheck();
