@@ -1,5 +1,6 @@
 package io.kkw.auction.spring.api.auctioncrud;
 
+import com.google.gson.Gson;
 import io.kkw.auction.spring.bean.*;
 import io.kkw.auction.spring.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,9 +82,10 @@ public class AuctionUpdateCotroller {
     }
 
     //수정 페이지
-    @RequestMapping
-    public String modifyAction(HttpServletRequest request){
-
+    @RequestMapping("/{id}")
+    public String modifyAction(@PathVariable int id, Model model){
+        AucProduct aucProduct = auctionService.findInfo(id);
+        model.addAttribute("product", new Gson().toJson(aucProduct));
         return "mod";
     }
 

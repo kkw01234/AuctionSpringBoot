@@ -335,20 +335,20 @@
         });
     }
 
-    // function requestServer(){
-    //     $.ajax({
-    //         url: "/check",
-    //         type: "post",
-    //         data: {
-    //         },
-    //         dataType: "text",
-    //         success: function (data) {
-    //         }
-    //     });
-    // }
-    //
-    // $(document),ready(function (){
-    //     setInterval(requestServer, 2000);
-    // })
+    function requestServer(){
+        $.ajax({
+            url: "/check",
+            type: "post",
+            data: {
+            },
+            dataType: "text",
+            success: function (data) {
+            }
+        });
+    }
+
+    $(document).ready(function (){
+        setInterval(requestServer, 2000);
+    })
 
 </script>

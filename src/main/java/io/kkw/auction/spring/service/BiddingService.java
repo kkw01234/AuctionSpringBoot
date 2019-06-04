@@ -22,8 +22,13 @@ public class BiddingService {
 
     //경매 입찰
     public boolean bidding(long product_id, String user_id, long price){
-        aucLogRepository.saveBidding(product_id, user_id, price);
-        return false;
+        try {
+            aucLogRepository.saveBidding(product_id, user_id, price);
+            return true;
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     //현재까지의 금액

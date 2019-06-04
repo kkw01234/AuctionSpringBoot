@@ -221,28 +221,47 @@ public class AuctionService {
         while(iterator.hasNext()){
             Date today = new Date();
             AucProduct aucProduct = iterator.next();
-            if(aucProduct.getEnddate().after(today)){
+            if(aucProduct.getEnddate().before(today)){
                     aucProgressRepository.deleteByProductId(aucProduct.getId());
                     List<AucLog> aucLogOptional = aucLogRepository.findByProductIdOrderByPrice(aucProduct.getId());
-                    AucLog aucLog = aucLogOptional.get(0);
-                    AucComplete complete = new AucComplete();
                     long nextVal = aucCompleteRepository.getNextVal();
+                    if(aucLogOptional.size() != 0){
+                        AucLog aucLog = aucLogOptional.get(0);
+                        AucComplete complete = new AucComplete();
+                        complete.setId(nextVal);
+                        complete.setProductId(aucProduct.getId());
+                        complete.setCompletePrice(aucLog.getPrice());
+                        complete.setTenderUserId(aucLog.getUserId());
+                        aucCompleteRepository.save(complete);
+                        noteService.sendNote(aucProduct.getUserid(),aucLog.getUserId(),today,content(aucProduct.getTitle(),aucProduct.getId(),true));
+                    }else{
+                        AucComplete complete = new AucComplete();
+                        complete.setId(nextVal);
+                        complete.setProductId(aucProduct.getId());
+                        complete.setCompletePrice(0);
+                        aucCompleteRepository.save(complete);
+                        noteService.sendNote(aucProduct.getUserid(),aucProduct.getUserid(),today,content(aucProduct.getTitle(),aucProduct.getId(),false));
+
+                    }
+
+
                     System.out.println(nextVal);
-                    complete.setId(nextVal);
-                    complete.setProductId(aucProduct.getId());
-                    complete.setCompletePrice(aucLog.getPrice());
-                    complete.setTenderUserId(aucLog.getUserId());
-                    aucCompleteRepository.save(complete);
-                    noteService.sendNote(aucProduct.getUserid(),aucLog.getUserId(),today,content(aucProduct.getTitle(),aucProduct.getId()));
+
 
 
             }
         }
     }
 
-    public String content(String title, long product_id){
-        String str = "참여하신 경매가 완료 되었습니다. \n 경매 이름 : "+title+"\n"
-                    +"http://localhost://8080/read_auction/"+product_id;
+    public String content(String title, long product_id, boolean finish){
+        String str = "";
+        if(finish) {
+            str = "참여하신 경매가 완료 되었습니다. \n 경매 이름 : " + title + "\n"
+                    + "http://localhost://8080/read_auction/" + product_id;
+        }else{
+            str = "경매에 참여한 회원이 없으므로 유찰되었습니다.\n 경매 이름 : " + title + "\n"+
+                    "                    + \"http://localhost://8080/read_auction/\" + product_id;";
+        }
         return str;
     }
 
