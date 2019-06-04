@@ -63,7 +63,28 @@ public class AuctionUpdateCotroller {
     public String modifyAuctionPage(@SessionAttribute("user") UserBean userBean,
                                     @RequestParam("id")long id,
                                     HttpServletRequest request,
-                                    @RequestParam("isNewImage") boolean isNewImage,
+                                    @RequestParam("price") long price){
+
+
+        if (!(userBean instanceof AucUser)){
+            return null;
+        }
+        AucUser aucUser = (AucUser) userBean;
+        String title = request.getParameter("title");
+        String psubject = request.getParameter("psubject");
+        String pcontent = request.getParameter("pcontent");
+        SimpleDateFormat format = new SimpleDateFormat(("yyyy-MM-dd HH:mm:ss"));
+        Date startdate = new Date(request.getParameter("startdate"));
+        Date enddate = new Date(request.getParameter("enddate"));
+        AucProduct aucProduct = auctionService.modifyAuction(id, aucUser.getId(),title,psubject,pcontent,null,startdate,enddate,price);
+        return null;
+    }
+    //개인이 올린 것을 수정하기
+    @ResponseBody
+    @RequestMapping("/newImage")
+    public String modifyAuctionPage(@SessionAttribute("user") UserBean userBean,
+                                    @RequestParam("id")long id,
+                                    HttpServletRequest request,
                                     @RequestPart MultipartFile sourceFile,
                                     @RequestParam("price") long price){
 
@@ -75,10 +96,9 @@ public class AuctionUpdateCotroller {
         String title = request.getParameter("title");
         String psubject = request.getParameter("psubject");
         String pcontent = request.getParameter("pcontent");
+
         String picture = null;
-        if(isNewImage){
-            picture = AuctionCreateController.uploadImage(sourceFile);
-        }
+        picture = AuctionCreateController.uploadImage(sourceFile);
 
         SimpleDateFormat format = new SimpleDateFormat(("yyyy-MM-dd HH:mm:ss"));
         Date startdate = new Date(request.getParameter("startdate"));
