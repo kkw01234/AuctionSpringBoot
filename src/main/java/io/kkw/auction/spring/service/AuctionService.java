@@ -224,7 +224,9 @@ public class AuctionService {
         while(iterator.hasNext()){
             Date today = new Date();
             AucProduct aucProduct = iterator.next();
-            if(aucProduct.getEnddate().before(today)){
+            Optional<AucComplete> aucComplete = aucCompleteRepository.findByProductId(aucProduct.getId());
+
+            if(aucComplete.orElse(null) == null||aucProduct.getEnddate().before(today)){
                     System.out.println(aucProduct.getId());
                     aucProgressRepository.removeByProductId(aucProduct.getId());
                     List<AucLog> aucLogOptional = aucLogRepository.findByProductIdOrderByPrice(aucProduct.getId());
