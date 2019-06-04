@@ -34,11 +34,11 @@ public class BiddingService {
     //현재까지의 금액
     public long currentbidding(long product_id){
         Optional<AucProduct> aucProduct = aucProductRepository.findById(product_id);
-        AucLog a = new AucLog();
-        a.setPrice(aucProduct.get().getPrice());
         List<AucLog> aucLog = aucLogRepository.findByProductIdOrderByPrice(product_id);
-        System.out.println(a.getPrice()+" "+aucLog.get(0).getPrice());
-        return aucLog.get(0).getPrice();
+        if(aucLog.size() == 0)
+            return aucProduct.get().getPrice();
+        else
+            return aucLog.get(0).getPrice();
     }
 
 }

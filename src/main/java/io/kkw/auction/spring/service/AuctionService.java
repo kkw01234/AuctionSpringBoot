@@ -233,14 +233,15 @@ public class AuctionService {
                         complete.setCompletePrice(aucLog.getPrice());
                         complete.setTenderUserId(aucLog.getUserId());
                         aucCompleteRepository.save(complete);
-                        noteService.sendNote(aucProduct.getUserid(),aucLog.getUserId(),today,content(aucProduct.getTitle(),aucProduct.getId(),true));
+                        noteService.sendNote(aucProduct.getUserid(),aucLog.getUserId(),today,content(aucProduct.getTitle(),aucProduct.getId(),0));
+                        noteService.sendNote(aucLog.getUserId(),aucProduct.getUserid(),today,content(aucProduct.getTitle(),aucProduct.getId(),0));
                     }else{
                         AucComplete complete = new AucComplete();
                         complete.setId(nextVal);
                         complete.setProductId(aucProduct.getId());
                         complete.setCompletePrice(0);
                         aucCompleteRepository.save(complete);
-                        noteService.sendNote(aucProduct.getUserid(),aucProduct.getUserid(),today,content(aucProduct.getTitle(),aucProduct.getId(),false));
+                        noteService.sendNote(aucProduct.getUserid(),aucProduct.getUserid(),today,content(aucProduct.getTitle(),aucProduct.getId(),1));
 
                     }
 
@@ -253,14 +254,14 @@ public class AuctionService {
         }
     }
 
-    public String content(String title, long product_id, boolean finish){
+    public String content(String title, long product_id, int finish){
         String str = "";
-        if(finish) {
-            str = "참여하신 경매가 완료 되었습니다. \n 경매 이름 : " + title + "\n"
-                    + "http://localhost://8080/read_auction/" + product_id;
-        }else{
-            str = "경매에 참여한 회원이 없으므로 유찰되었습니다.\n 경매 이름 : " + title + "\n"+
-                    "                    + \"http://localhost://8080/read_auction/\" + product_id;";
+        if(finish == 0) {
+            str = "물건이 낙찰 되었습니다. 경매 이름 : " + title + "<br>"
+                    + "<a href=http://localhost://8080/read_auction/" + product_id+">확인하러가기</a>";
+        }else if(finish == 1){
+            str = "경매가 유찰되었습니다. 경매 이름 : " + title + "<br>"
+                    + "<a href=http://localhost://8080/read_auction/" + product_id+">확인하러가기</a>";
         }
         return str;
     }

@@ -59,8 +59,8 @@ public class AuctionUpdateCotroller {
 
     //개인이 올린 것을 수정하기
     @ResponseBody
-    @RequestMapping("/{id}")
-    public String modifyAuctionPage(Model model, @SessionAttribute("user") UserBean userBean, @PathVariable("id")long id, HttpServletRequest request, @RequestParam("isNewImage") boolean isNewImage,@RequestPart MultipartFile sourceFile){
+    @RequestMapping
+    public String modifyAuctionPage(Model model, @SessionAttribute("user") UserBean userBean,@RequestParam("id")long id,  HttpServletRequest request, @RequestParam("isNewImage") boolean isNewImage,@RequestPart MultipartFile sourceFile){
 
 
         if (!(userBean instanceof AucUser)){

@@ -179,6 +179,13 @@ public class AuctionReadController {
         long current = biddingService.currentbidding(id);
         return current;
     }
+
+
+    @ResponseBody
+    @RequestMapping("/check")
+    public void check(){
+
+    }
     //필요한 거
 
     /*
