@@ -34,37 +34,18 @@ public class AuctionReadController {
 
 
     @RequestMapping("/{id}") //한개씩
-    public String readAuctionInfo_page(Model model, HttpServletRequest request, @PathVariable long id) {
+    public String readAuctionInfo_page(Model model, HttpServletRequest request, @PathVariable long id) throws IOException {
         AucProduct aucProduct = auctionService.findInfo(id);
-        Gson gson = new Gson();
-        if(aucProduct.getEnddate().before(new Date())){
-            System.out.println("들어왔어요");
+        if(aucProduct.getEnddate().after(new Date())){
             AucComplete aucComplete = auctionService.findComplete(id);
-            if(aucComplete == null) System.out.println("널입니다.");
-            model.addAttribute("completeBean", gson.toJson(aucComplete));
+            model.addAttribute("CompleteBean", aucComplete);
+        }else {
+            AucProgress progressBean = auctionService.findProgress(id);
+            model.addAttribute("progressBean", progressBean);
         }
+        Gson gson = new Gson();
         model.addAttribute("informationBean",gson.toJson(aucProduct));
         return "read_auction_page";
-    }
-
-    @ResponseBody
-    @RequestMapping("/check/{id}")
-    public ResponseEntity<Object> check(@PathVariable int id, @SessionAttribute("user")UserBean userBean){
-        if(!(userBean instanceof AucUser)){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        AucProduct aucProduct =auctionService.findInfo(id);
-        AucUser user = (AucUser) userBean;
-        if (user.getId().equals(aucProduct.getAucComplete().getTenderUserId())) {
-            //낙찰
-            auctionService.check(1,aucProduct);
-        }else if(user.getId().equals(aucProduct.getUserid())){
-            auctionService.check(2,aucProduct);
-            //등록
-        }else
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(HttpStatus.OK);
-
     }
 
     @ResponseBody
@@ -109,12 +90,12 @@ public class AuctionReadController {
         return aucProducts;
     }
     //완료된 정보
-        @ResponseBody
-        @RequestMapping("/complete")
-        public  List<AucProduct> readComplete(Model model){
-            List<AucProduct> aucProducts = auctionService.findAllComplete();
+    @ResponseBody
+    @RequestMapping("/complete")
+    public  List<AucProduct> readComplete(Model model){
+        List<AucProduct> aucProducts = auctionService.findAllComplete();
 
-            return aucProducts;
+        return aucProducts;
     }
 
     //허가받지않은 정보
@@ -199,6 +180,27 @@ public class AuctionReadController {
         return current;
     }
 
+
+    @ResponseBody
+    @RequestMapping("/check/{id}")
+    public ResponseEntity<Object> check(@PathVariable int id, @SessionAttribute("user")UserBean userBean){
+        if(!(userBean instanceof AucUser)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        AucProduct aucProduct =auctionService.findInfo(id);
+        AucComplete aucComplete = auctionService.findComplete(id);
+        AucUser user = (AucUser) userBean;
+        if (user.getId().equals(aucComplete.getTenderUserId())) {
+            //낙찰
+            auctionService.check(1,aucProduct);
+        }else if(user.getId().equals(aucProduct.getUserid())){
+            auctionService.check(2,aucProduct);
+            //등록
+        }else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
     //필요한 거
 
     /*

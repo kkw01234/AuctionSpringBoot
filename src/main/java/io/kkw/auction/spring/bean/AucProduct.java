@@ -42,13 +42,13 @@ public class AucProduct implements Serializable {
     private List<AucProgress> aucProgresses;
     */
 
-    @OneToOne(cascade =CascadeType.ALL)
-    @JoinColumn(name = "id", nullable = true, insertable = false, updatable = false)
-    private AucProgress aucProgress;
-
-    @OneToOne(cascade =CascadeType.ALL)
-    @JoinColumn(name = "id", nullable = true, insertable = false, updatable = false)
-    private AucComplete aucComplete;
+//    @OneToMany(cascade =CascadeType.ALL)
+//    @JoinColumn(name = "product_id",nullable = true, insertable = false, updatable = false)
+//    private List<AucProgress> aucProgress;
+//
+//    @OneToOne(cascade =CascadeType.ALL)
+//    @JoinColumn(name = "product_id",nullable = true, insertable = false, updatable = false)
+//    private List<AucComplete> aucComplete;
 
 
      /*

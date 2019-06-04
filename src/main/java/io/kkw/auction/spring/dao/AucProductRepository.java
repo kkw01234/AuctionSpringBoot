@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AucProductRepository extends CrudRepository<AucProduct,Long> {
@@ -44,9 +45,11 @@ public interface AucProductRepository extends CrudRepository<AucProduct,Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM Auc_Product i, Auc_Progress p WHERE i.id=p.product_id and i.start_date > :start_date and approval= 1")
     List<AucProduct> findAllByStartdateBefore(@Param("start_date") Date start_date);
 
+    //@Query(nativeQuery = true, value = "SELECT * FROM (SELECT * FROM Auc_Product i, Auc_Progress p WHERE i.id=p.product_id) x, (Auc_Product ip LEFT OUTER JOIN Auc_Complete co ON(ip.id=co.product_id))y WHERE x.id=p.product_id and i.id= :id")
+    //Optional<AucProduct> findById(@Param("id") long Id);
 
     //Start 이후 End 이전데이터
-    @Query(nativeQuery = true, value = "SELECT * FROM Auc_Product i, Auc_Progress p WHERE  i.id=p.product_id and  i.start_date <= :start_date and i.end_date > :end_date and approval= 1")
+    @Query(nativeQuery = true, value = "SELECT * FROM  Auc_Product i, Auc_Progress p WHERE  i.id=p.product_id and  i.start_date <= :start_date and i.end_date > :end_date and approval= 1")
     List<AucProduct> findAllByStartdateAfterAndEnddateBefore(@Param("start_date") Date start_date, @Param("end_date") Date end_date);
 
     //마무리된 경매

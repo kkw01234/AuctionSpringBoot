@@ -3,7 +3,9 @@ package io.kkw.auction.spring.service;
 
 import io.kkw.auction.spring.bean.*;
 import io.kkw.auction.spring.dao.*;
+import javassist.NotFoundException;
 import jdk.nashorn.internal.runtime.ListAdapter;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,7 +74,7 @@ public class AuctionService {
     //유저가 올린 모든 정보를 가져오는 메소드
     public List<AucProduct> findMyAuction(String id){
         List<AucProduct> products = aucProductRepository.findMyProgressAuction(id);
-        System.out.println(products.get(0).getAucProgress());
+        //System.out.println(products.get(0).getAucProgress());
         List<AucProduct> products1 = aucProductRepository.findMyCompleteAuction(id);
         products.addAll(products1);
         return products;
@@ -121,7 +123,7 @@ public class AuctionService {
     //경매정보삭제 (단 경매 시작 이전에만 지울 수 있게 하는 함수, 트리거 작성)
     public ResponseEntity<Object> deleteAuction(long product_id, String user_id){
         try {
-            aucProgressRepository.deleteByProductId(product_id);
+            aucProgressRepository.removeByProductId(product_id);
             aucProductRepository.deleteById(product_id);
         }catch(Exception e){
             e.printStackTrace();
@@ -222,8 +224,9 @@ public class AuctionService {
         while(iterator.hasNext()){
             Date today = new Date();
             AucProduct aucProduct = iterator.next();
-            if(aucProduct.getAucComplete() == null && aucProduct.getEnddate().before(today)){
-                    aucProgressRepository.deleteByProductId(aucProduct.getId());
+            if(aucProduct.getEnddate().before(today)){
+                    System.out.println(aucProduct.getId());
+                    aucProgressRepository.removeByProductId(aucProduct.getId());
                     List<AucLog> aucLogOptional = aucLogRepository.findByProductIdOrderByPrice(aucProduct.getId());
                     long nextVal = aucCompleteRepository.getNextVal();
                     if(aucLogOptional.size() != 0){
@@ -257,7 +260,7 @@ public class AuctionService {
 
     public void check(int whatCheck, AucProduct aucProduct){
         Date date = new Date();
-        AucComplete complete = aucProduct.getAucComplete();
+        AucComplete complete =aucCompleteRepository.findByProductId(aucProduct.getId()).orElseThrow(()->new ClassCastException("Not Found"));
         if(whatCheck == 1) {
             complete.setTenderIdCheck(date);
             noteService.sendNote(aucProduct.getUserid(),complete.getTenderUserId(),date,content(aucProduct.getTitle(),aucProduct.getId(),2));

@@ -19,7 +19,8 @@ public interface AucProgressRepository extends CrudRepository<AucProgress,Long> 
     List<AucProgress> approval(@Param("approval") long approval);
     */
     @Transactional
-    Long deleteByProductId(@Param("productId")long product_id);
+    //@Query(nativeQuery = true, value = ("DELETE FROM auc_progress WHERE product_id = :productId"))
+    Long removeByProductId(@Param("productId")long product_id);
 
 
 }

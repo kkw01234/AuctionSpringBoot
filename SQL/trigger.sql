@@ -24,27 +24,7 @@ BEGIN
             RAISE_APPLICATION_ERROR(-22001, '이미 마감 되었습니다.');
 END;
 
-create or replace TRIGGER delproduct
-before update or delete on auc_product
-for each row
 
-declare
-    afterdate DATE;
-    appr NUMBER;
-    now DATE;
-    not_delete EXCEPTION;
-begin
-    SELECT SYSDATE INTO now FROM DUAL;
-    SELECT i.start_date, p.approval INTO afterdate, appr FROM auc_product i, auc_progress p WHERE i.id=p.product_id and p.approval = 1 and i.id = :new.id;
-    if(afterdate - now <= 0) THEN
-        raise not_delete;
-    end if;
-
-    EXCEPTION
-        WHEN not_delete THEN
-            RAISE_APPLICATION_ERROR(-22001, '시작된 것은 삭제 및 수정이 불가능 합니다');
-
-end;
 
 create or replace trigger password
 before insert or update on auc_user
@@ -101,4 +81,20 @@ begin
         WHEN low_price THEN
             RAISE_APPLICATION_ERROR(-21004, '현재 최고가 보다 낮은 금액입니다');
 end;
+
+create or replace TRIGGER error_date
+before insert or update on auc_product
+for each row
+declare
+    error_date Exception;
+    user VARCHAR2(100);
+BEGIN
+   if (:new.start_date > :new.end_date) then
+        raise error_date;
+    end if;
+
+    EXCEPTION
+        WHEN error_date THEN
+            RAISE_APPLICATION_ERROR(-23000, '시작날짜는 마감날짜보다 앞설 수 없습니다.');
+END;
 
