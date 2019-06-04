@@ -335,6 +335,7 @@ body {
     border-top : 1px solid #7a7c92;
     border-bottom : 1px solid #7a7c92;
     font-size : 18px;
+    text-align : right;
 }
 
 .message-col {
@@ -361,4 +362,8 @@ body {
 
 .message-val a {
     color : #7a7c92;
+}
+
+.empty-row {
+    height : 10px;
 }

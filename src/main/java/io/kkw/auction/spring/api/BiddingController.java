@@ -31,7 +31,7 @@ public class BiddingController {
     //경매 참여
     @RequestMapping("/{id}")
     public @ResponseBody
-    ResponseEntity<Object> bidding(@PathVariable("id") long product_id, @RequestParam int price, @SessionAttribute("user") UserBean userBean){
+    ResponseEntity<Object> bidding(@PathVariable("id") long product_id, @RequestParam("price") int price, @SessionAttribute("user") UserBean userBean){
         //ID
         //금액
         //시간검증
@@ -40,10 +40,10 @@ public class BiddingController {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         AucProduct product = auctionService.findInfo(product_id);
         boolean result = false;
-        if(product.getStartdate().after(today) && product.getEnddate().before(today)){
+        if(product.getStartdate().before(today) && product.getEnddate().after(today)){
             result = biddingService.bidding(product_id, ((AucUser) userBean).getId(), price); //트리거 필요
         }
 
-        return new ResponseEntity<Object>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

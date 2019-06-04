@@ -1,4 +1,3 @@
-<%@ page import="io.kkw.auction.spring.bean.AucProduct" %>
 <%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" isELIgnored="false" %>
 <% String auc = (String) request.getAttribute("informationBean"); %>
@@ -56,17 +55,16 @@
                 <div class="read-row col-md-12"></div>
             </div>
             <div class="col-md-12 curr-auc">
-                <div class="col-md-12 curr-auc-label">
-                    현재 경매중
+                <div class="col-md-12 curr-auc-label" id="currLabel">
                 </div>
                 <div class="col-md-4 curr_price">
-                    현재 입찰가 : <span id="currPriceDiv">5000</span> 원
+                    현재 입찰가 : <span id="currPriceDiv"></span> 원
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputPrice" class="inform-label">희망 입찰가</label>
                     <input type="number" class="form-control" id="inputPrice" value="1000">
                 </div>
-                <a href="/auction_page" class="btn btn-primary btn-lg col-md-4" style="margin-top : 15px;">입찰하기</a>
+                <a class="btn btn-primary btn-lg col-md-4" style="margin-top : 15px;" id="currButton">입찰하기</a>
             </div>
         </div>
     </div>
@@ -77,7 +75,6 @@
 
 <script type="text/javascript">
     var inform = <%=auc%>;
-
     function setInform(){
         $('#title').text(inform['title']);
         $('#category').text(inform['psubject']);
@@ -87,13 +84,22 @@
         var startFormat = '';
         var enddate = new Date(inform['enddate']);
         var endFormat = '';
-        startFormat += startdate.getFullYear() + '-' + startdate.getMonth() + '-' + startdate.getDay() + ', ';
+        startFormat += startdate.getFullYear() + '-' + (startdate.getMonth() + 1) + '-' + startdate.getDate() + ', ';
         startFormat += startdate.getUTCHours() + ':' + startdate.getMonth();
-        endFormat += enddate.getFullYear() + '- ' + enddate.getMonth() + '- ' + enddate.getDay() + ', ';
+        endFormat += enddate.getFullYear() + '- ' + (enddate.getMonth() + 1) + '- ' + enddate.getDate() + ', ';
         endFormat += enddate.getUTCHours() + ':' + enddate.getMonth();
         $('#startDate').text(startFormat);
         $('#endDate').text(endFormat);
         $('#content').text(inform['pcontent']);
+        var today = new Date();
+        if(startdate > today || enddate < today) {
+            $('#currLabel').html('경매 중이 아닙니다.')
+            $('#currButton').attr('disabled', true);
+            $('#inputPrice').attr('readonly', true);
+        } else {
+            $('#currLabel').html('현재 경매 중!')
+            $('#currButton').attr('onclick', 'doAuc()');
+        }
     }
 
     function getCurrPrice(){
@@ -106,6 +112,29 @@
                 $('#currPriceDiv').html(data);
             }
         });
+    }
+
+    function doAuc(){
+        <%if (user == null) { %>
+        $('#loginModal').modal('show');
+        <%} else {%>
+        var want = $('#inputPrice').val();
+        $.ajax({
+            url: "/bidding/" + inform['id'],
+            type: "post",
+            data: {
+                'price' : want
+            },
+            dataType: "text",
+            success: function (data) {
+                if(data == 'true') {
+                    alert('입찰에 성공했습니다.');
+                } else {
+                    alert('입찰 실패!');
+                }
+            }
+        });
+        <% } %>
     }
 
     $(document).ready(function(){

@@ -78,14 +78,19 @@
         for (var i = 0; i < auc_list.length; i++) {
             if(i % 3 == 0) result += '<div class="row blog-listing">';
             var auc = auc_list[i];
+            console.log(auc);
             var startdate = new Date(auc['startdate']);
+            console.log(auc['startdate']);
+            console.log(startdate)
             var enddate = new Date(auc['enddate']);
+            console.log(auc['enddate']);
+            console.log(enddate);
             var startFormat = '';
             var endFormat = '';
-            startFormat += startdate.getFullYear() + '년 ' + startdate.getMonth() + '월 ' + startdate.getDay() + '일, ';
-            startFormat += startdate.getUTCHours() + '시 ' + startdate.getMonth() + '분'
-            endFormat += enddate.getFullYear() + '년 ' + enddate.getMonth() + '월 ' + enddate.getDay() + '일, ';
-            endFormat += enddate.getUTCHours() + '시 ' + enddate.getMonth() + '분'
+            startFormat += startdate.getFullYear() + '년 ' + (startdate.getMonth() + 1) + '월 ' + startdate.getDate() + '일, ';
+            startFormat += startdate.getUTCHours() + '시 ' + startdate.getMinutes() + '분'
+            endFormat += enddate.getFullYear() + '년 ' + (enddate.getMonth() + 1) + '월 ' + enddate.getDate() + '일, ';
+            endFormat += enddate.getUTCHours() + '시 ' + enddate.getMinutes() + '분'
             result += '<div class="col-md-4"><a href="/read_auction/' + auc['id'] + '">' + '<article>' +
                 '<img class="img-thumbnail" src="/read_auction/load/' + auc['id'] + '" alt=""/>' +
                 '<h2>' + auc['title'] + '</h2>' + '<hr class="title-underline">' +
@@ -164,14 +169,27 @@
 
     function doSearch() {
         var url = '';
+        var search = $('#search').val();
         if(curr == 0) { // 예정
-
+            url = '/read_auction/plan/search';
         } else if (curr == 1) { // 진행 중
-
-        } else { //
-
+            url = '/read_auction/progress/search';
+        } else { // 완료
+            url = '/read_auction/complete/search';
         }
-        return;
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+                'search' : search
+            },
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                auc_list = data;
+                setAucList();
+            }
+        });
     }
 </script>
 

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" isELIgnored="false" %>
+<% String auc = (String) request.getAttribute("informationBean"); %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -57,11 +58,13 @@
             <div class="form-group col-md-4">
                 <label for="inputCategory">관련 분류를 선택하세요</label>
                 <select class="form-control" id="inputCategory">
-                    <option>가구</option>
-                    <option>가전</option>
+                    <option>패션</option>
+                    <option>유아</option>
                     <option>식품</option>
-                    <option>쏘쏘</option>
-                    <option>굳굳</option>
+                    <option>가전</option>
+                    <option>가구</option>
+                    <option>공구</option>
+                    <option>티켓</option>
                 </select>
             </div>
         </div>
@@ -84,6 +87,7 @@
 <script src="js/sha256.js"></script>
 
 <script type="text/javascript">
+    <% if(auc == null) { %>
     function uploadAuction() {
         var formData = new FormData();
         formData.append('sourceFile', $('input[type=file]')[0].files[0]);
@@ -111,6 +115,47 @@
         });
     }
 
+    <% } else { %>
+    var auc = <%=auc%>;
+    console.log(auc);
+    function setValue() {
+        // formData.append('sourceFile', $('input[type=file]')[0].files[0]);
+        $('#inputTitle').val(auc['']);
+        $('#inputContent').val(auc['']);
+        $('#inputStartDate').val(auc['']);
+        $('#inputEndDate').val(auc['']);
+        $('#inputCategory').val(auc['']);
+        $('#inputPrice').val(auc['']);
+    }
+
+    function updateAuction() {
+        var formData = new FormData();
+        formData.append('id', auc['id']);
+        formData.append('sourceFile', $('input[type=file]')[0].files[0]);
+        formData.append('title', $('#inputTitle').val());
+        formData.append('content', $('#inputContent').val());
+        formData.append('start_date', $('#inputStartDate').val());
+        formData.append('end_date', $('#inputEndDate').val());
+        formData.append('subject', $('#inputCategory').val());
+        formData.append('price', $('#inputPrice').val());
+        $.ajax({
+            url : "create_auction/new",
+            type : "post",
+            processData : false,
+            contentType : false,
+            data : formData,
+            dataType : "text",
+            success : function(data) {
+                if(data == 'success') {
+                    alert('관리자 승인을 기다립니다!');
+                    window.location.href = "/auction_page";
+                } else {
+                    alert('등록에 실패했습니다!');
+                }
+            }
+        });
+    }
+    <% } %>
 </script>
 
 </body>
