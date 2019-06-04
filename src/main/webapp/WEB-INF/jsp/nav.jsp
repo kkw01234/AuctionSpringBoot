@@ -1,5 +1,5 @@
-<%@ page import="io.kkw.auction.spring.bean.AucUser" %>
 <%@ page import="io.kkw.auction.spring.bean.AucAdmin" %>
+<%@ page import="io.kkw.auction.spring.bean.AucUser" %>
 <%@ page import="io.kkw.auction.spring.bean.UserBean" %>
 <%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" isELIgnored="false" %>
@@ -9,7 +9,10 @@
     if(user instanceof AucAdmin) {
         isManager = true;
     }
-
+    AucUser aucUser = null;
+    if(!isManager) {
+        aucUser = (AucUser) user;
+    }
 %>
 <html>
 <head>
@@ -226,7 +229,7 @@
         // password = SHA256(email + password);
 
         $.ajax({
-            url: "login",
+            url: "/login",
             type: "post",
             data: {
                 id: email,
@@ -241,6 +244,9 @@
                 } else {
                     alert('잘못된 아이디, 비밀번호입니다.');
                 }
+            },
+            error: function (error) {
+                alert('로그인에 실패했습니다.');
             }
         });
     }
@@ -314,7 +320,7 @@
         }
         // password = SHA256(email + password);
         $.ajax({
-            url: "register",
+            url: "/register",
             type: "post",
             data: {
                 id: id,
@@ -331,6 +337,9 @@
                 } else {
                     alert('실패했습니다.');
                 }
+            },
+            error: function (error) {
+                alert('회원가입에 실패했습니다.');
             }
         });
     }

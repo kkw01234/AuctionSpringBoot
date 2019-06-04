@@ -73,6 +73,9 @@
             dataType: "text",
             success: function (data) {
                 showUserList();
+            },
+            error: function (error) {
+                alert('유저 정지에 실패했습니다.');
             }
         });
     }
@@ -87,6 +90,9 @@
             dataType: "text",
             success: function (data) {
                 showUserList();
+            },
+            error: function (error) {
+                alert('정지 해제에 실패했습니다.');
             }
         });
     }
@@ -111,6 +117,9 @@
             dataType: "text",
             success: function (data) {
                 showAucs();
+            },
+            error: function (error) {
+                alert('승인에 실패했습니다.');
             }
         });
     }

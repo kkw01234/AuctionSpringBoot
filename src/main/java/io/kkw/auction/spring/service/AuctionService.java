@@ -65,7 +65,7 @@ public class AuctionService {
 
     //경매정보 id를 이용해여 마감된 경매정보를 찾는 메소드
     public AucComplete findComplete(long auc_id){
-        Optional<AucComplete> optional = aucCompleteRepository.findById(auc_id);
+        Optional<AucComplete> optional = aucCompleteRepository.findByProductId(auc_id);
         return optional.orElse(null);
     }
 
@@ -222,7 +222,7 @@ public class AuctionService {
         while(iterator.hasNext()){
             Date today = new Date();
             AucProduct aucProduct = iterator.next();
-            if(aucProduct.getEnddate().before(today)){
+            if(aucProduct.getAucComplete() == null && aucProduct.getEnddate().before(today)){
                     aucProgressRepository.deleteByProductId(aucProduct.getId());
                     List<AucLog> aucLogOptional = aucLogRepository.findByProductIdOrderByPrice(aucProduct.getId());
                     long nextVal = aucCompleteRepository.getNextVal();
@@ -255,13 +255,32 @@ public class AuctionService {
         }
     }
 
+    public void check(int whatCheck, AucProduct aucProduct){
+        Date date = new Date();
+        AucComplete complete = aucProduct.getAucComplete();
+        if(whatCheck == 1) {
+            complete.setTenderIdCheck(date);
+            noteService.sendNote(aucProduct.getUserid(),complete.getTenderUserId(),date,content(aucProduct.getTitle(),aucProduct.getId(),2));
+        }else if(whatCheck == 2) {
+            complete.setUidCheck(date);
+            noteService.sendNote(aucProduct.getUserid(),complete.getTenderUserId(),date,content(aucProduct.getTitle(),aucProduct.getId(),3));
+        }
+        aucCompleteRepository.save(complete);
+    }
+
     public String content(String title, long product_id, int finish){
         String str = "";
         if(finish == 0) {
-            str = "물건이 낙찰 되었습니다. 경매 이름 : " + title + "<br>"
+            str = "물건이 낙찰 되었습니다. <br> 경매 이름 : " + title + "<br>"
                     + "<a href=http://localhost:8080/read_auction/" + product_id+">확인하러가기</a>";
         }else if(finish == 1){
-            str = "경매가 유찰되었습니다. 경매 이름 : " + title + "<br>"
+            str = "경매가 유찰되었습니다. <br> 경매 이름 : " + title + "<br>"
+                    + "<a href=http://localhost:8080/read_auction/" + product_id+">확인하러가기</a>";
+        }else if(finish == 2){
+            str = "결제가 완료 되었습니다. 계좌에서 출금 됩니다.<br> 경매 이름 : " + title + "<br>"
+                    + "<a href=http://localhost:8080/read_auction/" + product_id+">확인하러가기</a>";
+        }else if(finish == 3){
+            str = "낙찰자가 결제를 했습니다. 계좌로 입급 됩니다. 경매 이름 : " + title + "<br>"
                     + "<a href=http://localhost:8080/read_auction/" + product_id+">확인하러가기</a>";
         }
         return str;

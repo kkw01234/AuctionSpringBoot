@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" isELIgnored="false" %>
+<% String auc = (String) request.getAttribute("product"); %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -21,7 +22,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2 class="title-section"><span class="title-regular">물건</span><br/>등록하기</h2>
+                <h2 class="title-section"><span class="title-regular">물건</span><br/>수정하기</h2>
                 <hr class="title-underline"/>
             </div>
         </div>
@@ -47,7 +48,7 @@
                 </div>
             </div>
             <div class="form-group col-md-4">
-                <label for="inputPhoto" class="inform-label">관련 사진을 등록하세요</label>
+                <label for="inputPhoto" class="inform-label">업로드한 사진은 저장되어 있습니다.<br>바꾸시려면 추가하세요.</label>
                 <input type="file" class="form-control-file" id="inputPhoto">
             </div>
             <div class="form-group col-md-4">
@@ -69,7 +70,7 @@
             </div>
         </div>
         <div class="btn-div">
-            <a class="btn btn-sm btn-primary" onclick="uploadAuction()">신청</a>
+            <a class="btn btn-sm btn-primary" onclick="updateAuction()">수정</a>
             <a class="btn btn-sm btn-primary" href="/auction_page">취소</a>
         </div>
     </div>
@@ -79,17 +80,46 @@
 <%@ include file="footer.jsp" %>
 
 <script type="text/javascript">
-    function uploadAuction() {
+    var auc = <%=auc%>;
+    var isNew = false;
+    console.log(auc);
+    function setValue() {
+        $('#inputTitle').val(auc['title']);
+        $('#inputContent').val(auc['pcontent']);
+        var startDate = new Date(auc['startdate']);
+        var startFormat = startDate.toISOString();
+        startFormat = startFormat.slice(0, startFormat.indexOf(':', startFormat.indexOf(':') + 1));
+        $('#inputStartDate').val(startFormat);
+        var endDate = new Date(auc['enddate']);
+        var endFormat = endDate.toISOString();
+        endFormat = endFormat.slice(0, endFormat.indexOf(':', endFormat.indexOf(':') + 1));
+        $('#inputEndDate').val(endFormat);
+        $('#inputCategory').val(auc['psubject']);
+        $('#inputPrice').val(auc['price']);
+    }
+
+    function updateAuction() {
         var formData = new FormData();
-        formData.append('sourceFile', $('input[type=file]')[0].files[0]);
+        formData.append('id', auc['id']);
         formData.append('title', $('#inputTitle').val());
-        formData.append('content', $('#inputContent').val());
-        formData.append('start_date', $('#inputStartDate').val());
-        formData.append('end_date', $('#inputEndDate').val());
-        formData.append('subject', $('#inputCategory').val());
+        formData.append('pcontent', $('#inputContent').val());
+        formData.append('startdate', $('#inputStartDate').val());
+        formData.append('enddate', $('#inputEndDate').val());
+        formData.append('psubject', $('#inputCategory').val());
         formData.append('price', $('#inputPrice').val());
+        console.log($('#inputPhoto').val());
+        if($('#inputPhoto').val() != '') {
+            isNew = true;
+        }
+        var url = '';
+        if(isNew) {
+            formData.append('sourceFile', $('input[type=file]')[0].files[0]);
+            url = '/modify_auction/newImage'
+        } else {
+            url = '/modify_auction'
+        }
         $.ajax({
-            url : "create_auction/new",
+            url : url,
             type : "post",
             processData : false,
             contentType : false,
@@ -100,14 +130,18 @@
                     alert('관리자 승인을 기다립니다!');
                     window.location.href = "/auction_page";
                 } else {
-                    alert('등록에 실패했습니다!');
+                    alert('수정에 실패했습니다!');
                 }
             },
             error: function (error) {
-                alert('등록에 실패했습니다.');
+                alert('수정에 실패했습니다!');
             }
         });
     }
+
+    $(document).ready(function(){
+        setValue();
+    })
 </script>
 
 </body>

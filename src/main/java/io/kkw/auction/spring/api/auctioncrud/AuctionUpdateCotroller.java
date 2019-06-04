@@ -27,15 +27,15 @@ public class AuctionUpdateCotroller {
     //관리자가 허가 하기
     @RequestMapping("/checkauthorize/{id}")
     @ResponseBody
-    public ResponseEntity<Object> checkAuthorize(@SessionAttribute("user") UserBean user, @PathVariable int id){
+    public ResponseEntity<Object> checkAuthorize(@SessionAttribute("user") UserBean user, @PathVariable int id) {
         AucAdmin aucAdmin = null;
-        if (user instanceof  AucAdmin) {
+        if (user instanceof AucAdmin) {
             aucAdmin = (AucAdmin) user;
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         boolean bool = auctionService.checkAuthorize(id, aucAdmin.getId());
-        if(bool){
+        if (bool) {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return null;
@@ -43,53 +43,63 @@ public class AuctionUpdateCotroller {
 
     //관리자 허가 취소
     @RequestMapping("/cancleauthorized/{id}")
-    public ResponseEntity<Object> cancelAuthorize(@SessionAttribute("user") UserBean user, @PathVariable int id){
+    public ResponseEntity<Object> cancelAuthorize(@SessionAttribute("user") UserBean user, @PathVariable int id) {
         AucAdmin aucAdmin = null;
-        if (user instanceof  AucAdmin) {
+        if (user instanceof AucAdmin) {
             aucAdmin = (AucAdmin) user;
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         boolean result = auctionService.cancelAuthorize(id, aucAdmin.getId());
-        if(result) {
+        if (result) {
             return new ResponseEntity<>(HttpStatus.OK);
-        }else
+        } else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     //개인이 올린 것을 수정하기
     @ResponseBody
-    @RequestMapping
+    @RequestMapping()
     public String modifyAuctionPage(@SessionAttribute("user") UserBean userBean,
-                                    @RequestParam("id")long id,
+                                    @RequestParam("id") long id,
                                     HttpServletRequest request,
-                                    @RequestParam("price") long price){
+                                    @RequestParam("price") long price) {
 
 
-        if (!(userBean instanceof AucUser)){
+        if (!(userBean instanceof AucUser)) {
             return null;
         }
         AucUser aucUser = (AucUser) userBean;
         String title = request.getParameter("title");
         String psubject = request.getParameter("psubject");
         String pcontent = request.getParameter("pcontent");
-        SimpleDateFormat format = new SimpleDateFormat(("yyyy-MM-dd HH:mm:ss"));
-        Date startdate = new Date(request.getParameter("startdate"));
-        Date enddate = new Date(request.getParameter("enddate"));
-        AucProduct aucProduct = auctionService.modifyAuction(id, aucUser.getId(),title,psubject,pcontent,null,startdate,enddate,price);
-        return null;
+        String start_date_string = request.getParameter("startdate");
+        String end_date_string = request.getParameter("enddate");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date start_date = null;
+        Date end_date = null;
+        try {
+            start_date = format.parse(start_date_string.replace("T", " "));
+            end_date = format.parse(end_date_string.replace("T", " "));
+            AucProduct aucProduct = auctionService.modifyAuction(id, aucUser.getId(), title, psubject, pcontent, null, start_date, end_date, price);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+        return "success";
     }
+
     //개인이 올린 것을 수정하기
     @ResponseBody
     @RequestMapping("/newImage")
     public String modifyAuctionPage(@SessionAttribute("user") UserBean userBean,
-                                    @RequestParam("id")long id,
+                                    @RequestParam("id") long id,
                                     HttpServletRequest request,
                                     @RequestPart MultipartFile sourceFile,
-                                    @RequestParam("price") long price){
+                                    @RequestParam("price") long price) {
 
 
-        if (!(userBean instanceof AucUser)){
+        if (!(userBean instanceof AucUser)) {
             return null;
         }
         AucUser aucUser = (AucUser) userBean;
@@ -100,19 +110,28 @@ public class AuctionUpdateCotroller {
         String picture = null;
         picture = AuctionCreateController.uploadImage(sourceFile);
 
-        SimpleDateFormat format = new SimpleDateFormat(("yyyy-MM-dd HH:mm:ss"));
-        Date startdate = new Date(request.getParameter("startdate"));
-        Date enddate = new Date(request.getParameter("enddate"));
-        AucProduct aucProduct = auctionService.modifyAuction(id, aucUser.getId(),title,psubject,pcontent,picture,startdate,enddate,price);
-        return null;
+        String start_date_string = request.getParameter("startdate");
+        String end_date_string = request.getParameter("enddate");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date start_date = null;
+        Date end_date = null;
+        try {
+            start_date = format.parse(start_date_string.replace("T", " "));
+            end_date = format.parse(end_date_string.replace("T", " "));
+            AucProduct aucProduct = auctionService.modifyAuction(id, aucUser.getId(), title, psubject, pcontent, picture, start_date, end_date, price);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+        return "success";
     }
 
     //수정 페이지
     @RequestMapping("/{id}")
-    public String modifyAction(@PathVariable int id, Model model){
+    public String modifyAction(@PathVariable int id, Model model) {
         AucProduct aucProduct = auctionService.findInfo(id);
         model.addAttribute("product", new Gson().toJson(aucProduct));
-        return "mod";
+        return "modify_auction_page";
     }
 
 

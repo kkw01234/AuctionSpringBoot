@@ -188,6 +188,9 @@
             success: function (data) {
                 auc_list = data;
                 setAucList();
+            },
+            error: function (error) {
+                alert('검색에 실패했습니다.');
             }
         });
     }

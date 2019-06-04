@@ -30,7 +30,6 @@
                 <a onclick="clickMyPage();"><div class="col-md-12 my-page-tab tab-selected" id="tab0">개인 정보</div></a>
                 <a onclick="clickMessage();"><div class="col-md-12 my-page-tab" id="tab1">쪽지</div></a>
                 <a onclick="clickAuc();"><div class="col-md-12 my-page-tab" id="tab2">경매 확인</div></a>
-                <a onclick="clickConfirm();"><div class="col-md-12 my-page-tab" id="tab3">거래 확인</div></a>
                 <a data-toggle="modal" href="#changeModal"><div class="col-md-12 my-page-tab" id="tab4">비밀번호 변경</div></a>
             </div>
             <div class="col-md-9 my-page-content-container" id="myPageContentContainer">
@@ -145,6 +144,9 @@
             dataType: "text",
             success: function (data) {
                 location.href = "/user/mypage";
+            },
+            error: function (error) {
+                alert('정보 변경에 실패했습니다.');
             }
         });
     }
@@ -168,6 +170,9 @@
             dataType: "text",
             success: function (data) {
                 showMessages();
+            },
+            error: function (error) {
+                alert('메세지 삭제에 실패했습니다.');
             }
         });
     }
@@ -183,8 +188,8 @@
             var message = messages[i];
             console.log(message);
             var date = new Date(message['dataSend'])
-            var dateFormat = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ', ';
-            dateFormat += date.getUTCHours() + ':' + date.getMonth();
+            var dateFormat = date.getFullYear() + '-' + (date.getMonth() + 1)+ '-' + date.getDate() + ', ';
+            dateFormat += date.getUTCHours() + ':' + date.getMinutes();
             addOn += '<div class="col-md-1 message-val">' + (i + 1) + '</div>' +
                 '<div class="col-md-6 message-val"><a onclick="clickCont(\'' + message['content'] + '\')">' + message['content'] + '</a></div>' +
                 '<div class="col-md-2 message-val">' + message['sendId'] + '</div>' +
@@ -200,7 +205,7 @@
     function sendMessage(){
         var receiver = $('#InputReceiver').val();
         var content = $('#InputMessageContent').val();
-        content = content.replace('\n', ' ');
+        content = content.replace(/\n/g, '<br>');
         $.ajax({
             url: "/note/send",
             type: "post",
@@ -217,6 +222,9 @@
                 } else {
                     alert('메시지 전송에 실패했습니다.');
                 }
+            },
+            error: function (error) {
+                alert('메세지 전송에 실패했습니다.');
             }
         });
     }
@@ -242,17 +250,21 @@
             var auc = aucs[i];
             console.log(auc);
             var date = new Date(auc['startdate'])
-            var dateFormat = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ', ';
-            dateFormat += date.getUTCHours() + ':' + date.getMonth();
+            var dateFormat = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ', ';
+            dateFormat += date.getUTCHours() + ':' + date.getMinutes();
             var state = '';
             if(auc['aucProgress']['approval'] == 1) state = '승인';
-            else state = '대기';
+            else state = '<a onclick="updateAuc(\'' + auc['id'] + '\')"><div class="col-md-12 btn btn-primary btn-sm">대기</div></a>';
             addOn += '<div class="col-md-1 message-val">' + (i + 1) + '</div>' +
                 '<div class="col-md-6 message-val"><a href="/read_auction/' + auc['id'] + '">' + auc['title'] + '</a></div>' +
                 '<div class="col-md-2 message-val">' + state + '</div>' +
                 '<div class="col-md-3 message-val">' + dateFormat + '</div>';
         }
         $('#myPageContentContainer').html(addOn);
+    }
+
+    function updateAuc(id) {
+        location.href = '/modify_auction/' + id;
     }
 
     function showAuc(){
@@ -263,22 +275,6 @@
             dataType: "json",
             success: function (data) {
                 setAuc(data);
-            }
-        });
-    }
-
-    function setConfirm(completes) {
-
-    }
-
-    function showConfirm(){
-        $.ajax({
-            url: "",
-            type: "post",
-            data: {},
-            dataType: "json",
-            success: function (data) {
-                setConfirm(data);
             }
         });
     }
@@ -307,14 +303,6 @@
         showAuc();
     }
 
-    function clickConfirm(){
-        if(curr == 3) return;
-        $('#tab' + curr).removeClass('tab-selected');
-        curr = 3;
-        $('#tab' + curr).addClass('tab-selected');
-        showConfirm();
-    }
-
     function changePwd(){
         var curr = $('#InputCurrPwd').val();
         var next = $('#InputNextPwd').val();
@@ -328,6 +316,9 @@
             dataType: "text",
             success: function (data) {
                 location.href='/user/mypage';
+            },
+            error: function (error) {
+                alert('비밀번호 변경에 실패했습니다.');
             }
         });
     }
