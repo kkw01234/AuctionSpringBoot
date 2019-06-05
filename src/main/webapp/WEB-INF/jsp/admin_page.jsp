@@ -134,7 +134,7 @@
             console.log(auc);
             var date = new Date(auc['startdate'])
             var dateFormat = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ', ';
-            dateFormat += date.getUTCHours() + ':' + date.getMonth();
+            dateFormat += date.getHours() + ':' + date.getMonth();
             var addButton = '<a onclick="registerAuc(\'' + auc['id'] + '\')"><div class="btn btn-primary btn-sm">승인</div></a>';
             addOn += '<div class="col-md-3 message-val">' + auc['userid'] + '</div>' +
                 '<div class="col-md-4 message-val"><a href="/read_auction/' + auc['id'] + '">' + auc['title'] + '</a></div>' +

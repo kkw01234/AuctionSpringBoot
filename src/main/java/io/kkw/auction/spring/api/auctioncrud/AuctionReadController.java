@@ -50,6 +50,7 @@ public class AuctionReadController {
         return "read_auction_page";
     }
 
+
     @ResponseBody
     @RequestMapping("/myauction") //내가 올린 경매 확인
     public ResponseEntity<Object> readMyAuction(HttpServletRequest request){
@@ -63,7 +64,6 @@ public class AuctionReadController {
             e.printStackTrace(); //Admin이 접속했을 때 막아버림
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @ResponseBody

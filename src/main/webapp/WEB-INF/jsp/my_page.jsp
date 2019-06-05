@@ -189,7 +189,7 @@
             console.log(message);
             var date = new Date(message['dataSend'])
             var dateFormat = date.getFullYear() + '-' + (date.getMonth() + 1)+ '-' + date.getDate() + ', ';
-            dateFormat += date.getUTCHours() + ':' + date.getMinutes();
+            dateFormat += date.getHours() + ':' + date.getMinutes();
             addOn += '<div class="col-md-1 message-val">' + (i + 1) + '</div>' +
                 '<div class="col-md-6 message-val"><a onclick="clickCont(\'' + message['content'] + '\')">' + message['content'] + '</a></div>' +
                 '<div class="col-md-2 message-val">' + message['sendId'] + '</div>' +
@@ -248,13 +248,27 @@
             '<div class="col-md-3 message-col">OPEN DATE</div>';
         for(var i = 0 ; i < aucs.length ; i++) {
             var auc = aucs[i];
+            var info;
+            $.ajax({
+                url: "/read_auction/myauction/" + auc['id'],
+                type: "post",
+                data: {},
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    info = data;
+                }
+            });
             console.log(auc);
+            console.log(info);
             var date = new Date(auc['startdate'])
             var dateFormat = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ', ';
-            dateFormat += date.getUTCHours() + ':' + date.getMinutes();
+            dateFormat += date.getHours() + ':' + date.getMinutes();
             var state = '';
-            if(auc['aucProgress']['approval'] == 1) state = '승인';
-            else state = '<a onclick="updateAuc(\'' + auc['id'] + '\')"><div class="col-md-12 btn btn-primary btn-sm">대기</div></a>';
+            if(info[0]['id'] != 0) {
+                if(info[0]['approval'] == 1) state = '승인';
+                else state = '<a onclick="updateAuc(\'' + auc['id'] + '\')"><div class="col-md-12 btn btn-primary btn-sm">대기</div></a>';
+            } else state = '완료';
             addOn += '<div class="col-md-1 message-val">' + (i + 1) + '</div>' +
                 '<div class="col-md-6 message-val"><a href="/read_auction/' + auc['id'] + '">' + auc['title'] + '</a></div>' +
                 '<div class="col-md-2 message-val">' + state + '</div>' +

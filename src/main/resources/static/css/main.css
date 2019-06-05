@@ -367,3 +367,7 @@ body {
 .empty-row {
     height : 10px;
 }
+
+.auc-row {
+    border-bottom : 4px solid black;
+}

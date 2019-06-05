@@ -88,9 +88,9 @@
             var startFormat = '';
             var endFormat = '';
             startFormat += startdate.getFullYear() + '년 ' + (startdate.getMonth() + 1) + '월 ' + startdate.getDate() + '일, ';
-            startFormat += startdate.getUTCHours() + '시 ' + startdate.getMinutes() + '분'
+            startFormat += startdate.getHours() + '시 ' + startdate.getMinutes() + '분'
             endFormat += enddate.getFullYear() + '년 ' + (enddate.getMonth() + 1) + '월 ' + enddate.getDate() + '일, ';
-            endFormat += enddate.getUTCHours() + '시 ' + enddate.getMinutes() + '분'
+            endFormat += enddate.getHours() + '시 ' + enddate.getMinutes() + '분'
             result += '<div class="col-md-4"><a href="/read_auction/' + auc['id'] + '">' + '<article>' +
                 '<img class="img-thumbnail" src="/read_auction/load/' + auc['id'] + '" alt=""/>' +
                 '<h2>' + auc['title'] + '</h2>' + '<hr class="title-underline">' +

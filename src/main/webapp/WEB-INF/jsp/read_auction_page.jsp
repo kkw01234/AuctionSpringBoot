@@ -89,9 +89,9 @@
         var enddate = new Date(inform['enddate']);
         var endFormat = '';
         startFormat += startdate.getFullYear() + '-' + (startdate.getMonth() + 1) + '-' + startdate.getDate() + ', ';
-        startFormat += startdate.getUTCHours() + ':' + startdate.getMonth();
+        startFormat += startdate.getHours() + ':' + startdate.getMonth();
         endFormat += enddate.getFullYear() + '- ' + (enddate.getMonth() + 1) + '- ' + enddate.getDate() + ', ';
-        endFormat += enddate.getUTCHours() + ':' + enddate.getMonth();
+        endFormat += enddate.getHours() + ':' + enddate.getMonth();
         $('#startDate').text(startFormat);
         $('#endDate').text(endFormat);
         $('#content').text(inform['pcontent']);
@@ -139,6 +139,7 @@
                     }
                     $('#informDiv').append('<div class="col-md-8">' +
                         '<div class="col-md-6 curr_price">ID</div><div class="col-md-6 curr_price">State</div>' +
+                            '<div class="auc-row col-md-12"></div>' +
                         '<div class="col-md-6 curr_price">' + writerID + '</div><div class="col-md-6 curr_price">' + writerButton + '</div>' +
                         '<div class="col-md-6 curr_price">' + tenderID + '</div><div class="col-md-6 curr_price">' + btnFormat + '</div>' +
                         '</div>');
@@ -148,6 +149,7 @@
                     }
                     $('#informDiv').append('<div class="col-md-8">' +
                         '<div class="col-md-6 curr_price">ID</div><div class="col-md-6 curr_price">State</div>' +
+                            '<div class="auc-row col-md-12"></div>' +
                         '<div class="col-md-6 curr_price">' + writerID + '</div><div class="col-md-6 curr_price">' + btnFormat + '</div>' +
                         '<div class="col-md-6 curr_price">' + tenderID + '</div><div class="col-md-6 curr_price">' + tenderButton + '</div>' +
                         '</div>');
