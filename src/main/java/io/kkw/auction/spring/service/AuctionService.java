@@ -67,11 +67,11 @@ public class AuctionService {
 
     public AucProgress findAllProgress(long id){
         Optional <AucProgress> optional = aucProgressRepository.findByProductId(id);
-        return optional.orElse(new AucProgress());
+        return optional.orElse(null);
     }
     public AucComplete findAllComplete(long id){
         Optional <AucComplete> optionalAucComplete = aucCompleteRepository.findByProductId(id);
-        return optionalAucComplete.orElse(new AucComplete());
+        return optionalAucComplete.orElse(null);
     }
 
     //경매정보 id를 이용해여 마감된 경매정보를 찾는 메소드
