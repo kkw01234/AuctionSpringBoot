@@ -22,5 +22,7 @@ public interface AucProgressRepository extends CrudRepository<AucProgress,Long> 
     //@Query(nativeQuery = true, value = ("DELETE FROM auc_progress WHERE product_id = :productId"))
     Long removeByProductId(@Param("productId")long product_id);
 
+    Optional<AucProgress> findByProductId(@Param("productId")long productId);
+
 
 }

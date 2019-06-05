@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +64,17 @@ public class AuctionReadController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @ResponseBody
+    @RequestMapping("/myauction/{id}")
+    public ResponseEntity<Object> readProgress(@PathVariable int id){
+        AucProgress aucProgress = auctionService.findAllProgress(id);
+        AucComplete aucComplete = auctionService.findAllComplete(id);
+        List<Object> objects = new ArrayList<>();
+        objects.add(aucProgress);
+        objects.add(aucComplete);
+        return new ResponseEntity<Object>(objects, HttpStatus.OK);
     }
 
     //모두 보여주기
