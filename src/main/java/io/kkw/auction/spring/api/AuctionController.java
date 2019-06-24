@@ -7,12 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AuctionController {
 
-
-
-
     @RequestMapping("/auction_page")
     public String loadAuctionPage(){
-
         return "auction_page";
     }
 

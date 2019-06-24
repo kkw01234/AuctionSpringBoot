@@ -1,19 +1,13 @@
 package io.kkw.auction.spring.api;
 
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import io.kkw.auction.spring.bean.AucUserBean;
-import io.kkw.auction.spring.bean.UserBean;
+import io.kkw.auction.spring.bean.AucUser;
 import io.kkw.auction.spring.service.UserService;
-import jdk.nashorn.internal.parser.JSONParser;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 
 @Controller
@@ -35,9 +29,9 @@ public class RegisterController {
         String phone = request.getParameter("phone");
         String account = request.getParameter("account");
 
-        AucUserBean aucUserBean = new AucUserBean(id,password,email,address,phone,account);
-        AucUserBean bean = userService.addUser(aucUserBean);
-
+        AucUser aucUser = new AucUser(id,password,email,address,phone,account);
+        AucUser bean = userService.addUser(aucUser);
+        request.getSession().setAttribute("user",bean);
         System.out.println("가입 완료");
         return "success";
     }

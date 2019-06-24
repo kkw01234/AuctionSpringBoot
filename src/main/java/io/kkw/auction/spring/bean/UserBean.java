@@ -1,6 +1,12 @@
 package io.kkw.auction.spring.bean;
 
+import lombok.Data;
 
-public interface UserBean{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+
+public abstract class UserBean{
 
 }

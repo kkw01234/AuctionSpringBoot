@@ -1,6 +1,7 @@
 package io.kkw.auction.spring.api;
 
-import io.kkw.auction.spring.bean.AucUserBean;
+import io.kkw.auction.spring.bean.AucAdmin;
+import io.kkw.auction.spring.bean.AucUser;
 import io.kkw.auction.spring.bean.UserBean;
 import io.kkw.auction.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,20 +28,38 @@ public class LoginController {
         String password = request.getParameter("password");
 
         UserBean userBean = userService.getLogin(id,password);
-        AucUserBean aucUserBean = (AucUserBean)userBean;
+        AucUser aucUser= null;
+        AucAdmin aucAdmin = null;
+        System.out.println(userBean instanceof AucUser);
+        if (userBean instanceof AucUser) {
+            aucUser = (AucUser) userBean;
+            aucUser.setPassword("");
+            if(aucUser.getStopdate() != null){
+                return "stop user";
+            }
+        }else if(userBean instanceof AucAdmin) {
+            aucAdmin = (AucAdmin) userBean;
+            aucAdmin.setPassword("");
+        }
+        else
+            return "ERROR";
 
         HttpSession session = request.getSession();
-        session.setAttribute("user",userBean);
 
-        if(userBean == null){
-            model.addAttribute("user", null);
-        }else {
-            model.addAttribute("userid", aucUserBean.getId());
-            model.addAttribute("password", aucUserBean.getPassword());
+
+        if(aucUser != null) { //User 일경우
+            model.addAttribute("userid", aucUser.getId());
+            session.setAttribute("user",aucUser);
+            System.out.println("로그인 성공");
+            return "success";
+        }else{
+            model.addAttribute("userId",aucAdmin.getId());
+            session.setAttribute("user",aucAdmin);
             System.out.println("로그인 성공");
             return "success";
         }
-        return "redirect:/";
+        //관리자일경우
+
     }
 
     //로그아웃

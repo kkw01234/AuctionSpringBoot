@@ -1,16 +1,17 @@
 package io.kkw.auction.spring.service;
 
 
-import com.google.gson.JsonObject;
-import io.kkw.auction.spring.bean.AucAdminBean;
-import io.kkw.auction.spring.bean.AucUserBean;
+import io.kkw.auction.spring.bean.AucUser;
 import io.kkw.auction.spring.bean.UserBean;
 import io.kkw.auction.spring.dao.AdminRepository;
 import io.kkw.auction.spring.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -30,15 +31,53 @@ public class UserService {
     }
 
 
-    public AucUserBean addUser(AucUserBean aucUserBean){
-        return userRepository.save(aucUserBean);
+    public AucUser addUser(AucUser aucUser){
+        return userRepository.save(aucUser);
     }
     public boolean hasEmail(String email){
-        List<AucUserBean> Users = userRepository.findByEmail(email);
+        List<AucUser> Users = userRepository.findByEmail(email);
 
         if(Users != null && Users.size() >0){
             return true;
         }else
             return false;
+    }
+
+    public boolean stopUser(String userId){
+        try {
+            Optional<AucUser> aucUser = userRepository.findById(userId);
+            AucUser user = aucUser.get();
+            Date time = new Date();
+            user.setStopdate(time);
+            userRepository.save(user);
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+
+    }
+    public boolean releaseUser(String userId){
+        try {
+            Optional<AucUser> aucUser = userRepository.findById(userId);
+            AucUser user = aucUser.get();
+            user.setStopdate(null);
+            userRepository.save(user);
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+
+    }
+
+    public List<AucUser> findAll(){
+        List<AucUser> aucUsers = userRepository.findAll();
+        return aucUsers;
+    }
+
+    public AucUser findUser(String user_id){
+        Optional<AucUser> user = userRepository.findById(user_id);
+        return user.orElse(null);
     }
 }
